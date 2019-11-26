@@ -1,8 +1,4 @@
-package com.example.creditpartner;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+package com.example.creditpartner.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.example.creditpartner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -27,12 +29,11 @@ public class VerifyInfoActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private String phoneNumber;
     private String verificationID;
-
     private Button verifyButton;
     private EditText otpCode;
     private ProgressBar loadOTP;
-
     private FirebaseAuth mAuth;
+    private TextView otpMessage, resendOTP;
 
 
     @Override
@@ -51,8 +52,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
                 String code = otpCode.getText().toString().trim();
 
-                if(code.isEmpty())
-                {
+                if (code.isEmpty()) {
                     otpCode.setError("Enter valid code!");
                     otpCode.requestFocus();
                     return;
@@ -65,8 +65,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
     }
 
 
-    private void verifyCode(String code)
-    {
+    private void verifyCode(String code) {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID, code);
         signInWithCredentials(credential);
     }
@@ -76,13 +75,11 @@ public class VerifyInfoActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            startActivity(new Intent(VerifyInfoActivity.this, MainActivity.class));
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(VerifyInfoActivity.this, MainActivity.class);
+                            startActivity(intent);
                             loadOTP.setVisibility(View.INVISIBLE);
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(VerifyInfoActivity.this, task.getException().getMessage().toString(), Toast.LENGTH_LONG).show();
                             loadOTP.setVisibility(View.INVISIBLE);
 
@@ -93,14 +90,13 @@ public class VerifyInfoActivity extends AppCompatActivity {
     }
 
 
-    private void sendVerificationCode(String number)
-    {
+    private void sendVerificationCode(String number) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-              number,
-              60,
+                number,
+                60,
                 TimeUnit.SECONDS,
                 TaskExecutors.MAIN_THREAD,
-              mCallbacks
+                mCallbacks
         );
     }
 
@@ -115,7 +111,6 @@ public class VerifyInfoActivity extends AppCompatActivity {
             verificationID = s;
 
 
-
         }
 
         @Override
@@ -123,8 +118,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
             String code = phoneAuthCredential.getSmsCode();
 
-            if(code!= null)
-            {
+            if (code != null) {
                 verifyCode(code);
             }
 
@@ -134,28 +128,30 @@ public class VerifyInfoActivity extends AppCompatActivity {
         public void onVerificationFailed(FirebaseException e) {
             Toast.makeText(VerifyInfoActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
-    } ;
-
-
-
+    };
 
 
     private void Initialize() {
         SetupToolbar();
 
+        //Get phone number previously filled
         phoneNumber = getIntent().getStringExtra("phoneNumber");
+
         otpCode = (EditText) findViewById(R.id.otp_code);
-        verifyButton = (Button)findViewById(R.id.verify_button);
-        loadOTP = (ProgressBar)findViewById(R.id.load_otp);
+        verifyButton = (Button) findViewById(R.id.verify_button);
+        loadOTP = (ProgressBar) findViewById(R.id.load_otp);
         loadOTP.setVisibility(View.GONE); //Dont show before verify
+
+        resendOTP = (TextView)findViewById(R.id.otp_resend);
+        otpMessage = (TextView)findViewById(R.id.otp_message);
+
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
     private void SetupToolbar() {
 
-        //Get Phone number
-
-        mToolbar = (Toolbar)findViewById(R.id.verify_bar);
+        mToolbar = (Toolbar) findViewById(R.id.verify_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Credit Partner");
 

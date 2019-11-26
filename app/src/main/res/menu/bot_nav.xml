@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/bot_credit_score"
+        android:icon="@drawable/ic_track_changes_black_24dp"
+        android:title="Credit Score"/>
+
+    <item
+        android:id="@+id/bot_paisa_tracker"
+        android:icon="@drawable/ic_track_changes_black_24dp"
+        android:title="PaisaTracker"/>
+
+    <item
+        android:id="@+id/bot_account"
+        android:icon="@drawable/ic_account_box_black_24dp"
+        android:title="My Account"/>
+
+
+</menu>

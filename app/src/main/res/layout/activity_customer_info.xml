@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomerInfoActivity">
+    tools:context=".Activities.CustomerInfoActivity">
 
 
     <Button
@@ -24,12 +24,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Free Credit Score"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="90dp"
+            android:textStyle="bold"
+            android:textSize="29dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/creditscore"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="9dp"
+            android:textSize="19dp"/>
+
+
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/customer_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="40dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"

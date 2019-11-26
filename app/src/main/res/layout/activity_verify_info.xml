@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VerifyInfoActivity">
+    tools:context=".Activities.VerifyInfoActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/customer_otp"
@@ -22,13 +22,37 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
+    <TextView
+        android:id="@+id/otp_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customer_otp"
+        android:text="@string/otp_name"
+        android:textSize="19dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/otp_resend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend"
+        android:layout_above="@id/verify_button"
+        android:textSize="18dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorAccent"/>
+
+
+
     <ProgressBar
         android:id="@+id/load_otp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/customer_otp"
+        android:layout_below="@id/verify_bar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="20dp"/>
+
 
 
     <include

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CreditPartner</string>
+    <string name="otp_name">You will receive an OTP message</string>
+    <string name="open_navigation_drawer">Open</string>
+    <string name="close_navigation_drawer">close_navigation_drawer</string>
+    <string name="creditscore">Get your credit report for free, with monthly updates.</string>
+    otp_name
 </resources>
