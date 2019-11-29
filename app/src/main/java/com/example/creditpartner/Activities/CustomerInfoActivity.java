@@ -33,6 +33,8 @@ public class CustomerInfoActivity extends AppCompatActivity {
 
     private String mVerificationId, currentUserID;
 
+    private static final String countryCode = "+91";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,19 +48,14 @@ public class CustomerInfoActivity extends AppCompatActivity {
 
                 if (isValid(mobileTIET, referenceTIET, emailTIET, nameTIET)) {
 
-                    String phoneNumber = mobileTIET.getText().toString();
-                    Intent intent = new Intent(CustomerInfoActivity.this, VerifyInfoActivity.class);
-                    intent.putExtra("phoneNumber", phoneNumber);
-                    startActivity(intent);
-
-                    SendDataToFirebase(phoneNumber, referenceTIET.getText().toString(), emailTIET.getText().toString()
+                    SendDataToNextActivity(countryCode + mobileTIET.getText().toString(), referenceTIET.getText().toString(), emailTIET.getText().toString()
                             , nameTIET.getText().toString());
                 } else {
                     String customerNumber = mobileTIET.getText().toString();
                     String email = emailTIET.getText().toString();
                     String name = nameTIET.getText().toString();
 
-                    if (customerNumber.length() < 13) {
+                    if (customerNumber.length() < 10) {
                         mobileTIET.setError("Enter a valid number!");
 
                     }
@@ -80,15 +77,17 @@ public class CustomerInfoActivity extends AppCompatActivity {
 
     }
 
-    private void SendDataToFirebase(String phoneNumber, String referenceNumber, String email, String name) {
-
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("phoneNumber", phoneNumber);
-        hashMap.put("email", email);
-        hashMap.put("name", name);
+    private void SendDataToNextActivity(String phoneNumber, String referenceNumber, String email, String name) {
 
 
-        Ref.child("Customers").child("BasicInfo").child(currentUserID).setValue(hashMap);
+        Intent intent = new Intent(CustomerInfoActivity.this, VerifyInfoActivity.class);
+        intent.putExtra("phoneNumber", phoneNumber);
+        intent.putExtra("email", email);
+        intent.putExtra("name", name);
+
+        startActivity(intent);
+
+
 
     }
 
@@ -121,8 +120,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
         //Firebase
         mAuth = FirebaseAuth.getInstance();
         Ref = FirebaseDatabase.getInstance().getReference();
-        currentUSer = mAuth.getCurrentUser();
-        currentUserID = currentUSer.getUid();
+
 
         generateOTP = (Button) findViewById(R.id.generate_button);
     }

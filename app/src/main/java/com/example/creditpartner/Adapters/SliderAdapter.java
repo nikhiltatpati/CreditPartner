@@ -1,11 +1,11 @@
-package com.example.creditpartner.Classes;
+package com.example.creditpartner.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.viewpager.widget.PagerAdapter;
@@ -24,14 +24,20 @@ public class SliderAdapter extends PagerAdapter {
 
     public int[] slideImages = {
             R.drawable.creditscore,
-            R.drawable.creditscore,
-            R.drawable.creditscore
+            R.drawable.mf,
+            R.drawable.rupee
     };
 
     public String[] slideHeadings = {
-            "First Image",
-            "Second Image",
-            "Third Image"
+            "Get your CIBIL Report Absolutely Free",
+            "Mutual Funds",
+            "₹ 0"
+    };
+
+    public String[] slideDescriptions = {
+            "Free monthly updates",
+            "No Commission, no charges",
+            "Your spends in November'19"
     };
 
 
@@ -42,7 +48,7 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view == (RelativeLayout) object;
+        return view == (LinearLayout) object;
     }
 
     @Override
@@ -53,9 +59,11 @@ public class SliderAdapter extends PagerAdapter {
 
         ImageView slideImageView = (ImageView) view.findViewById(R.id.iv_image_icon);
         TextView slideHeading = (TextView) view.findViewById(R.id.tv_heading);
+        TextView slideDescription = (TextView) view.findViewById(R.id.tv_description);
 
         slideImageView.setImageResource(slideImages[position]);
         slideHeading.setText(slideHeadings[position]);
+        slideDescription.setText(slideDescriptions[position]);
 
 
         container.addView(view);
@@ -67,6 +75,6 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((RelativeLayout) object);  //todo: RelativeLayout??
+        container.removeView((LinearLayout) object);  //todo: RelativeLayout??
     }
 }
