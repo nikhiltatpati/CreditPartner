@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private DatabaseReference Ref;
-    private String currentUserID;
+    private String currentUserID, phoneNumber;
 
     private ViewPager mSlideViewPager;
     private LinearLayout mDotsLayout;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int currentPage = 0;
     final int NUM_PAGES = 4;
 
+    private ImageButton addAdminButton;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         Initialize();
+
+        CheckSuperAdmin();
 
         SetupViewPager();
 
@@ -101,6 +105,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }, DELAY_MS, PERIOD_MS);
 
+    }
+
+    private void CheckSuperAdmin() {
+        Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild("phoneNumber")) {
+                    phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        Ref.child("Privileges").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(phoneNumber))
+                {
+                    if(dataSnapshot.child(phoneNumber).getValue().toString().equals("SuperAdmin"))
+                    {
+                        addAdminButton.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void SetupRecyclerView() {
@@ -297,6 +335,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
         productRecyclerView = findViewById(R.id.product_recyclerview);
+
+        addAdminButton = (ImageButton)findViewById(R.id.add_admin_button);
+        addAdminButton.setVisibility(View.GONE);
 
         Ref = FirebaseDatabase.getInstance().getReference();
 

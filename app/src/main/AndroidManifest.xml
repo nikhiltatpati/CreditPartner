@@ -8,14 +8,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CompanyWebsiteActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Activities.AddCompanyActivity"
+            android:parentActivityName=".Activities.ProductDetailActivity"></activity>
+        <activity
+            android:name=".Activities.CompanyWebsiteActivity"
+            android:parentActivityName=".Activities.ProductDetailActivity" />
         <activity android:name=".Activities.MyAccountActivity" />
         <activity
             android:name=".Activities.ProductDetailActivity"
-            android:parentActivityName=".Activities.MainActivity"></activity>
+            android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.VerifyInfoActivity" />
         <activity android:name=".Activities.MainActivity">
@@ -27,12 +30,12 @@
         </activity>
         <activity android:name=".Activities.CustomerInfoActivity" />
     </application>
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <uses-permission android:name="android.permission.READ_SMS" />
 

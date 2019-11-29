@@ -58,6 +58,14 @@
             android:layout_below="@id/dots_layout"
             android:layout_above="@id/bot_nav" />
 
+        <ImageButton
+            android:id="@+id/add_admin_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/colorAccent"
+            android:src="@drawable/ic_add_black_24dp"
+            android:layout_alignParentRight="true"/>
+
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
