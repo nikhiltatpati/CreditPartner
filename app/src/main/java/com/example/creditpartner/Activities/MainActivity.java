@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseUser currentUser;
     private DatabaseReference Ref;
     private String currentUserID, phoneNumber;
+    private boolean isSuperAdmin = false;
 
     private ViewPager mSlideViewPager;
     private LinearLayout mDotsLayout;
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private BottomNavigationView bottomNavigationView;
     private Toolbar mToolbar;
-
     private int mCurrentPage;
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
@@ -87,7 +87,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         addAdminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChangeActivity(AddAdminsActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddAdminsActivity.class);
+                intent.putExtra("isSuperAdmin", isSuperAdmin ? "True":"False");
+                startActivity(intent);
             }
         });
 
@@ -133,8 +135,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild(phoneNumber)) {
-                    if (dataSnapshot.child(phoneNumber).getValue().toString().equals("SuperAdmin")) {
+                    if (dataSnapshot.child(phoneNumber).getValue().toString().equals("SuperAdmin")){
                         addAdminButton.setVisibility(View.VISIBLE);
+                        isSuperAdmin = true;
+                    }
+                    else if(dataSnapshot.child(phoneNumber).getValue().toString().equals("Admin"))
+                    {
+                        addAdminButton.setVisibility(View.VISIBLE);
+
                     }
                 }
             }
