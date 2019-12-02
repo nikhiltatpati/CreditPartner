@@ -2,7 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/side_home"
+        android:title="Home" />
+
+
+    <item
+        android:id="@+id/side_myaccount"
+        android:title="My Account" />
+    <item
+        android:id="@+id/side_credit_report"
+        android:title="Credit Report"/>
+    <item
+        android:id="@+id/side_credit_card"
+        android:title="Credit Card"/>
+    <item
+        android:id="@+id/side_loan"
+        android:title="Loan"/>
+    <item
+        android:id="@+id/side_Investment"
+        android:title="Investment"/>
+    <item
+        android:id="@+id/side_insurance"
+        android:title="Insurance"/>
+    <item
+        android:id="@+id/side_refer_and_earn"
+        android:title="Refer and Earn"/>
+    <item
         android:id="@+id/side_logout"
         android:title="Logout"/>
-
 </menu>

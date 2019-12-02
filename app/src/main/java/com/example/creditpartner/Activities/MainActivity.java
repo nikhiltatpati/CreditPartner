@@ -84,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         SetNavigationView();
 
+        addAdminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChangeActivity(AddAdminsActivity.class);
+            }
+        });
+
 
 
         /*After setting the adapter use the timer */
@@ -125,10 +132,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Ref.child("Privileges").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(phoneNumber))
-                {
-                    if(dataSnapshot.child(phoneNumber).getValue().toString().equals("SuperAdmin"))
-                    {
+                if (dataSnapshot.hasChild(phoneNumber)) {
+                    if (dataSnapshot.child(phoneNumber).getValue().toString().equals("SuperAdmin")) {
                         addAdminButton.setVisibility(View.VISIBLE);
                     }
                 }
@@ -186,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //SET DATA IN NAVHEADER
     private void SetNavigationView() {
 
-        navigationView = (NavigationView)findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         final View header = navigationView.getHeaderView(0);
@@ -217,7 +222,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     private void ChangeActivity(Class Activity) {
         Intent intent = new Intent(MainActivity.this, Activity);
         startActivity(intent);
@@ -234,11 +238,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.side_logout:
+
+            case R.id.side_home: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            }
+
+            case R.id.side_logout: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 mAuth.signOut();
                 ChangeActivity(LoginActivity.class);
+                break;
+
+            }
+            case R.id.side_myaccount: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                ChangeActivity(MyAccountActivity.class);
+                break;
+
+            }
+            case R.id.side_refer_and_earn: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                ChangeActivity(ReferAndEarnActivity.class);
+                break;
+
+            }
+
         }
         return true;
     }
@@ -300,7 +329,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 }
                 case R.id.bot_paisa_tracker:
+                {
+                    Intent intent = new Intent(MainActivity.this, PaisaTrackerActivity.class);
+                    startActivity(intent);
                     break;
+                }
+
                 case R.id.bot_home: {
                     break;
 
@@ -314,21 +348,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     };
+
     private void Initialize() {
 
         SetupToolbar();
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        currentUserID = currentUser.getUid();
 
         if (currentUser == null) {
             ChangeActivity(CustomerInfoActivity.class);
+        } else {
+            currentUserID = currentUser.getUid();
+
         }
+
+
         loadProducts = findViewById(R.id.load_products);
         mSlideViewPager = findViewById(R.id.main_viewpager);
         mDotsLayout = findViewById(R.id.dots_layout);
-
 
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bot_nav);
@@ -336,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         productRecyclerView = findViewById(R.id.product_recyclerview);
 
-        addAdminButton = (ImageButton)findViewById(R.id.add_admin_button);
+        addAdminButton = (ImageButton) findViewById(R.id.add_admin_button);
         addAdminButton.setVisibility(View.GONE);
 
         Ref = FirebaseDatabase.getInstance().getReference();
