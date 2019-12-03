@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.DynamicAddActivity">
+
+    <include
+        android:id="@+id/options_bar"
+        layout="@layout/app_bar"/>
+
+    <EditText
+        android:id="@+id/add_product_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/options_bar"
+        android:layout_marginTop="50dp"
+        android:hint="Product Name"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/inputs"
+        android:layout_marginRight="20dp"/>
+
+    <EditText
+        android:id="@+id/add_product_image"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/add_product_name"
+        android:layout_marginTop="20dp"
+        android:hint="Image Link"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/inputs"
+        android:layout_marginRight="20dp"/>
+
+    <EditText
+        android:id="@+id/add_admin_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/add_product_image"
+        android:layout_marginTop="20dp"
+        android:hint="Admin's Number"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/inputs"
+        android:layout_marginRight="20dp"/>
+
+    <Button
+        android:id="@+id/add_option_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/buttons"
+        android:textSize="20dp"
+        android:text="Add"
+        android:textColor="@android:color/white"/>
+
+    <Button
+        android:id="@+id/remove_option_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/buttons"
+        android:textSize="20dp"
+        android:text="Remove"
+        android:textColor="@android:color/white"
+        />
+
+</RelativeLayout>

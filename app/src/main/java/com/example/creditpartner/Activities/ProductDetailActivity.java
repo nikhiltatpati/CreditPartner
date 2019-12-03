@@ -69,7 +69,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
         /*
-        Add company feature only for admins!
+        Add company feature only for superadmins and admins!
          */
 
         addCompanyButton.setOnClickListener(new View.OnClickListener() {
