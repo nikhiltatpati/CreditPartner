@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddExpenseActivity">
+
+    <include
+        android:id="@+id/add_expense_bar"
+        layout="@layout/app_bar"/>
+
+    <EditText
+        android:id="@+id/expense_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_expense_bar"
+        android:layout_margin="30dp"
+        android:hint="₹ Enter Amount"
+        android:gravity="center_horizontal"
+        android:textSize="20dp"
+       />
+
+    <EditText
+        android:id="@+id/category_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/expense_value"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:hint="Enter Category"
+        android:gravity="center_horizontal"
+        android:textSize="20dp"
+       />
+
+
+
+    <DatePicker
+        android:id="@+id/date_picker"
+        android:layout_width="350dp"
+        android:layout_height="370dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/category_name"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/add_transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_alignParentRight="true"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@android:color/white"/>
+
+
+
+</RelativeLayout>

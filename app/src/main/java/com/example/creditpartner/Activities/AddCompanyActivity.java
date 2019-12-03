@@ -85,3 +85,7 @@ public class AddCompanyActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 }
+
+
+
+
