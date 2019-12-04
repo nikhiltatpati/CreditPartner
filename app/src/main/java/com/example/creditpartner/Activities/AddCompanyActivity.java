@@ -21,7 +21,7 @@ public class AddCompanyActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private TextInputLayout companyName, companyURL, companyImage;
-    private TextInputEditText name, url, image;
+    private TextInputEditText name, url, image, balance, rate;
     private Button addCompanyButton;
     private String productTitle;
     private DatabaseReference Ref;
@@ -43,6 +43,8 @@ public class AddCompanyActivity extends AppCompatActivity {
                 hashMap.put("companyName", name.getText().toString());
                 hashMap.put("companyImage", image.getText().toString());
                 hashMap.put("companyURL", url.getText().toString());
+                hashMap.put("companyRate", rate.getText().toString());
+                hashMap.put("companyMinimumBalance", balance.getText().toString());
 
                 Ref.child("CompanyList").child(productTitle).push().setValue(hashMap);
                 addProgress.setVisibility(View.INVISIBLE);
@@ -72,6 +74,8 @@ public class AddCompanyActivity extends AppCompatActivity {
         name = (TextInputEditText) findViewById(R.id.name);
         image = (TextInputEditText) findViewById(R.id.image);
         url = (TextInputEditText) findViewById(R.id.url);
+        rate = (TextInputEditText) findViewById(R.id.rate);
+        balance = (TextInputEditText) findViewById(R.id.balance);
 
         addCompanyButton = (Button)findViewById(R.id.add_company_button);
 

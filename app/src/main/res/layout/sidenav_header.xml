@@ -25,6 +25,7 @@
         android:layout_below="@id/sidenav_header_app_name"
         android:text="Loading"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="15dp"
         android:textColor="@android:color/white"
         android:textSize="20dp"

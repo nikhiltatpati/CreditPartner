@@ -73,7 +73,7 @@ public class CompanyWebsiteActivity extends AppCompatActivity {
 
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
                 {
-                    if(dataSnapshot1.child("Name").getValue().toString().equals(companyTitle) && dataSnapshot1.hasChild("companyURL"))
+                    if(dataSnapshot1.child("companyName").getValue().toString().equals(companyTitle) && dataSnapshot1.hasChild("companyURL"))
                     {
                         URL = dataSnapshot1.child("companyURL").getValue().toString();
                         break;

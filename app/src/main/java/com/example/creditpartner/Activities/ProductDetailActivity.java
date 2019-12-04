@@ -37,7 +37,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private String productTitle, currentUserID,phoneNumber;
     private RecyclerView companyRecyclerview;
     private ArrayList<Companies> companiesArrayList = new ArrayList<>();
-    private String companyName, companyImage;
+    private String companyName, companyImage, companyRate, companyBalance;
     private TextView addCompanyButton;
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
@@ -148,7 +148,15 @@ public class ProductDetailActivity extends AppCompatActivity {
                             companyImage = dataSnapshot1.child("companyImage").getValue().toString();
                         }
 
-                        companiesArrayList.add(new Companies(companyImage, companyName));
+                        if (dataSnapshot1.hasChild("companyRate")) {
+                            companyRate = dataSnapshot1.child("companyRate").getValue().toString();
+                        }
+
+                        if (dataSnapshot1.hasChild("companyMinimumBalance")) {
+                            companyBalance = dataSnapshot1.child("companyMinimumBalance").getValue().toString();
+                        }
+
+                        companiesArrayList.add(new Companies(companyImage, companyName,companyRate, companyBalance));
                     }
 
                     CompanyAdapter adapter = new CompanyAdapter(ProductDetailActivity.this, companiesArrayList);

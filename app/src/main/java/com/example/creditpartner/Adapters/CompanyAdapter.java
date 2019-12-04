@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +28,12 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
     private Context mContext;
     private ArrayList<Companies> companiesArrayList;
     private String productName;
+    private boolean isShown = false;
+
+    @Override
+    public boolean onFailedToRecycleView(@NonNull ViewHolder holder) {
+        return super.onFailedToRecycleView(holder);
+    }
 
     public CompanyAdapter(Context mContext, ArrayList<Companies> companiesArrayList) {
         this.mContext = mContext;
@@ -37,15 +44,18 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
     @Override
     public CompanyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
+
         myView = LayoutInflater.from(parent.getContext()).inflate(R.layout.company_layout,parent,false);
         return new CompanyAdapter.ViewHolder(myView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CompanyAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CompanyAdapter.ViewHolder holder, int position) {
 
         final Companies companies = companiesArrayList.get(position);
         holder.companyName.setText(companies.getCompanyName());
+        holder.companyInterestRate.setText(companies.getCompanyInterestRate());
+        holder.companyMinimumBalance.setText(companies.getCompanyMinimumBalance());
         Glide.with(mContext)
                 .load(companies.getCompanyImage())
                 .into(holder.companyImage);
@@ -65,6 +75,27 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
             }
         });
 
+        holder.viewDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(isShown)
+                {
+                    holder.detailsCard.setVisibility(View.GONE);
+                    holder.viewDetails.setText("View Details");
+                    isShown = false;
+
+                }
+                else
+                {
+                    holder.detailsCard.setVisibility(View.VISIBLE);
+                    holder.viewDetails.setText("Hide Details");
+                    isShown = true;
+                }
+
+            }
+        });
+
 
 
     }
@@ -77,14 +108,20 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView companyImage;
-        private TextView companyName;
-        private Button selectCompany;
+        private TextView companyName, companyInterestRate, companyMinimumBalance;
+        private Button selectCompany, viewDetails;
+        private CardView detailsCard;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+
             companyImage = (ImageView)myView.findViewById(R.id.company_image);
             companyName = (TextView)myView.findViewById(R.id.company_name);
+            companyInterestRate = (TextView)myView.findViewById(R.id.percent_rate);
+            companyMinimumBalance = (TextView)myView.findViewById(R.id.minimum_balance_money);
             selectCompany = (Button)myView.findViewById(R.id.company_select);
+            viewDetails = (Button)myView.findViewById(R.id.company_view_details);
+            detailsCard = (CardView)myView.findViewById(R.id.details_card);
 
         }
     }
