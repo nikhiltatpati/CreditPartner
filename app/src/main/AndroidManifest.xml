@@ -12,7 +12,6 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Activities.DynamicAddActivity"
             android:parentActivityName=".Activities.AddAdminsActivity"></activity>
-        <activity android:name=".Activities.ApplyFormActivity" />
         <activity android:name=".Activities.AddExpenseActivity" />
         <activity
             android:name=".Activities.AddAdminsActivity"

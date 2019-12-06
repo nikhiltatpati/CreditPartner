@@ -76,7 +76,7 @@ public class PaisaTrackerActivity extends AppCompatActivity {
 
                 }
                 String totalString = String.valueOf(totalValue);
-                totalExpense.setText(totalString);
+                totalExpense.setText("₹ " + totalString);
 
             }
 

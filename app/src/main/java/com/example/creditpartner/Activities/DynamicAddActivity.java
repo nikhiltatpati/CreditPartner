@@ -108,9 +108,9 @@ public class DynamicAddActivity extends AppCompatActivity {
                                 if(dataSnapshot1.child("Name").getValue().toString().equals(productname))
                                 {
                                     key = dataSnapshot1.getKey();
-                                    Log.e("ke", key + "");
+                                    Ref.child("ProductList").child(key).removeValue();
+
                                 }
-                                Log.e("s", dataSnapshot1.getKey());
                             }
                         }
 
@@ -119,9 +119,6 @@ public class DynamicAddActivity extends AppCompatActivity {
 
                         }
                     });
-                    Log.e("key", key + "");
-
-                    Ref.child("ProductList").child(key).removeValue();
                     ChangeActivity();
 
 

@@ -41,6 +41,19 @@
         android:textSize="20sp"
          />
 
+        <TextView
+            android:id="@+id/tv_links"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/iv_image_icon"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:text="View Details"
+            android:textSize="15sp"
+            />
+
     </LinearLayout>
 
 

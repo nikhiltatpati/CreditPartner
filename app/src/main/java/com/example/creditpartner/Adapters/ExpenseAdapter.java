@@ -38,7 +38,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
         Expenses expenses = expensesArrayList.get(position);
         holder.categoryName.setText(expenses.getCategoryName());
-        holder.expense.setText(expenses.getExpenseValue());
+        holder.expense.setText("₹ "+expenses.getExpenseValue());
         holder.date.setText(expenses.getDate());
 
     }

@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Resend"
-        android:layout_above="@id/verify_button"
+        android:layout_above="@id/login_button"
         android:textSize="18dp"
         android:layout_centerHorizontal="true"
         android:textColor="@color/colorAccent"/>
@@ -66,21 +66,21 @@
 
 
     <ProgressBar
-        android:id="@+id/load_otp"
+        android:id="@+id/load_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/verify_bar"
+        android:layout_below="@id/login_bar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
 
 
 
     <include
-        android:id="@+id/verify_bar"
+        android:id="@+id/login_bar"
         layout="@layout/app_bar" />
 
     <Button
-        android:id="@+id/verify_button"
+        android:id="@+id/login_button"
         android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"

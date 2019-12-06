@@ -27,6 +27,7 @@ import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -227,6 +228,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        Ref.child("Privileges").child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                   String privilege =  dataSnapshot.getValue().toString();
+                    TextView privilegeText = (TextView) header.findViewById(R.id.sidenav_header_privilege);
+                    privilegeText.setText(privilege);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
@@ -257,7 +275,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 mAuth.signOut();
-                ChangeActivity(LoginActivity.class);
+                startActivity(new Intent(MainActivity.this, CustomerInfoActivity.class));
+                finish();
                 break;
 
             }
@@ -272,6 +291,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 ChangeActivity(ReferAndEarnActivity.class);
+                break;
+
+            }
+
+            case R.id.side_credit_report: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Snackbar.make(drawerLayout, "Coming Soon, hang on!", 3000).show();
                 break;
 
             }
@@ -333,13 +360,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 }
 
-                case R.id.bot_credit_score: {
+                case R.id.bot_recharge: {
+                    Snackbar.make(drawerLayout, "Coming Soon, hang on!", 3000).show();
                     break;
                 }
                 case R.id.bot_paisa_tracker:
                 {
-                    Intent intent = new Intent(MainActivity.this, PaisaTrackerActivity.class);
-                    startActivity(intent);
+                    ChangeActivity(PaisaTrackerActivity.class);
                     break;
                 }
 

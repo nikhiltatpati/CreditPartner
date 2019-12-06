@@ -7,6 +7,7 @@ import android.app.Notification;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -40,9 +41,11 @@ public class ReferAndEarnActivity extends AppCompatActivity {
     private void OpenWhatsapp() {
 
         String url = "https://api.whatsapp.com/send?phone=";
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        startActivity(intent);
+        final Intent whatIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+        whatIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("CreditPartner is a good app take my link and open" ));
+        whatIntent.setType("text/plain");
+        startActivity(Intent.createChooser(whatIntent, "Send to friend"));
     }
 
     private void Initialize() {

@@ -75,6 +75,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
             }
         });
 
+
         holder.viewDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

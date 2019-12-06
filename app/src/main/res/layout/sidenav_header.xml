@@ -23,24 +23,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/sidenav_header_app_name"
-        android:text="Loading"
+        android:text="Loadinggggggggggggggg"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="170dp"
         android:layout_marginLeft="15dp"
         android:textColor="@android:color/white"
-        android:textSize="20dp"
+        android:textSize="18dp"
+
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/sidenav_header_privilege"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sidenav_header_app_name"
+        android:text="SuperAdmin"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"/>
 
     <TextView
         android:id="@+id/sidenav_header_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sidenav_header_app_name"
-        android:text="Loading"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
+        android:layout_below="@id/sidenav_header_name"
+        android:text="+919619147970"
+        android:layout_marginLeft="15dp"
         android:textColor="@android:color/white"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"/>
 

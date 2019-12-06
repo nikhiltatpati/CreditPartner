@@ -7,9 +7,9 @@
         android:title="Home"/>
 
     <item
-        android:id="@+id/bot_credit_score"
+        android:id="@+id/bot_recharge"
         android:icon="@drawable/ic_track_changes_black_24dp"
-        android:title="Credit Score"/>
+        android:title="Recharge and Bill"/>
 
     <item
         android:id="@+id/bot_paisa_tracker"
