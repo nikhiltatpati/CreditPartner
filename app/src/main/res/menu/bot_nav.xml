@@ -9,7 +9,7 @@
     <item
         android:id="@+id/bot_recharge"
         android:icon="@drawable/ic_track_changes_black_24dp"
-        android:title="Recharge and Bill"/>
+        android:title="Recharge"/>
 
     <item
         android:id="@+id/bot_paisa_tracker"

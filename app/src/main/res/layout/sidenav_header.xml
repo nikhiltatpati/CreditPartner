@@ -8,22 +8,21 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/sidenav_header_app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="Credit Partner"
+    <ImageView
+        android:id="@+id/sidenav_header_image"
         android:layout_centerHorizontal="true"
-        android:textColor="@android:color/white"
-        android:textSize="27dp" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/cplogo"
+        android:layout_marginLeft="20dp"/>
+
 
     <TextView
         android:id="@+id/sidenav_header_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sidenav_header_app_name"
-        android:text="Loadinggggggggggggggg"
+        android:layout_below="@id/sidenav_header_image"
+        android:text="Loading"
         android:layout_marginTop="10dp"
         android:layout_marginRight="170dp"
         android:layout_marginLeft="15dp"
@@ -36,10 +35,23 @@
         android:id="@+id/sidenav_header_privilege"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sidenav_header_app_name"
+        android:layout_below="@id/sidenav_header_image"
         android:text="SuperAdmin"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"/>
+
+
+    <TextView
+        android:id="@+id/sidenav_header_number_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sidenav_header_name"
+        android:text="Number"
+        android:layout_marginLeft="15dp"
         android:textColor="@android:color/white"
         android:textSize="18dp"
         android:layout_marginTop="10dp"
@@ -52,6 +64,8 @@
         android:layout_below="@id/sidenav_header_name"
         android:text="+919619147970"
         android:layout_marginLeft="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
         android:textColor="@android:color/white"
         android:textSize="18dp"
         android:layout_marginTop="10dp"

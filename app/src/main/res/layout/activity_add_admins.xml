@@ -11,6 +11,18 @@
         android:id="@+id/add_admin_bar"
         layout="@layout/app_bar"/>
 
+    <Button
+        android:id="@+id/add_ads"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/buttons"
+        android:layout_marginTop="100dp"
+        android:text="Add Ads"
+        android:textColor="@android:color/white"
+        android:textSize="17dp"
+        android:visibility="invisible"
+        android:layout_below="@id/add_admin_bar"/>
 
     <Button
         android:id="@+id/add_product"
@@ -18,11 +30,11 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@drawable/buttons"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:text="Add Product"
         android:textColor="@android:color/white"
         android:textSize="17dp"
-        android:layout_below="@id/add_admin_bar"/>
+        android:layout_below="@id/add_ads"/>
 
     <Button
         android:id="@+id/remove_product"

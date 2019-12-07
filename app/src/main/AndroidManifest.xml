@@ -10,8 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.DynamicAddActivity"
-            android:parentActivityName=".Activities.AddAdminsActivity"></activity>
+        <activity android:name=".Activities.BannerActivity"
+            android:parentActivityName=".Activities.MainActivity"></activity>
+        <activity android:name=".Activities.SplashActivity"></activity>
+        <activity
+            android:name=".Activities.DynamicAddActivity"
+            android:parentActivityName=".Activities.AddAdminsActivity" />
         <activity android:name=".Activities.AddExpenseActivity" />
         <activity
             android:name=".Activities.AddAdminsActivity"
@@ -45,14 +49,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.CustomerInfoActivity" />
+        <activity android:name=".Activities.CustomerInfoActivity">
+
+        </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.SEND_SMS" />
 

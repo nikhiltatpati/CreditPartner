@@ -1,10 +1,13 @@
 package com.example.creditpartner.Activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.creditpartner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,8 +36,9 @@ import java.util.concurrent.TimeUnit;
 
 public class VerifyInfoActivity extends AppCompatActivity {
     private Toolbar mToolbar;
-    private String phoneNumber, name, email;
+    private String phoneNumber, name, email, reference;
     private String verificationID, currentUserID;
+    private ImageView verifyLogo;
     private Button verifyButton;
     private EditText otpCode;
     private ProgressBar loadOTP;
@@ -40,6 +46,8 @@ public class VerifyInfoActivity extends AppCompatActivity {
     private TextView otpMessage, resendOTP;
     private DatabaseReference Ref;
     private FirebaseUser currentUser;
+    private String[] permissionArray = {Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS};
+    private static final int requestCode = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +56,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
         Initialize();
 
-        sendVerificationCode(phoneNumber);
+
 
 
         verifyButton.setOnClickListener(new View.OnClickListener() {
@@ -69,10 +77,25 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        sendVerificationCode(phoneNumber);
+
+    }
 
     private void verifyCode(String code) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID, code);
-        signInWithCredentials(credential);
+        try {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID, code);
+            signInWithCredentials(credential);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(VerifyInfoActivity.this,""+e.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void signInWithCredentials(PhoneAuthCredential credential) {
@@ -91,6 +114,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("phoneNumber", phoneNumber);
                             hashMap.put("name", name);
+                            hashMap.put("reference", reference);
                             hashMap.put("email", email);
 
 
@@ -157,11 +181,13 @@ public class VerifyInfoActivity extends AppCompatActivity {
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         name = getIntent().getStringExtra("name");
         email = getIntent().getStringExtra("email");
+        reference = getIntent().getStringExtra("reference");
 
         otpCode = (EditText) findViewById(R.id.otp_code);
         verifyButton = (Button) findViewById(R.id.verify_button);
         loadOTP = (ProgressBar) findViewById(R.id.load_otp);
         loadOTP.setVisibility(View.GONE); //Dont show before verify
+        verifyLogo = (ImageView)findViewById(R.id.verify_logo);
 
         resendOTP = (TextView)findViewById(R.id.otp_resend);
         otpMessage = (TextView)findViewById(R.id.otp_message);

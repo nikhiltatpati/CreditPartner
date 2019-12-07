@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.creditpartner.Adapters.ProductAdapter;
 import com.example.creditpartner.Adapters.SliderAdapter;
 import com.example.creditpartner.Classes.Products;
+import com.example.creditpartner.Classes.Slides;
 import com.example.creditpartner.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
     final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
     int currentPage = 0;
-    final int NUM_PAGES = 4;
 
     private ImageButton addAdminButton;
     private DrawerLayout drawerLayout;
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private RecyclerView productRecyclerView;
     private ArrayList<Products> productsArrayList = new ArrayList<>();
+    private ArrayList<Slides> slidesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +80,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         CheckSuperAdmin();
 
-        SetupViewPager();
+        GetSlides();
+
 
         SetupRecyclerView();
 
-        SetNavigationView();
+        if(currentUser != null)
+        {
+            SetNavigationView();
+
+        }
 
         addAdminButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,11 +102,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-        /*After setting the adapter use the timer */
+//        After setting the adapter use the timer
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
             public void run() {
-                if (mCurrentPage == NUM_PAGES - 1) {
+                if (mCurrentPage == slidesList.size()) {
                     mCurrentPage = 0;
                 }
                 mSlideViewPager.setCurrentItem(mCurrentPage++, true);
@@ -117,13 +123,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void CheckSuperAdmin() {
-        Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
+    private void GetSlides() {
+
+        Ref.child("Banners").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("phoneNumber")) {
-                    phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
-                }
+                slidesList.clear();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if(dataSnapshot1.hasChild("AdImage") && dataSnapshot1.hasChild("AdLink"))
+
+                    {
+                        String image = dataSnapshot1.child("AdImage").getValue().toString();
+                        String link = dataSnapshot1.child("AdLink").getValue().toString();
+                        slidesList.add(new Slides(image, "", link));
+
+
+                    }
+                    else if(dataSnapshot1.hasChild("AdImage") && dataSnapshot1.hasChild("AdLink") && dataSnapshot1.hasChild("Adtext"))
+                    {
+
+                        String image = dataSnapshot1.child("AdImage").getValue().toString();
+                        String link = dataSnapshot1.child("AdLink").getValue().toString();
+                        String text = dataSnapshot1.child("AdText").getValue().toString();
+                        slidesList.add(new Slides(image, "", link));
+
+                    }}
+
+                sliderAdapter = new SliderAdapter(MainActivity.this, slidesList);
+
+                mSlideViewPager.setAdapter(sliderAdapter);
+
+                mSlideViewPager.addOnPageChangeListener(viewListener);
             }
 
             @Override
@@ -131,7 +161,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+    }
+    private void CheckSuperAdmin() {
+        if(currentUser != null) {
 
+
+            Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild("phoneNumber")) {
+                        phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
         Ref.child("Privileges").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -187,15 +235,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void SetupViewPager() {
 
-        sliderAdapter = new SliderAdapter(this);
-
-        mSlideViewPager.setAdapter(sliderAdapter);
-
-        addDotsIndicator(0);
-        mSlideViewPager.addOnPageChangeListener(viewListener);
-    }
 
     //SET DATA IN NAVHEADER
     private void SetNavigationView() {
@@ -204,8 +244,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         final View header = navigationView.getHeaderView(0);
-        TextView text = (TextView) header.findViewById(R.id.sidenav_header_app_name);
-        text.setText("CreditPartner");
+
         Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -228,12 +267,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        Ref.child("Privileges").child(currentUserID).addValueEventListener(new ValueEventListener() {
+        Ref.child("Privileges").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists())
                 {
-                   String privilege =  dataSnapshot.getValue().toString();
+                   String privilege =  dataSnapshot.child(phoneNumber).getValue().toString();
+                   TextView privilegeText = (TextView) header.findViewById(R.id.sidenav_header_privilege);
+                   privilegeText.setText(privilege);
+                }
+
+                else {
+                    String privilege =  "User";
                     TextView privilegeText = (TextView) header.findViewById(R.id.sidenav_header_privilege);
                     privilegeText.setText(privilege);
                 }
@@ -271,6 +316,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
 
+            case R.id.side_credit_card: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Credit Card");
+                startActivity(intent);
+                break;
+            }
+
+
+
             case R.id.side_logout: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
@@ -302,6 +358,88 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             }
+            case R.id.side_businessloan: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Business Loan");
+                startActivity(intent);
+                break;
+
+            }
+
+            case R.id.side_carloan: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Car Loan");
+                startActivity(intent);
+                break;
+
+            }
+            case R.id.side_educationloan: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Education Loan");
+                startActivity(intent);
+                break;
+
+            }
+            case R.id.side_homeloan: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Home Loan");
+                startActivity(intent);
+                break;
+
+            }
+            case R.id.side_instantloan: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Instant Loan");
+                startActivity(intent);
+                break;
+
+            }
+            case R.id.side_personalloan: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Personal Loan");
+                startActivity(intent);
+                break;
+
+            }
+            case R.id.side_terminsurance: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Term Insurance");
+                startActivity(intent);
+                break;
+
+            }
+            case R.id.side_carinsurance: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Car Insurance");
+                startActivity(intent);
+                break;
+
+            }
+            case R.id.side_healthinsurance: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Health Insurance");
+                startActivity(intent);
+                break;
+
+            }
 
         }
         return true;
@@ -309,7 +447,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void addDotsIndicator(int position) {
 
-        mDots = new TextView[3];
+        mDots = new TextView[slidesList.size()];
         mDotsLayout.removeAllViews(); //without this multiple number of dots will be created
 
         for (int i = 0; i < mDots.length; i++) {

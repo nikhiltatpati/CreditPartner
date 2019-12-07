@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AddAdminsActivity extends AppCompatActivity {
 
-    private Button addAdmin, removeAdmin, addProduct, removeProduct;
+    private Button addAdmin, removeAdmin, addProduct, removeProduct, addAds;
     private String isSuperAdmin;
     private Toolbar mToolbar;
     private FirebaseAuth mAuth;
@@ -37,6 +37,15 @@ public class AddAdminsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AddAdminsActivity.this, DynamicAddActivity.class);
                 intent.putExtra("optionSelected", addProduct.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        addAds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddAdminsActivity.this, DynamicAddActivity.class);
+                intent.putExtra("optionSelected", addAds.getText().toString());
                 startActivity(intent);
             }
         });
@@ -82,6 +91,7 @@ public class AddAdminsActivity extends AppCompatActivity {
         isSuperAdmin = getIntent().getStringExtra("isSuperAdmin");
 
         addAdmin = (Button)findViewById(R.id.add_admin);
+        addAds = (Button)findViewById(R.id.add_ads);
         removeAdmin = (Button)findViewById(R.id.remove_admin);
         addProduct = (Button)findViewById(R.id.add_product);
         removeProduct = (Button)findViewById(R.id.remove_product);
@@ -90,6 +100,7 @@ public class AddAdminsActivity extends AppCompatActivity {
         {
             addAdmin.setVisibility(View.VISIBLE);
             removeAdmin.setVisibility(View.VISIBLE);
+            addAds.setVisibility(View.VISIBLE);
         }
     }
 

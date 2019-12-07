@@ -3,6 +3,7 @@ package com.example.creditpartner.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,13 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         Glide.with(mContext)
                 .load(companies.getCompanyImage())
                 .into(holder.companyImage);
+
+        holder.detailsCard.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent) {
+                return false;
+            }
+        });
 
 
         SharedPreferences pref = mContext.getSharedPreferences("MyPref",

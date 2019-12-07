@@ -17,13 +17,50 @@
         android:title="Credit Card"/>
     <item
         android:id="@+id/side_loan"
-        android:title="Loan"/>
-    <item
-        android:id="@+id/side_Investment"
-        android:title="Investment"/>
+        android:title="Loan">
+
+
+        <menu>
+            <item android:id="@+id/side_homeloan"
+                android:title="Home Loan"/>
+
+            <item android:id="@+id/side_personalloan"
+                android:title="Personal Loan"/>
+
+            <item android:id="@+id/side_instantloan"
+                android:title="Instant Loan"/>
+
+            <item android:id="@+id/side_carloan"
+                android:title="Car Loan"/>
+
+            <item android:id="@+id/side_educationloan"
+                android:title="Education Loan"/>
+
+            <item android:id="@+id/side_businessloan"
+                android:title="Business Loan"/>
+
+        </menu>
+
+    </item>
+
     <item
         android:id="@+id/side_insurance"
-        android:title="Insurance"/>
+        android:title="Insurance">
+
+        <menu>
+            <item android:id="@+id/side_healthinsurance"
+                android:title="Health Insurance"/>
+
+            <item android:id="@+id/side_terminsurance"
+                android:title="Term Insurance"/>
+
+            <item android:id="@+id/side_carinsurance"
+                android:title="Car Insurance"/>
+
+
+        </menu>
+
+    </item>
     <item
         android:id="@+id/side_refer_and_earn"
         android:title="Refer and Earn"/>

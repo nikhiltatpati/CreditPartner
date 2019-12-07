@@ -2,9 +2,11 @@ package com.example.creditpartner.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -14,8 +16,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -30,6 +35,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
     private FirebaseUser currentUSer;
+    private boolean isReferenceValid = false;
 
     private String mVerificationId, currentUserID;
 
@@ -42,18 +48,21 @@ public class CustomerInfoActivity extends AppCompatActivity {
 
         InitializeFields();
 
+        if(currentUSer != null)
+        {
+            Intent intent = new Intent(CustomerInfoActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         generateOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (isValid(mobileTIET, referenceTIET, emailTIET, nameTIET)) {
-
-                    SendDataToNextActivity(countryCode + mobileTIET.getText().toString(), referenceTIET.getText().toString(), emailTIET.getText().toString()
-                            , nameTIET.getText().toString());
-                } else {
                     String customerNumber = mobileTIET.getText().toString();
                     String email = emailTIET.getText().toString();
                     String name = nameTIET.getText().toString();
+                    final String reference = referenceTIET.getText().toString();;
 
                     if (customerNumber.length() < 10) {
                         mobileTIET.setError("Enter a valid number!");
@@ -68,6 +77,46 @@ public class CustomerInfoActivity extends AppCompatActivity {
                         emailTIET.setError("Enter a valid email!");
 
                     }
+
+                    Ref.child("References").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot snapshot: dataSnapshot.getChildren())
+                            {
+                                for(DataSnapshot dataSnapshot1 : snapshot.getChildren())
+                                {
+                                    if(dataSnapshot1.getValue().toString().equals(reference))
+                                    {
+                                        isReferenceValid = true;
+                                        Log.e("isvalid", isReferenceValid + "yes");
+                                        break;
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    if (!reference.isEmpty()) {
+                        {
+                            if(!isReferenceValid)
+                            {
+                                referenceTIET.setError("Enter a valid Reference!");
+
+                            }
+                        }
+
+                    }
+
+                    else
+                    {
+                        SendDataToNextActivity(countryCode + mobileTIET.getText().toString(), referenceTIET.getText().toString(), emailTIET.getText().toString()
+                                , nameTIET.getText().toString(), referenceTIET.getText().toString());
                 }
 
 
@@ -77,13 +126,14 @@ public class CustomerInfoActivity extends AppCompatActivity {
 
     }
 
-    private void SendDataToNextActivity(String phoneNumber, String referenceNumber, String email, String name) {
+    private void SendDataToNextActivity(String phoneNumber, String referenceNumber, String email, String name, String reference) {
 
 
         Intent intent = new Intent(CustomerInfoActivity.this, VerifyInfoActivity.class);
         intent.putExtra("phoneNumber", phoneNumber);
         intent.putExtra("email", email);
         intent.putExtra("name", name);
+        intent.putExtra("reference", reference);
 
         startActivity(intent);
 
@@ -102,6 +152,8 @@ public class CustomerInfoActivity extends AppCompatActivity {
     }
 
     private void InitializeFields() {
+
+
         SetupToolbar();
 
         //TextInputLayouts

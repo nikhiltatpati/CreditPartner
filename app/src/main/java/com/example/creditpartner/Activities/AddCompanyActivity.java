@@ -37,6 +37,29 @@ public class AddCompanyActivity extends AppCompatActivity {
         addCompanyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String nameString = name.getText().toString();
+                String urlString = url.getText().toString();
+                String imageeString = image.getText().toString();
+                String balanceString = balance.getText().toString();
+                String rateString = rate.getText().toString();
+                if(nameString.isEmpty())
+                {
+                    name.setError("Enter Valid name!");
+                }
+                if(urlString.isEmpty())
+                {
+                    name.setError("Enter Valid url!");
+                }if(imageeString.isEmpty())
+                {
+                    name.setError("Enter Valid Image link!");
+                }if(balanceString.isEmpty())
+                {
+                    name.setError("Enter Valid balance!");
+                }if(rateString.isEmpty())
+                {
+                    name.setError("Enter Valid rate!");
+                }
+
                 addProgress.setVisibility(View.VISIBLE);
 
                 HashMap<String, String> hashMap = new HashMap<>();

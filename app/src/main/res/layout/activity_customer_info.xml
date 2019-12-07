@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="Mobile Number" />
+                android:hint="10-digit Mobile Number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -14,3 +14,5 @@ public class CompanyFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_company_form);
     }
 }
+
+

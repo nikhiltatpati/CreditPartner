@@ -5,6 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".Activities.VerifyInfoActivity">
 
+
+    <ImageView
+        android:id="@+id/verify_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/cplogo"
+        android:layout_below="@id/load_otp"
+        android:layout_marginTop="15dp"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/customer_otp"
         android:layout_centerInParent="true"
@@ -32,17 +42,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
         android:textColor="@color/colorAccent"/>
-
-    <TextView
-        android:id="@+id/otp_resend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resend"
-        android:layout_above="@id/verify_button"
-        android:textSize="18dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/colorAccent"/>
-
 
 
     <ProgressBar

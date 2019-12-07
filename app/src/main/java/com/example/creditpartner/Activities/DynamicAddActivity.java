@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +25,7 @@ import java.util.HashMap;
 
 public class DynamicAddActivity extends AppCompatActivity {
 
-    private EditText addAdminNumber, addProductName, addProductImage;
+    private EditText addAdminNumber, addProductName, addProductImage, addAdLink;
     private Button addButton, removeButton;
     private String optionSelected;
 
@@ -59,14 +60,21 @@ public class DynamicAddActivity extends AppCompatActivity {
                     String productname = addProductName.getText().toString();
                     String productimage = addProductImage.getText().toString();
 
-                    HashMap<String, String> hashMap = new HashMap<>();
-                    hashMap.put("Image", productimage);
-                    hashMap.put("Name", productname);
+                    if(productimage.isEmpty() || productname.isEmpty())
+                    {
+                        Toast.makeText(DynamicAddActivity.this,"Please enter valid details!", Toast.LENGTH_LONG).show();;
+                    }
+                    else {
 
-                    Ref.child("ProductList").push().setValue(hashMap);
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("Image", productimage);
+                        hashMap.put("Name", productname);
 
-                    ChangeActivity();
+                        Ref.child("ProductList").push().setValue(hashMap);
+                        Toast.makeText(DynamicAddActivity.this, "Product added!", Toast.LENGTH_LONG).show();
 
+                        ChangeActivity();
+                    }
                 }
             });
 
@@ -82,10 +90,17 @@ public class DynamicAddActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     String adminnumber = addAdminNumber.getText().toString();
-                    Ref.child("Privileges").child(adminnumber).setValue("Admin");
 
-                    ChangeActivity();
+                    if(adminnumber.isEmpty())
+                    {
+                        Toast.makeText(DynamicAddActivity.this,"Please enter valid details!", Toast.LENGTH_LONG).show();;
+                    }
+                    else {
+                        Ref.child("Privileges").child(adminnumber).setValue("Admin");
+                        Toast.makeText(DynamicAddActivity.this, "Admin added!", Toast.LENGTH_LONG).show();
 
+                        ChangeActivity();
+                    }
                 }
             });
 
@@ -98,33 +113,38 @@ public class DynamicAddActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     final String productname = addProductName.getText().toString();
-                    Log.e("s", productname);
 
-                    Ref.child("ProductList").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                            {
-                                if(dataSnapshot1.child("Name").getValue().toString().equals(productname))
-                                {
-                                    key = dataSnapshot1.getKey();
-                                    Ref.child("ProductList").child(key).removeValue();
+                    if(productname.isEmpty())
+                    {
+                        Toast.makeText(DynamicAddActivity.this,"Please enter valid details!", Toast.LENGTH_LONG).show();;
+                    }
+                    else {
 
+                        Ref.child("ProductList").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    if (dataSnapshot1.child("Name").getValue().toString().equals(productname)) {
+                                        key = dataSnapshot1.getKey();
+                                        Ref.child("ProductList").child(key).removeValue();
+
+                                    }
                                 }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
-                    ChangeActivity();
+                            }
+                        });
+                        Toast.makeText(DynamicAddActivity.this, "Product removed!", Toast.LENGTH_LONG).show();
 
+                        ChangeActivity();
 
+                    }
                 }
             });
-        } else {
+        } else if(optionSelected.equals("Remove Admin")){
 
             addProductName.setVisibility(View.GONE);
             addProductImage.setVisibility(View.GONE);
@@ -134,11 +154,54 @@ public class DynamicAddActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     String adminnumber = addAdminNumber.getText().toString();
-                    Ref.child("Privileges").child(adminnumber).removeValue();
+
+                    if(adminnumber.isEmpty())
+                    {
+                        Toast.makeText(DynamicAddActivity.this,"Please enter valid details!", Toast.LENGTH_LONG).show();;
+                    }
+                    else
+                    {
+                        Ref.child("Privileges").child(adminnumber).removeValue();
+                        Toast.makeText(DynamicAddActivity.this, "Admin removed!", Toast.LENGTH_LONG).show();
+                        ChangeActivity();
+
+                    }}
+            });
+
+        }
+
+        else
+        {
+            removeButton.setVisibility(View.GONE);
+            addAdminNumber.setVisibility(View.GONE);
+
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                   String name = addProductName.getText().toString();
+                   String link = addAdLink.getText().toString();
+                   String image = addProductImage.getText().toString();
+
+                   if(name.isEmpty() || link.isEmpty() || image.isEmpty())
+                   {
+                       Toast.makeText(DynamicAddActivity.this,"Please enter valid details!", Toast.LENGTH_LONG).show();;
+                   }
+                   else
+                   {
+                       HashMap<String, String> hashMap = new HashMap<>();
+                       hashMap.put("AdText",name);
+                       hashMap.put("AdLink",link);
+                       hashMap.put("AdImage",image);
+
+
+                       Ref.child("Banners").push().setValue(hashMap);
+                       Toast.makeText(DynamicAddActivity.this, "Ad Added", Toast.LENGTH_LONG).show();
+                       ChangeActivity();
+                   }
+
+
                 }
             });
-            ChangeActivity();
-
         }
     }
 
@@ -160,6 +223,7 @@ public class DynamicAddActivity extends AppCompatActivity {
         addAdminNumber = (EditText) findViewById(R.id.add_admin_number);
         addProductImage = (EditText) findViewById(R.id.add_product_image);
         addProductName = (EditText) findViewById(R.id.add_product_name);
+        addAdLink = (EditText) findViewById(R.id.add_ad_url);
 
         addButton = (Button) findViewById(R.id.add_option_button);
         removeButton = (Button) findViewById(R.id.remove_option_button);
