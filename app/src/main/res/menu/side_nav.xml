@@ -1,79 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/side_home"
-        android:title="Home" />
+    <group android:checkableBehavior="single">
 
 
-    <item
-        android:id="@+id/side_myaccount"
-        android:title="My Account" />
-    <item
-        android:id="@+id/side_credit_report"
-        android:title="Credit Report" />
-    <item
-        android:id="@+id/side_credit_card"
-        android:title="Credit Card" />
-    <item
-        android:id="@+id/side_loan"
-        android:title="Loan">
+        <item
+            android:id="@+id/side_home"
+            android:title="Home" />
 
 
-        <menu>
-            <item
-                android:id="@+id/side_homeloan"
-                android:title="Home Loan" />
+        <item
+            android:id="@+id/side_myaccount"
+            android:title="My Account" />
+        <item
+            android:id="@+id/side_credit_report"
+            android:title="Credit Report" />
+        <item
+            android:id="@+id/side_credit_card"
+            android:title="Credit Card" />
 
-            <item
-                android:id="@+id/side_personalloan"
-                android:title="Personal Loan" />
-
-            <item
-                android:id="@+id/side_instantloan"
-                android:title="Instant Loan" />
-
-            <item
-                android:id="@+id/side_carloan"
-                android:title="Car Loan" />
-
-            <item
-                android:id="@+id/side_educationloan"
-                android:title="Education Loan" />
-
-            <item
-                android:id="@+id/side_businessloan"
-                android:title="Business Loan" />
-
-        </menu>
-
-    </item>
-
-    <item
-        android:id="@+id/side_insurance"
-        android:title="Insurance">
-
-        <menu>
-            <item
-                android:id="@+id/side_healthinsurance"
-                android:title="Health Insurance" />
-
-            <item
-                android:id="@+id/side_terminsurance"
-                android:title="Term Insurance" />
-
-            <item
-                android:id="@+id/side_carinsurance"
-                android:title="Car Insurance" />
+        <item
+            android:id="@+id/side_loan"
+            android:title="Loan                              +" />
 
 
-        </menu>
+        <item
+            android:id="@+id/side_homeloan"
+            android:title="Home Loan"
+            android:visible="false" />
 
-    </item>
+        <item
+            android:id="@+id/side_personalloan"
+            android:title="Personal Loan"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_instantloan"
+            android:title="Instant Loan"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_carloan"
+            android:title="Car Loan"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_educationloan"
+            android:title="Education Loan"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_businessloan"
+            android:title="Business Loan"
+            android:visible="false" />
+
+
+
+        <item
+            android:id="@+id/side_insurance"
+            android:title="Insurance             +" />
+        <item
+            android:id="@+id/side_healthinsurance"
+            android:visible="false"
+            android:title="Health Insurance" />
+
+        <item
+            android:id="@+id/side_terminsurance"
+            android:visible="false"
+            android:title="Term Insurance" />
+
+        <item
+            android:id="@+id/side_carinsurance"
+            android:visible="false"
+            android:title="Car Insurance" />
+
+    </group>
 
     <group
-        android:id="@+id/menu"
-        android:checkableBehavior="none">
+
+        android:checkableBehavior="single">
+
 
             <item
                 android:id="@+id/side_refer_and_earn"
@@ -83,5 +88,8 @@
                 android:title="Logout" />
 
     </group>
+
+
+
 
 </menu>

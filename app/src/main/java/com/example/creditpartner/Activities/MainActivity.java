@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -311,6 +312,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
+
+        Menu menu = navigationView.getMenu();
         switch (menuItem.getItemId()) {
 
             case R.id.side_home: {
@@ -326,6 +329,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra("productName", "Credit Card");
                 startActivity(intent);
                 break;
+            }
+
+            case R.id.side_loan:
+            {
+
+                boolean b=!menu.findItem(R.id.side_businessloan).isVisible();
+
+                menu.findItem(R.id.side_businessloan).setVisible(b);
+                menu.findItem(R.id.side_carloan).setVisible(b);
+                menu.findItem(R.id.side_educationloan).setVisible(b);
+                menu.findItem(R.id.side_personalloan).setVisible(b);
+                menu.findItem(R.id.side_instantloan).setVisible(b);
+                menu.findItem(R.id.side_homeloan).setVisible(b);
+                break;
+
+            }
+
+            case R.id.side_insurance:
+            {
+                boolean b=!menu.findItem(R.id.side_carinsurance).isVisible();
+                menu.findItem(R.id.side_carinsurance).setVisible(b);
+                menu.findItem(R.id.side_healthinsurance).setVisible(b);
+                menu.findItem(R.id.side_terminsurance).setVisible(b);
+                break;
+
             }
 
 
@@ -447,7 +475,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void addDotsIndicator(int position) {
+   /* public void addDotsIndicator(int position) {
 
         mDots = new TextView[slidesList.size()];
         mDotsLayout.removeAllViews(); //without this multiple number of dots will be created
@@ -465,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mDots[position].setTextColor(getResources().getColor(R.color.colorAccent)); //setting currently selected dot to white
         }
     }
-
+*/
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -475,7 +503,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onPageSelected(int position) {
 
-            addDotsIndicator(position);
+     //       addDotsIndicator(position);
 
             mCurrentPage = position;
 
@@ -534,7 +562,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         loadProducts = findViewById(R.id.load_products);
         mSlideViewPager = findViewById(R.id.main_viewpager);
-        mDotsLayout = findViewById(R.id.dots_layout);
 
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bot_nav);

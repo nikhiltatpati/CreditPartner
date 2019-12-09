@@ -19,22 +19,10 @@
             android:layout_centerInParent="true"/>
 
 
-
-        <LinearLayout
-            android:id="@+id/dots_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/main_viewpager"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
+            android:layout_height="155dp"
             android:layout_below="@id/main_toolbar" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -56,7 +44,7 @@
             android:id="@+id/product_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/dots_layout"
+            android:layout_below="@id/main_viewpager"
             android:layout_above="@id/bot_nav"
              />
 

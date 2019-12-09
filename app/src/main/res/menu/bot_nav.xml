@@ -14,7 +14,7 @@
     <item
         android:id="@+id/bot_paisa_tracker"
         android:icon="@drawable/ic_track_changes_black_24dp"
-        android:title="PaisaTracker"/>
+        android:title="ExpenseTracker"/>
 
     <item
         android:id="@+id/bot_account"
