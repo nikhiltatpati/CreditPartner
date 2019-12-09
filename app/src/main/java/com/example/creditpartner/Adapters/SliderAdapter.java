@@ -94,12 +94,13 @@ public class SliderAdapter extends PagerAdapter {
                 .into(slideImageView);
 
         slideHeading.setText(slides.getAdText());
-
+        final String adLink = slides.getAdLink();
         slideImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, BannerActivity.class);
-                intent.putExtra("adLink", slides.getAdLink());
+                intent.putExtra("adLink", adLink);
+                Log.e("adLink",adLink);
                 context.startActivity(intent);
             }
         });

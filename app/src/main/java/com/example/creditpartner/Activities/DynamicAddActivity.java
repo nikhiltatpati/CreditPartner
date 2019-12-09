@@ -32,7 +32,8 @@ public class DynamicAddActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
-    private String currentUserID,key;
+    private String currentUserID,key, isSuperAdmin;
+    private static final String countryCode = "+91";
 
     private Toolbar mToolbar;
     @Override
@@ -53,6 +54,7 @@ public class DynamicAddActivity extends AppCompatActivity {
         if (optionSelected.equals("Add Product")) {
             addAdminNumber.setVisibility(View.GONE);
             removeButton.setVisibility(View.GONE);
+            addAdLink.setVisibility(View.GONE);
 
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,14 +86,14 @@ public class DynamicAddActivity extends AppCompatActivity {
             addProductName.setVisibility(View.GONE);
             addProductImage.setVisibility(View.GONE);
             removeButton.setVisibility(View.GONE);
-
+            addAdLink.setVisibility(View.GONE);
 
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String adminnumber = addAdminNumber.getText().toString();
+                    String adminnumber = countryCode + addAdminNumber.getText().toString();
 
-                    if(adminnumber.isEmpty())
+                    if(adminnumber.isEmpty() || adminnumber.length() <13)
                     {
                         Toast.makeText(DynamicAddActivity.this,"Please enter valid details!", Toast.LENGTH_LONG).show();;
                     }
@@ -108,6 +110,7 @@ public class DynamicAddActivity extends AppCompatActivity {
             addProductImage.setVisibility(View.GONE);
             addAdminNumber.setVisibility(View.GONE);
             addButton.setVisibility(View.GONE);
+            addAdLink.setVisibility(View.GONE);
 
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -149,13 +152,13 @@ public class DynamicAddActivity extends AppCompatActivity {
             addProductName.setVisibility(View.GONE);
             addProductImage.setVisibility(View.GONE);
             addButton.setVisibility(View.GONE);
-
+            addAdLink.setVisibility(View.GONE);
             removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String adminnumber = addAdminNumber.getText().toString();
+                    String adminnumber = countryCode + addAdminNumber.getText().toString();
 
-                    if(adminnumber.isEmpty())
+                    if(adminnumber.isEmpty() || adminnumber.length() <13)
                     {
                         Toast.makeText(DynamicAddActivity.this,"Please enter valid details!", Toast.LENGTH_LONG).show();;
                     }
@@ -170,7 +173,7 @@ public class DynamicAddActivity extends AppCompatActivity {
 
         }
 
-        else
+        else if(optionSelected.equals("Add Ads"))
         {
             removeButton.setVisibility(View.GONE);
             addAdminNumber.setVisibility(View.GONE);
@@ -189,15 +192,66 @@ public class DynamicAddActivity extends AppCompatActivity {
                    else
                    {
                        HashMap<String, String> hashMap = new HashMap<>();
-                       hashMap.put("AdText",name);
-                       hashMap.put("AdLink",link);
-                       hashMap.put("AdImage",image);
+                       hashMap.put("adText",name);
+                       hashMap.put("adLink",link);
+                       hashMap.put("adImage",image);
 
 
                        Ref.child("Banners").push().setValue(hashMap);
                        Toast.makeText(DynamicAddActivity.this, "Ad Added", Toast.LENGTH_LONG).show();
                        ChangeActivity();
                    }
+
+
+                }
+            });
+        }
+        else
+        {
+            addButton.setVisibility(View.GONE);
+            addAdminNumber.setVisibility(View.GONE);
+            addAdLink.setVisibility(View.GONE);
+            addProductName.setVisibility(View.GONE);
+
+            removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final String image = addProductImage.getText().toString();
+
+
+                    if(image.isEmpty())
+                    {
+                        Toast.makeText(DynamicAddActivity.this,"Please enter valid details!", Toast.LENGTH_LONG).show();;
+                    }
+                    else
+                    {
+
+                        Ref.child("Banners").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for(DataSnapshot snapshot : dataSnapshot.getChildren())
+                                {
+                                    if(snapshot.hasChild("adImage"))
+                                    {
+                                        if(snapshot.child("adImage").getValue().toString().equals(image))
+                                        {
+                                            String key = snapshot.getKey();
+                                            Ref.child(key).removeValue();
+                                            Toast.makeText(DynamicAddActivity.this, "Ad Removed", Toast.LENGTH_LONG).show();
+                                            ChangeActivity();
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    }
 
 
                 }
@@ -218,6 +272,7 @@ public class DynamicAddActivity extends AppCompatActivity {
 
     private void Initialize() {
         optionSelected = getIntent().getStringExtra("optionSelected");
+        isSuperAdmin = getIntent().getStringExtra("isSuperAdmin");
 
         SetupToolbar();
         addAdminNumber = (EditText) findViewById(R.id.add_admin_number);
@@ -236,7 +291,6 @@ public class DynamicAddActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.options_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(optionSelected);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
     }
 }

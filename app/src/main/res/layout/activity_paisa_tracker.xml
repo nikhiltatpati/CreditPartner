@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:text="Total Spend"
+                android:text="Total Expense"
                 android:textSize="22dp" />
 
             <TextView

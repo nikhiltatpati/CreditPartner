@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".Activities.MyAccountActivity">
 
 
@@ -21,6 +22,7 @@
         android:id="@+id/account_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="5dp"
         android:layout_below="@id/my_account_bar">
 
         <LinearLayout
@@ -36,7 +38,7 @@
                 android:layout_below="@id/my_account_bar"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
-                android:text="Name"
+                android:text="Name:"
                 android:textSize="20dp" />
 
             <TextView
@@ -45,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/name_text"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="Loading..."
                 android:textSize="23dp" />
 
@@ -56,7 +58,7 @@
                 android:layout_below="@id/name"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
-                android:text="Email"
+                android:text="Email:"
                 android:textSize="20dp" />
 
             <TextView
@@ -65,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/email_text"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="Loading..."
                 android:textSize="23dp" />
 
@@ -76,7 +78,7 @@
                 android:layout_below="@id/email"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
-                android:text="Number"
+                android:text="Number:"
                 android:textSize="20dp" />
 
             <TextView
@@ -85,7 +87,27 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/number_text"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Loading..."
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/privilege_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/email"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
+                android:text="Privilege:"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/privilege"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/number_text"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="Loading..."
                 android:textSize="20dp" />
@@ -99,30 +121,6 @@
         layout="@layout/app_bar" />
 
 
-    <TextView
-        android:id="@+id/application_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/account_card"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
-        android:text="My Applications"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-
-    <androidx.cardview.widget.CardView
-        android:layout_below="@id/application_text"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/applications_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-
-    </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1,10 +1,12 @@
 package com.example.creditpartner.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AddAdminsActivity extends AppCompatActivity {
 
-    private Button addAdmin, removeAdmin, addProduct, removeProduct, addAds;
+    private Button addAdmin, removeAdmin, addProduct, removeProduct, addAds, removeAds;
     private String isSuperAdmin;
     private Toolbar mToolbar;
     private FirebaseAuth mAuth;
@@ -28,6 +30,10 @@ public class AddAdminsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_admins);
+
+
+
+
         Initialize();
 
 
@@ -46,6 +52,14 @@ public class AddAdminsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AddAdminsActivity.this, DynamicAddActivity.class);
                 intent.putExtra("optionSelected", addAds.getText().toString());
+                startActivity(intent);
+            }
+        });
+        removeAds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddAdminsActivity.this, DynamicAddActivity.class);
+                intent.putExtra("optionSelected", removeAds.getText().toString());
                 startActivity(intent);
             }
         });
@@ -80,7 +94,10 @@ public class AddAdminsActivity extends AppCompatActivity {
     }
 
     private void Initialize() {
-
+        if(getIntent() != null)
+        {
+        isSuperAdmin = getIntent().getStringExtra("isSuperAdmin");
+}
         SetupToolbar();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -88,10 +105,10 @@ public class AddAdminsActivity extends AppCompatActivity {
         currentUserID = currentUser.getUid();
 
 
-        isSuperAdmin = getIntent().getStringExtra("isSuperAdmin");
 
         addAdmin = (Button)findViewById(R.id.add_admin);
         addAds = (Button)findViewById(R.id.add_ads);
+        removeAds = (Button)findViewById(R.id.remove_ads);
         removeAdmin = (Button)findViewById(R.id.remove_admin);
         addProduct = (Button)findViewById(R.id.add_product);
         removeProduct = (Button)findViewById(R.id.remove_product);
@@ -101,6 +118,7 @@ public class AddAdminsActivity extends AppCompatActivity {
             addAdmin.setVisibility(View.VISIBLE);
             removeAdmin.setVisibility(View.VISIBLE);
             addAds.setVisibility(View.VISIBLE);
+            removeAds.setVisibility(View.VISIBLE);
         }
     }
 
@@ -111,4 +129,5 @@ public class AddAdminsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
 }

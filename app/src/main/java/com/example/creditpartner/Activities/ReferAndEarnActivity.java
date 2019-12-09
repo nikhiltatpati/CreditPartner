@@ -61,8 +61,8 @@ public class ReferAndEarnActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue().toString().trim();
-
-                String code = "" + name + String.valueOf(random.nextInt(1000)) + "";
+                name.replaceAll("\\s+", "");
+                String code = "" + name + String.valueOf(random.nextInt(10000)) + "";
                 Ref.child("References").child(currentUserID).push().setValue(code);
                 OpenWhatsapp(code);
 

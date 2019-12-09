@@ -35,7 +35,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
     private FirebaseUser currentUSer;
-    private boolean isReferenceValid = false;
+    private String isReferenceValid = "False";
 
     private String mVerificationId, currentUserID;
 
@@ -64,56 +64,22 @@ public class CustomerInfoActivity extends AppCompatActivity {
                     String name = nameTIET.getText().toString();
                     final String reference = referenceTIET.getText().toString();;
 
+                    if (name.isEmpty() || name.length() < 5) {
+                    nameTIET.setError("Enter your full name!");
+                    }
+
                     if (customerNumber.length() < 10) {
                         mobileTIET.setError("Enter a valid number!");
 
                     }
 
-                    if (name.isEmpty() || name.length() < 7) {
-                        nameTIET.setError("Enter your full name!");
 
-                    }
-                    if (email.isEmpty()) {
-                        emailTIET.setError("Enter a valid email!");
-
+                    if (!isEmailValid(email)){
+                        emailTIET.setError("Email is invalid!");
                     }
 
-                    Ref.child("References").addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for(DataSnapshot snapshot: dataSnapshot.getChildren())
-                            {
-                                for(DataSnapshot dataSnapshot1 : snapshot.getChildren())
-                                {
-                                    if(dataSnapshot1.getValue().toString().equals(reference))
-                                    {
-                                        isReferenceValid = true;
-                                        Log.e("isvalid", isReferenceValid + "yes");
-                                        break;
-                                    }
-                                }
-                            }
 
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    if (!reference.isEmpty()) {
-                        {
-                            if(!isReferenceValid)
-                            {
-                                referenceTIET.setError("Enter a valid Reference!");
-
-                            }
-                        }
-
-                    }
-
-                    else
+                   else
                     {
                         SendDataToNextActivity(countryCode + mobileTIET.getText().toString(), referenceTIET.getText().toString(), emailTIET.getText().toString()
                                 , nameTIET.getText().toString(), referenceTIET.getText().toString());
@@ -141,14 +107,8 @@ public class CustomerInfoActivity extends AppCompatActivity {
 
     }
 
-    private boolean isValid(TextInputEditText mobileTIET, TextInputEditText referenceTIET, TextInputEditText emailTIET, TextInputEditText nameTIET) {
-
-        String customerNumber = mobileTIET.getText().toString();
-        String email = emailTIET.getText().toString();
-        String name = nameTIET.getText().toString();
-        return (customerNumber.isEmpty() || customerNumber.length() < 10 || email.isEmpty() || name.isEmpty() ? false : true);
-
-
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private void InitializeFields() {

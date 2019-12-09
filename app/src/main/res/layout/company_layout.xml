@@ -11,104 +11,105 @@
         android:layout_height="match_parent">
 
 
-    <Button
-        android:id="@+id/company_select"
-        android:layout_width="160dp"
-        android:layout_height="37dp"
-        android:layout_below="@id/company_name"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/buttons"
-        android:text="Apply Now"
-        android:layout_margin="10dp"
-        android:textSize="16dp"
-        android:textColor="@android:color/white" />
+        <Button
+            android:id="@+id/company_select"
+            android:layout_width="160dp"
+            android:layout_height="37dp"
+            android:layout_below="@id/company_name"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/buttons"
+            android:text="Apply Now"
+            android:textColor="@android:color/white"
+            android:textSize="16dp" />
 
-    <ImageView
-        android:id="@+id/company_image"
-        android:layout_width="110dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/tata" />
+        <Button
+            android:id="@+id/company_view_details"
+            android:layout_width="160dp"
+            android:layout_height="37dp"
+            android:layout_below="@id/company_name"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/white"
+            android:text="View Details"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/company_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/company_image"
-        android:text="Kotak 811"
-        android:textSize="17dp" />
+        <ImageView
+            android:id="@+id/company_image"
+            android:layout_width="110dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/tata" />
 
-    <Button
-        android:id="@+id/company_view_details"
-        android:layout_width="160dp"
-        android:layout_height="37dp"
-        android:layout_below="@id/company_name"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="20dp"
-        android:background="@android:color/white"
-        android:text="View Details"
-        android:layout_margin="10dp"
-        android:textSize="16dp"
-        android:textColor="@android:color/black" />
+        <TextView
+            android:id="@+id/company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/company_image"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Kotak 811"
+            android:textSize="17dp" />
 
-    <TextView
-        android:id="@+id/percent_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="6%"
-        android:layout_toRightOf="@id/company_image"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="20dp"
-        android:textSize="23dp"/>
+        <TextView
+            android:id="@+id/percent_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/company_image"
+            android:text="6%"
+            android:textSize="23dp" />
 
-    <TextView
-        android:id="@+id/interest_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Interest Rate"
-        android:layout_toRightOf="@id/company_image"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="10dp"
-        android:textSize="16dp"
-        android:layout_below="@id/percent_rate"/>
+        <TextView
+            android:id="@+id/interest_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/percent_rate"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/company_image"
+            android:text="Interest Rate"
+            android:textSize="16dp" />
 
 
-    <View
-        android:id="@+id/vertical_line"
-        android:layout_width="1dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="20dp"
-        android:layout_toRightOf="@id/interest_rate"
-        android:layout_marginLeft="10dp"
-        android:background="@android:color/darker_gray"/>
-    <TextView
-        android:id="@+id/minimum_balance_money"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="₹ 10000"
+        <TextView
+            android:id="@+id/minimum_balance_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
 
-        android:layout_toRightOf="@id/vertical_line"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="20dp"
-        android:textSize="23dp"/>
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/vertical_line"
+            android:text="₹ 10000"
+            android:textSize="23dp" />
 
-    <TextView
-        android:id="@+id/minimum_balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Interest Rate"
-        android:layout_toRightOf="@id/vertical_line"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="10dp"
-        android:textSize="16dp"
-        android:layout_below="@id/percent_rate"/>
+        <TextView
+            android:id="@+id/minimum_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/percent_rate"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/vertical_line"
+            android:text="Interest Rate"
+            android:textSize="16dp" />
+
+        <View
+            android:id="@+id/vertical_line"
+            android:layout_width="1dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/interest_rate"
+            android:background="@android:color/darker_gray" />
 
 
         <androidx.cardview.widget.CardView
@@ -120,33 +121,40 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
 
 
-            <TextView
-                android:id="@+id/key_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Key Features and Benefits"
-                android:textSize="20dp"
-                android:layout_margin="7dp"/>
+                <TextView
+                    android:id="@+id/key_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:text="Key Features and Benefits"
+                    android:textSize="20dp" />
 
-            <View
-                android:id="@+id/horizontal_line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/key_text"
-                android:layout_margin="5dp"
-                android:background="@android:color/darker_gray"/>
+                <TextView
+                    android:id="@+id/features_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/horizontal_line"
+                    android:layout_margin="7dp"
+                    android:text="Loading"
+                    android:textSize="20dp" />
 
-
+                <View
+                    android:id="@+id/horizontal_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/key_text"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/darker_gray" />
 
 
             </RelativeLayout>
 
 
         </androidx.cardview.widget.CardView>
-
 
 
     </RelativeLayout>

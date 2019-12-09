@@ -2,16 +2,25 @@ package com.example.creditpartner.Classes;
 
 public class Companies {
 
-    String companyImage, companyName, companyInterestRate,companyMinimumBalance;
+    String companyImage, companyName, companyInterestRate,companyMinimumBalance, companyFeatures;
 
     public Companies() {
     }
 
-    public Companies(String companyImage, String companyName, String companyInterestRate, String companyMinimumBalance) {
+    public Companies(String companyImage, String companyName, String companyInterestRate, String companyMinimumBalance, String companyFeatures) {
         this.companyImage = companyImage;
         this.companyName = companyName;
         this.companyInterestRate = companyInterestRate;
         this.companyMinimumBalance = companyMinimumBalance;
+        this.companyFeatures = companyFeatures;
+    }
+
+    public String getCompanyFeatures() {
+        return companyFeatures;
+    }
+
+    public void setCompanyFeatures(String companyFeatures) {
+        this.companyFeatures = companyFeatures;
     }
 
     public String getCompanyInterestRate() {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -31,12 +32,10 @@ public class BannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_website);
+        setContentView(R.layout.activity_banner);
 
         Initialize();
-
-        LoadURL();
-
+        mWebView .loadUrl(adLink);
 
         mWebView.getSettings().setJavaScriptEnabled(true); // enable javascript
 
@@ -51,8 +50,7 @@ public class BannerActivity extends AppCompatActivity {
 
     }
 
-    private void LoadURL() {
-                mWebView .loadUrl(adLink); }
+
 
     @Override
     public void onBackPressed() {
@@ -64,10 +62,11 @@ public class BannerActivity extends AppCompatActivity {
     private void Initialize() {
 
         adLink = getIntent().getStringExtra("adLink");
+        Log.e("adLinkBn", adLink);
+        mWebView = (WebView)findViewById(R.id.banner_webview);
         SetupTOolbar();
 
 
-        mWebView = (WebView)findViewById(R.id.banner_webview);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         currentUSerID = currentUser.getUid();
@@ -77,10 +76,11 @@ public class BannerActivity extends AppCompatActivity {
     }
 
     private void SetupTOolbar() {
-        mToolbar = (Toolbar)findViewById(R.id.banner_bar);
+        mToolbar = (Toolbar) findViewById(R.id.banner_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(adLink);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
     }
 }

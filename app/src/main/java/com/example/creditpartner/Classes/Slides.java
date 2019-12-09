@@ -2,38 +2,38 @@ package com.example.creditpartner.Classes;
 
 public class Slides {
 
-    private String AdImage, AdText, AdLink;
+    private String adImage, adText, adLink;
 
     public Slides() {
     }
 
-    public Slides(String adImage, String adText, String AdLink) {
-        this.AdImage = adImage;
-        this.AdText = adText;
-        this.AdLink = AdLink;
-    }
-
-    public String getAdLink() {
-        return AdLink;
-    }
-
-    public void setAdLink(String adLink) {
-        AdLink = adLink;
+    public Slides(String adImage, String adText, String adLink) {
+        this.adImage = adImage;
+        this.adText = adText;
+        this.adLink = adLink;
     }
 
     public String getAdImage() {
-        return AdImage;
+        return adImage;
     }
 
     public void setAdImage(String adImage) {
-        AdImage = adImage;
+        this.adImage = adImage;
     }
 
     public String getAdText() {
-        return AdText;
+        return adText;
     }
 
     public void setAdText(String adText) {
-        AdText = adText;
+        this.adText = adText;
+    }
+
+    public String getAdLink() {
+        return adLink;
+    }
+
+    public void setAdLink(String adLink) {
+        this.adLink = adLink;
     }
 }

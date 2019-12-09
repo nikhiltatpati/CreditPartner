@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -17,6 +19,7 @@ import com.example.creditpartner.Activities.MainActivity;
 import com.example.creditpartner.Activities.ProductDetailActivity;
 import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -51,10 +54,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.productCardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext.getApplicationContext(), ProductDetailActivity.class);
-                intent.putExtra("productName", product.getProductName());
-                mContext.startActivity(intent);
 
+                if(product.getProductName().equals("Credit Report"))
+                {
+                    Toast.makeText(mContext,"Coming soon! Hang on!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+
+                    Intent intent = new Intent(mContext.getApplicationContext(), ProductDetailActivity.class);
+                    intent.putExtra("productName", product.getProductName());
+                    mContext.startActivity(intent);
+                }
             }
         });
 
@@ -69,13 +80,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         private ImageView productImage;
         private TextView productName;
-        private CardView productCardview;
+        private FrameLayout productCardview;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             productImage = (ImageView)myView.findViewById(R.id.product_image);
             productName = (TextView)myView.findViewById(R.id.product_name);
-            productCardview = (CardView)myView.findViewById(R.id.product_cardview);
+            productCardview = (FrameLayout)myView.findViewById(R.id.product_cardview);
 
         }
     }

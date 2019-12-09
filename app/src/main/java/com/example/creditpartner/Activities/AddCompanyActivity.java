@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.creditpartner.R;
@@ -22,6 +23,7 @@ public class AddCompanyActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextInputLayout companyName, companyURL, companyImage;
     private TextInputEditText name, url, image, balance, rate;
+    private EditText features;
     private Button addCompanyButton;
     private String productTitle;
     private DatabaseReference Ref;
@@ -42,6 +44,7 @@ public class AddCompanyActivity extends AppCompatActivity {
                 String imageeString = image.getText().toString();
                 String balanceString = balance.getText().toString();
                 String rateString = rate.getText().toString();
+                String featuresString = features.getText().toString();
                 if(nameString.isEmpty())
                 {
                     name.setError("Enter Valid name!");
@@ -68,7 +71,7 @@ public class AddCompanyActivity extends AppCompatActivity {
                 hashMap.put("companyURL", url.getText().toString());
                 hashMap.put("companyRate", rate.getText().toString());
                 hashMap.put("companyMinimumBalance", balance.getText().toString());
-
+                hashMap.put("companyFeatures", features.getText().toString());
                 Ref.child("CompanyList").child(productTitle).push().setValue(hashMap);
                 addProgress.setVisibility(View.INVISIBLE);
 
@@ -94,6 +97,7 @@ public class AddCompanyActivity extends AppCompatActivity {
         companyImage = (TextInputLayout) findViewById(R.id.company_image);
         companyURL = (TextInputLayout) findViewById(R.id.company_url);
 
+        features = (EditText)findViewById(R.id.features);
         name = (TextInputEditText) findViewById(R.id.name);
         image = (TextInputEditText) findViewById(R.id.image);
         url = (TextInputEditText) findViewById(R.id.url);

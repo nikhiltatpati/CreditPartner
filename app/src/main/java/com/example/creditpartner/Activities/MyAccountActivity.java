@@ -23,9 +23,9 @@ public class MyAccountActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private DatabaseReference Ref;
     private FirebaseUser currentUser;
-    private String currentUserID, name, email, phoneNumber;
+    private String currentUserID, name, email, phoneNumber, privilege;
     private FirebaseAuth mAuth;
-    private TextView nameText, emailText, phoneNumberText;
+    private TextView nameText, emailText, phoneNumberText, privilegeText;
     private ProgressBar loadAccountDetails;
 
 
@@ -78,6 +78,23 @@ public class MyAccountActivity extends AppCompatActivity {
             }
         });
 
+        Ref.child("Privileges").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("" + phoneNumber))
+                {
+                    privilege = dataSnapshot.child(phoneNumber).getValue().toString();
+                    privilegeText.setText(privilege
+                    );
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         loadAccountDetails.setVisibility(View.INVISIBLE);
 
     }
@@ -92,6 +109,7 @@ public class MyAccountActivity extends AppCompatActivity {
         nameText = (TextView)findViewById(R.id.name);
         emailText = (TextView)findViewById(R.id.email);
         phoneNumberText = (TextView)findViewById(R.id.number);
+        privilegeText = (TextView)findViewById(R.id.privilege);
 
         loadAccountDetails = (ProgressBar)findViewById(R.id.load_account_details);
     }

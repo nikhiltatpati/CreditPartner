@@ -60,13 +60,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         Glide.with(mContext)
                 .load(companies.getCompanyImage())
                 .into(holder.companyImage);
+        holder.featuresText.setText(companies.getCompanyFeatures());
 
-        holder.detailsCard.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View view, DragEvent dragEvent) {
-                return false;
-            }
-        });
 
 
         SharedPreferences pref = mContext.getSharedPreferences("MyPref",
@@ -120,6 +115,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         private TextView companyName, companyInterestRate, companyMinimumBalance;
         private Button selectCompany, viewDetails;
         private CardView detailsCard;
+        private TextView featuresText;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -131,6 +127,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
             selectCompany = (Button)myView.findViewById(R.id.company_select);
             viewDetails = (Button)myView.findViewById(R.id.company_view_details);
             detailsCard = (CardView)myView.findViewById(R.id.details_card);
+            featuresText = (TextView)myView.findViewById(R.id.features_text);
 
         }
     }

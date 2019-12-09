@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.AddCompanyActivity">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ProgressBar
         android:id="@+id/add_company_progressbar"
@@ -22,7 +26,7 @@
             android:id="@+id/company_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp">
+            android:layout_marginTop="100dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
@@ -90,6 +94,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <EditText
+            android:id="@+id/features"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="Add Features"/>
+
 
 
 
@@ -102,6 +113,7 @@
             android:textColor="@android:color/white"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
+            android:layout_marginBottom="20dp"
             android:textSize="17dp" />
 
     </LinearLayout>
@@ -110,5 +122,5 @@
         android:id="@+id/add_company_bar"
         layout="@layout/app_bar" />
 
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
