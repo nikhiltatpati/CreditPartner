@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.creditpartner">
 
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.BannerActivity"
-            android:parentActivityName=".Activities.MainActivity"></activity>
+        <activity android:name=".Activities.UsersActivity"></activity>
+        <activity android:name=".Activities.UsersAccountActivity" />
+        <activity
+            android:name=".Activities.ProductsActivity"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity
+            android:name=".Activities.BannerActivity"
+            android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +32,9 @@
         <activity
             android:name=".Activities.DynamicAddActivity"
             android:parentActivityName=".Activities.AddAdminsActivity" />
-        <activity android:name=".Activities.AddExpenseActivity"
-            android:parentActivityName=".Activities.PaisaTrackerActivity"/>
+        <activity
+            android:name=".Activities.AddExpenseActivity"
+            android:parentActivityName=".Activities.PaisaTrackerActivity" />
         <activity
             android:name=".Activities.AddAdminsActivity"
             android:parentActivityName=".Activities.MainActivity" />
@@ -49,16 +60,8 @@
             android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.VerifyInfoActivity" />
-        <activity android:name=".Activities.MainActivity">
-
-        </activity>
-        <activity android:name=".Activities.CustomerInfoActivity">
-
-        </activity>
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.CustomerInfoActivity" />
     </application>
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.SEND_SMS" />
 
 </manifest>

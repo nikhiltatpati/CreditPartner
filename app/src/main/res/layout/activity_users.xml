@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ProductsActivity">
+
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/user_bar"/>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_bar"
+        android:layout_margin="10dp"
+        app:queryHint="Search User"
+        app:defaultQueryHint="Search"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/users_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_user"
+        />
+
+
+
+
+    <ImageButton
+        android:id="@+id/add_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_black_24dp"
+        android:layout_alignParentRight="true"
+        android:background="@color/colorAccent"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"/>
+
+
+</RelativeLayout>

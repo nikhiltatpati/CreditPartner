@@ -70,22 +70,10 @@ public class MyAccountActivity extends AppCompatActivity {
                     phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
                     phoneNumberText.setText(phoneNumber);
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        Ref.child("Privileges").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild("" + phoneNumber))
+                if(dataSnapshot.hasChild("privilege"))
                 {
-                    privilege = dataSnapshot.child(phoneNumber).getValue().toString();
-                    privilegeText.setText(privilege
-                    );
+                    privilege = dataSnapshot.child("privilege").getValue().toString();
+                    privilegeText.setText(phoneNumber);
                 }
             }
 
@@ -94,6 +82,7 @@ public class MyAccountActivity extends AppCompatActivity {
 
             }
         });
+
 
         loadAccountDetails.setVisibility(View.INVISIBLE);
 

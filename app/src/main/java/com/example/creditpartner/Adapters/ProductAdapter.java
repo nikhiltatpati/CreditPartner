@@ -47,9 +47,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         final Products product = products.get(position);
         holder.productName.setText(product.getProductName());
-        Glide.with(mContext)
+     /*   Glide.with(mContext)
                 .load(product.getProductImage())
-                .into(holder.productImage);
+                .into(holder.productImage);*/
 
         holder.productCardview.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,6 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
 
+        <item
+            android:title="Products"
+            android:id="@+id/side_products"/>
+
+        <item
+            android:title="Ads"
+            android:id="@+id/side_ads"/>
+
+        <item
+            android:title="Users"
+            android:id="@+id/side_users"/>
 
         <item
             android:id="@+id/side_home"
@@ -20,7 +31,7 @@
 
         <item
             android:id="@+id/side_loan"
-            android:title="Loan                              +" />
+            android:title="Loan                                                            +" />
 
 
         <item
@@ -57,7 +68,7 @@
 
         <item
             android:id="@+id/side_insurance"
-            android:title="Insurance             +" />
+            android:title="Insurance                                                   +" />
         <item
             android:id="@+id/side_healthinsurance"
             android:visible="false"

@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             SetupRecyclerView();
 
 
-            addAdminButton.setOnClickListener(new View.OnClickListener() {
+         /*   addAdminButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(MainActivity.this, AddAdminsActivity.class);
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     startActivity(intent);
                 }
             });
-
+*/
 
 //        After setting the adapter use the timer
             final Handler handler = new Handler();
@@ -172,9 +172,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("phoneNumber")) {
-                    phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
-                }
+                if (dataSnapshot.child("privilege").getValue().equals("SuperAdmin")) {
+                        //  addAdminButton.setVisibility(View.VISIBLE);
+                        isSuperAdmin = true;
+                    }
+
             }
 
             @Override
@@ -183,25 +185,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        Ref.child("Privileges").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild(phoneNumber)) {
-                            if (dataSnapshot.child(phoneNumber).getValue().equals("SuperAdmin")) {
-                                addAdminButton.setVisibility(View.VISIBLE);
-                                isSuperAdmin = true;
-                            } else if (dataSnapshot.child(phoneNumber).getValue().toString().equals("Admin")) {
-                                addAdminButton.setVisibility(View.VISIBLE);
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
 
     }
 
@@ -259,6 +242,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     TextView numText = (TextView) header.findViewById(R.id.sidenav_header_number);
                     numText.setText(number);
                 }
+
+                if (dataSnapshot.child("privilege").exists()) {
+                    String privilege = dataSnapshot.child("privilege").getValue().toString();
+                    TextView privilegeText = (TextView) header.findViewById(R.id.sidenav_header_privilege);
+                    privilegeText.setText(privilege);
+                }
             }
 
             @Override
@@ -266,32 +255,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Ref.child("Privileges").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild(phoneNumber+"")) {
-                            String privilege = dataSnapshot.child(phoneNumber).getValue().toString();
-                            TextView privilegeText = (TextView) header.findViewById(R.id.sidenav_header_privilege);
-                            privilegeText.setText(privilege);
-                        } else {
-                            String privilege = "User";
-                            TextView privilegeText = (TextView) header.findViewById(R.id.sidenav_header_privilege);
-                            privilegeText.setText(privilege);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        },3000);
-
 
 
     }
@@ -315,6 +278,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Menu menu = navigationView.getMenu();
         switch (menuItem.getItemId()) {
+
+            case R.id.side_products:
+            {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductsActivity.class);
+                intent.putExtra("decideScreen", "Products");
+                startActivity(intent);
+                break;
+            }
+
+            case R.id.side_ads:
+            {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductsActivity.class);
+                intent.putExtra("decideScreen", "Ads");
+
+                startActivity(intent);
+                break;
+            }
+
+            case R.id.side_users:
+            {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, UsersActivity.class);
+                intent.putExtra("decideScreen", "Users");
+                startActivity(intent);
+                break;
+            }
 
             case R.id.side_home: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -341,6 +335,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 menu.findItem(R.id.side_educationloan).setVisible(b);
                 menu.findItem(R.id.side_personalloan).setVisible(b);
                 menu.findItem(R.id.side_instantloan).setVisible(b);
+
                 menu.findItem(R.id.side_homeloan).setVisible(b);
                 break;
 
@@ -569,8 +564,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         productRecyclerView = findViewById(R.id.product_recyclerview);
 
-        addAdminButton = (ImageButton) findViewById(R.id.add_admin_button);
-        addAdminButton.setVisibility(View.GONE);
 
 
         drawerLayout = findViewById(R.id.drawer_layout);
