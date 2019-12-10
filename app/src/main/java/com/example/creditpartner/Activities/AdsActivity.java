@@ -1,4 +1,3 @@
-
 package com.example.creditpartner.Activities;
 
 import androidx.annotation.NonNull;
@@ -11,14 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
-import com.example.creditpartner.Adapters.CompanyAdapter;
-import com.example.creditpartner.Adapters.ProductAdapter;
+import com.example.creditpartner.Adapters.AdAdapter;
 import com.example.creditpartner.Adapters.SideProductAdapter;
-import com.example.creditpartner.Adapters.SideUserAdapter;
+import com.example.creditpartner.Classes.Ads;
 import com.example.creditpartner.Classes.Products;
-import com.example.creditpartner.Classes.Users;
 import com.example.creditpartner.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,22 +26,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ProductsActivity extends AppCompatActivity {
-
+public class AdsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Toolbar mToolbar;
-    private String decideScreen;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private ImageButton additems;
     private DatabaseReference Ref;
-    private ArrayList<Products> productsArrayList = new ArrayList<>();
-    private SideProductAdapter adapter;
+    private ArrayList<Ads> adsArrayList = new ArrayList<>();
+    private AdAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products);
+        setContentView(R.layout.activity_ads);
 
 
         Initialize();
@@ -59,8 +53,7 @@ public class ProductsActivity extends AppCompatActivity {
 
     private void ImplementSearch() {
 
-        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_products);
-
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_ads);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -80,33 +73,35 @@ public class ProductsActivity extends AppCompatActivity {
     private void SetupRecyclerView() {
 
 
-            additems.setVisibility(View.GONE);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(linearLayoutManager);
+        additems.setVisibility(View.GONE);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
 
-            Ref.child("ProductList").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    productsArrayList.clear();
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        String productName = dataSnapshot1.child("Name").getValue().toString();
-                        String productImage = dataSnapshot1.child("Image").getValue().toString();
+        Ref.child("Banners").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                adsArrayList.clear();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    String customerName = dataSnapshot1.child("customerName").getValue().toString();
+                    String adImage = dataSnapshot1.child("adImage").getValue().toString();
+                    String clicks = dataSnapshot1.child("noOfClicks").getValue().toString();
+                    String type = dataSnapshot1.child("adType").getValue().toString();
 
-                        productsArrayList.add(new Products(productName, productImage));
-
-                    }
-                     adapter = new SideProductAdapter(ProductsActivity.this, productsArrayList);
-                    recyclerView.setAdapter(adapter);
-                   // loadProducts.setVisibility(View.INVISIBLE);
+                    adsArrayList.add(new Ads(customerName, clicks, type, adImage));
 
                 }
+                adapter = new AdAdapter(AdsActivity.this, adsArrayList);
+                recyclerView.setAdapter(adapter);
+                // loadProducts.setVisibility(View.INVISIBLE);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
 
-                }
-            });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -120,16 +115,17 @@ public class ProductsActivity extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
         Ref = FirebaseDatabase.getInstance().getReference();
 
-        recyclerView = (RecyclerView)findViewById(R.id.products_recycler);
+        recyclerView = (RecyclerView)findViewById(R.id.ads_recycler);
         additems = (ImageButton)findViewById(R.id.add_items);
     }
 
     private void SetupToolbar() {
 
-        mToolbar = (Toolbar) findViewById(R.id.product_bar);
+        mToolbar = (Toolbar) findViewById(R.id.ads_bar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Categories");
+        getSupportActionBar().setTitle("Ads");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 }
+

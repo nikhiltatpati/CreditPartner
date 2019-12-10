@@ -48,12 +48,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private DatabaseReference Ref;
-    private String currentUserID, phoneNumber;
+    private String currentUserID, phoneNumber, superAdmin = "False";
     private boolean isSuperAdmin = false;
 
     private ViewPager mSlideViewPager;
-    private LinearLayout mDotsLayout;
-    private TextView[] mDots;
+
     private ProgressBar loadProducts;
 
     private SliderAdapter sliderAdapter;
@@ -87,9 +86,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             Initialize();
 
+            CheckSuperAdmin();
 
             SetNavigationView();
-            CheckSuperAdmin();
 
             GetSlides();
 
@@ -129,6 +128,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private void CheckSuperAdmin() {
+
+
+        Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("privilege").getValue().equals("SuperAdmin")) {
+                    //  addAdminButton.setVisibility(View.VISIBLE);
+                    isSuperAdmin = true;
+                    superAdmin = "True";
+                    navigationView.getMenu().setGroupVisible(R.id.admin_menu, true);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
     private void GetSlides() {
 
         Ref.child("Banners").addValueEventListener(new ValueEventListener() {
@@ -166,27 +189,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    private void CheckSuperAdmin() {
-
-
-        Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("privilege").getValue().equals("SuperAdmin")) {
-                        //  addAdminButton.setVisibility(View.VISIBLE);
-                        isSuperAdmin = true;
-                    }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
 
     private void SetupRecyclerView() {
 
@@ -225,6 +227,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
 
         final View header = navigationView.getHeaderView(0);
 
@@ -275,37 +280,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-
         Menu menu = navigationView.getMenu();
+
+
         switch (menuItem.getItemId()) {
 
-            case R.id.side_products:
-            {
+            case R.id.side_products: {
+
+
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent(MainActivity.this, ProductsActivity.class);
-                intent.putExtra("decideScreen", "Products");
+                startActivity(intent);
+                break;
+
+
+            }
+
+            case R.id.side_ads: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, AdsActivity.class);
+
                 startActivity(intent);
                 break;
             }
 
-            case R.id.side_ads:
-            {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductsActivity.class);
-                intent.putExtra("decideScreen", "Ads");
-
-                startActivity(intent);
-                break;
-            }
-
-            case R.id.side_users:
-            {
+            case R.id.side_users: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent(MainActivity.this, UsersActivity.class);
-                intent.putExtra("decideScreen", "Users");
                 startActivity(intent);
                 break;
             }
@@ -325,10 +329,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
 
-            case R.id.side_loan:
-            {
+            case R.id.side_loan: {
 
-                boolean b=!menu.findItem(R.id.side_businessloan).isVisible();
+                boolean b = !menu.findItem(R.id.side_businessloan).isVisible();
 
                 menu.findItem(R.id.side_businessloan).setVisible(b);
                 menu.findItem(R.id.side_carloan).setVisible(b);
@@ -341,9 +344,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
-            case R.id.side_insurance:
-            {
-                boolean b=!menu.findItem(R.id.side_carinsurance).isVisible();
+            case R.id.side_insurance: {
+                boolean b = !menu.findItem(R.id.side_carinsurance).isVisible();
                 menu.findItem(R.id.side_carinsurance).setVisible(b);
                 menu.findItem(R.id.side_healthinsurance).setVisible(b);
                 menu.findItem(R.id.side_terminsurance).setVisible(b);
@@ -470,25 +472,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-   /* public void addDotsIndicator(int position) {
+    /* public void addDotsIndicator(int position) {
 
-        mDots = new TextView[slidesList.size()];
-        mDotsLayout.removeAllViews(); //without this multiple number of dots will be created
+         mDots = new TextView[slidesList.size()];
+         mDotsLayout.removeAllViews(); //without this multiple number of dots will be created
 
-        for (int i = 0; i < mDots.length; i++) {
-            mDots[i] = new TextView(this);
-            mDots[i].setText(Html.fromHtml("&#8226;")); //code for the dot icon like thing
-            mDots[i].setTextSize(35);
-            mDots[i].setTextColor(getResources().getColor(R.color.colorPrimary));
+         for (int i = 0; i < mDots.length; i++) {
+             mDots[i] = new TextView(this);
+             mDots[i].setText(Html.fromHtml("&#8226;")); //code for the dot icon like thing
+             mDots[i].setTextSize(35);
+             mDots[i].setTextColor(getResources().getColor(R.color.colorPrimary));
 
-            mDotsLayout.addView(mDots[i]);
-        }
+             mDotsLayout.addView(mDots[i]);
+         }
 
-        if (mDots.length > 0) {
-            mDots[position].setTextColor(getResources().getColor(R.color.colorAccent)); //setting currently selected dot to white
-        }
-    }
-*/
+         if (mDots.length > 0) {
+             mDots[position].setTextColor(getResources().getColor(R.color.colorAccent)); //setting currently selected dot to white
+         }
+     }
+ */
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -498,7 +500,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onPageSelected(int position) {
 
-     //       addDotsIndicator(position);
+            //       addDotsIndicator(position);
 
             mCurrentPage = position;
 
@@ -563,7 +565,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
         productRecyclerView = findViewById(R.id.product_recyclerview);
-
 
 
         drawerLayout = findViewById(R.id.drawer_layout);

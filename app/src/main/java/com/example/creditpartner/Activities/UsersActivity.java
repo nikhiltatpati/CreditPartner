@@ -36,7 +36,7 @@ public class UsersActivity extends AppCompatActivity {
     private String currentUserID, username, usernumber, usertype;
     private SideUserAdapter adapter;
     private androidx.appcompat.widget.SearchView searchView;
-
+    private ImageButton adduser;
     private ArrayList<Users> usersArrayList = new ArrayList<>();
 
     @Override
@@ -80,7 +80,7 @@ public class UsersActivity extends AppCompatActivity {
         });
 
         searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_user);
-        searchView.setQueryHint("Search Users");
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -134,6 +134,7 @@ public class UsersActivity extends AppCompatActivity {
         Ref = FirebaseDatabase.getInstance().getReference();
         currentUserID = currentUser.getUid();
 
+        adduser = (ImageButton)findViewById(R.id.add_user);
         recyclerView = (RecyclerView)findViewById(R.id.users_recycler);
     }
 

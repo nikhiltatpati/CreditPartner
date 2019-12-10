@@ -10,11 +10,21 @@
         layout="@layout/app_bar"
         android:id="@+id/product_bar"/>
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_products"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product_bar"
+        android:layout_margin="10dp"
+        app:queryHint="Search Categories"
+        app:iconifiedByDefault="false"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/products_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/product_bar"/>
+        android:layout_below="@id/search_products"/>
 
     <ImageButton
         android:id="@+id/add_items"
@@ -22,7 +32,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add_black_24dp"
         android:background="@color/colorAccent"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="17dp"
         android:layout_marginRight="15dp"/>
 

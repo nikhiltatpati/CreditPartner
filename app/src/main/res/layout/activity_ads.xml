@@ -8,39 +8,33 @@
 
     <include
         layout="@layout/app_bar"
-        android:id="@+id/user_bar"/>
+        android:id="@+id/ads_bar"/>
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_user"
+        android:id="@+id/search_ads"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user_bar"
+        android:layout_below="@id/ads_bar"
         android:layout_margin="10dp"
-        app:queryHint="Search User"
+        app:queryHint="Search Ads"
         app:iconifiedByDefault="false"
-
         />
-
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/users_recycler"
+        android:id="@+id/ads_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/search_user"
-        />
-
-
-
+        android:layout_below="@id/search_ads"/>
 
     <ImageButton
-        android:id="@+id/add_user"
+        android:id="@+id/add_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add_black_24dp"
-        android:layout_alignParentRight="true"
         android:background="@color/colorAccent"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="17dp"
+        android:layout_marginRight="15dp"/>
 
 
 </RelativeLayout>

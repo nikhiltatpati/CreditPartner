@@ -63,6 +63,7 @@ public class SideUserAdapter extends RecyclerView.Adapter<SideUserAdapter.ViewHo
 
                 Intent intent = new Intent(mContext.getApplicationContext(), UsersAccountActivity.class);
                 intent.putExtra("userNumber", users.getUserNumber());
+                intent.putExtra("userName", users.getUserName());
                 mContext.startActivity(intent);
             }
         });

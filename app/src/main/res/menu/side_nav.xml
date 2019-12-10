@@ -1,106 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+
+    <group
+        android:id="@+id/admin_menu"
+        android:checkableBehavior="single"
+        android:visible="false">
+
 
         <item
+            android:id="@+id/side_products"
             android:title="Products"
-            android:id="@+id/side_products"/>
+            />
 
         <item
+            android:id="@+id/side_ads"
             android:title="Ads"
-            android:id="@+id/side_ads"/>
+            />
 
         <item
+            android:id="@+id/side_users"
             android:title="Users"
-            android:id="@+id/side_users"/>
-
-        <item
-            android:id="@+id/side_home"
-            android:title="Home" />
-
-
-        <item
-            android:id="@+id/side_myaccount"
-            android:title="My Account" />
-        <item
-            android:id="@+id/side_credit_report"
-            android:title="Credit Report" />
-        <item
-            android:id="@+id/side_credit_card"
-            android:title="Credit Card" />
-
-        <item
-            android:id="@+id/side_loan"
-            android:title="Loan                                                            +" />
-
-
-        <item
-            android:id="@+id/side_homeloan"
-            android:title="Home Loan"
-            android:visible="false" />
-
-        <item
-            android:id="@+id/side_personalloan"
-            android:title="Personal Loan"
-            android:visible="false" />
-
-        <item
-            android:id="@+id/side_instantloan"
-            android:title="Instant Loan"
-            android:visible="false" />
-
-        <item
-            android:id="@+id/side_carloan"
-            android:title="Car Loan"
-            android:visible="false" />
-
-        <item
-            android:id="@+id/side_educationloan"
-            android:title="Education Loan"
-            android:visible="false" />
-
-        <item
-            android:id="@+id/side_businessloan"
-            android:title="Business Loan"
-            android:visible="false" />
-
-
-
-        <item
-            android:id="@+id/side_insurance"
-            android:title="Insurance                                                   +" />
-        <item
-            android:id="@+id/side_healthinsurance"
-            android:visible="false"
-            android:title="Health Insurance" />
-
-        <item
-            android:id="@+id/side_terminsurance"
-            android:visible="false"
-            android:title="Term Insurance" />
-
-        <item
-            android:id="@+id/side_carinsurance"
-            android:visible="false"
-            android:title="Car Insurance" />
+             />
 
     </group>
+
+    <item
+        android:id="@+id/side_home"
+        android:title="Home" />
+
+
+    <item
+        android:id="@+id/side_myaccount"
+        android:title="My Account" />
+    <item
+        android:id="@+id/side_credit_report"
+        android:title="Credit Report" />
+    <item
+        android:id="@+id/side_credit_card"
+        android:title="Credit Card" />
+
+    <item
+        android:id="@+id/side_loan"
+        android:title="Loan                                                        +" />
+
+
+    <item
+        android:id="@+id/side_homeloan"
+        android:title="Home Loan"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/side_personalloan"
+        android:title="Personal Loan"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/side_instantloan"
+        android:title="Instant Loan"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/side_carloan"
+        android:title="Car Loan"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/side_educationloan"
+        android:title="Education Loan"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/side_businessloan"
+        android:title="Business Loan"
+        android:visible="false" />
+
+
+    <item
+        android:id="@+id/side_insurance"
+        android:title="Insurance                                              +" />
+    <item
+        android:id="@+id/side_healthinsurance"
+        android:title="Health Insurance"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/side_terminsurance"
+        android:title="Term Insurance"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/side_carinsurance"
+        android:title="Car Insurance"
+        android:visible="false" />
 
     <group
 
         android:checkableBehavior="single">
 
 
-            <item
-                android:id="@+id/side_refer_and_earn"
-                android:title="Refer and Earn" />
-            <item
-                android:id="@+id/side_logout"
-                android:title="Logout" />
+        <item
+            android:id="@+id/side_refer_and_earn"
+            android:title="Refer and Earn" />
+        <item
+            android:id="@+id/side_logout"
+            android:title="Logout" />
 
     </group>
-
-
 
 
 </menu>

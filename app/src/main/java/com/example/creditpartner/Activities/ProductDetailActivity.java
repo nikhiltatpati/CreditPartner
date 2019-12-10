@@ -89,8 +89,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("phoneNumber")) {
-                    phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
+                if (dataSnapshot.child("privilege").getValue().equals("SuperAdmin")) {
+                    addCompanyButton.setVisibility(View.VISIBLE);
+
                 }
             }
 
@@ -100,23 +101,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
-        Ref.child("Privileges").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(phoneNumber))
-                {
-                    if(dataSnapshot.child(phoneNumber).getValue().toString().equals("Admin") || dataSnapshot.child(phoneNumber).getValue().toString().equals("SuperAdmin"))
-                    {
-                        addCompanyButton.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         loadCompanies.setVisibility(View.INVISIBLE);
 

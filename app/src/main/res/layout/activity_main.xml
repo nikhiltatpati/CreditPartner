@@ -22,7 +22,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="155dp"
+            android:layout_height="175dp"
             android:layout_below="@id/main_toolbar" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
