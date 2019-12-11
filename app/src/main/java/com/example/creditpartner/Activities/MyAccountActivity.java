@@ -73,7 +73,7 @@ public class MyAccountActivity extends AppCompatActivity {
                 if(dataSnapshot.hasChild("privilege"))
                 {
                     privilege = dataSnapshot.child("privilege").getValue().toString();
-                    privilegeText.setText(phoneNumber);
+                    privilegeText.setText(privilege);
                 }
             }
 

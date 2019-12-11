@@ -61,13 +61,7 @@
         android:text="Loading"
         android:textSize="17dp" />
 
-    <View
-        android:id="@+id/horizontal_line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_margin="5dp"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/darker_gray" />
+
 
 
 

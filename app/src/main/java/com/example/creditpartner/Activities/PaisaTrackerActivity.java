@@ -152,7 +152,7 @@ public class PaisaTrackerActivity extends AppCompatActivity {
     private void SetupTOolbar() {
         mToolbar = (Toolbar) findViewById(R.id.paisa_tracker_bar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Paisa Tracker");
+        getSupportActionBar().setTitle("Expense Tracker");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
