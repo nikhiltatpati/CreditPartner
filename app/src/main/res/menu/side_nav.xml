@@ -41,7 +41,7 @@
 
     <item
         android:id="@+id/side_loan"
-        android:title="Loan                                                        +" />
+        android:title="Loan                                              +" />
 
 
     <item
@@ -77,7 +77,7 @@
 
     <item
         android:id="@+id/side_insurance"
-        android:title="Insurance                                              +" />
+        android:title="Insurance                                    +" />
     <item
         android:id="@+id/side_healthinsurance"
         android:title="Health Insurance"

@@ -14,13 +14,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.AdsActivity"
-            android:parentActivityName=".Activities.MainActivity"></activity>
+        <activity android:name=".Activities.AddAdsActivity"
+            android:parentActivityName=".Activities.AdsActivity"></activity>
+        <activity
+            android:name=".Activities.AddUsersActivity"
+            android:parentActivityName=".Activities.UsersActivity" />
+        <activity
+            android:name=".Activities.AdsActivity"
+            android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.AdDetailsActiviy" />
-        <activity android:name=".Activities.UsersActivity"
-            android:parentActivityName=".Activities.MainActivity"/>
-        <activity android:name=".Activities.UsersAccountActivity"
-            android:parentActivityName=".Activities.UsersActivity"/>
+        <activity
+            android:name=".Activities.UsersActivity"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity
+            android:name=".Activities.UsersAccountActivity"
+            android:parentActivityName=".Activities.UsersActivity" />
         <activity
             android:name=".Activities.ProductsActivity"
             android:parentActivityName=".Activities.MainActivity" />

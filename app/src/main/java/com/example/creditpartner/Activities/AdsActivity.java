@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -48,6 +49,15 @@ public class AdsActivity extends AppCompatActivity {
 
         ImplementSearch();
 
+        additems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(AdsActivity.this, AddAdsActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -72,8 +82,6 @@ public class AdsActivity extends AppCompatActivity {
 
     private void SetupRecyclerView() {
 
-
-        additems.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -116,7 +124,7 @@ public class AdsActivity extends AppCompatActivity {
         Ref = FirebaseDatabase.getInstance().getReference();
 
         recyclerView = (RecyclerView)findViewById(R.id.ads_recycler);
-        additems = (ImageButton)findViewById(R.id.add_items);
+        additems = (ImageButton)findViewById(R.id.add_ads);
     }
 
     private void SetupToolbar() {
