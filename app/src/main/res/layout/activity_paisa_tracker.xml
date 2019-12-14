@@ -23,8 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_below="@id/paisa_tracker_bar"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="60dp"
             android:layout_centerHorizontal="true"
             android:text="Total Expense"
             android:textColor="@android:color/white"
@@ -73,13 +72,16 @@
         android:layout_below="@id/latest_transactions"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="No Transactions!"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="No Transactions!\nAdd a transaction by pressing ₹ button below!"
         android:textSize="20dp"
-        android:visibility="gone" />
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+         />
 
-    <include
-        android:id="@+id/paisa_tracker_bar"
-        layout="@layout/app_bar" />
+
 
 
 </RelativeLayout>

@@ -70,6 +70,8 @@ public class AdAdapter extends RecyclerView.Adapter<AdAdapter.ViewHolder> implem
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, AdDetailsActiviy.class);
+                intent.putExtra("customerName", ads.getCustomerName());
+                intent.putExtra("adImage", ads.getAdImage());
                 mContext.startActivity(intent);
 
             }

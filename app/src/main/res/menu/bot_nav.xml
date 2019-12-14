@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/bot_recharge"
-        android:icon="@drawable/ic_track_changes_black_24dp"
+        android:icon="@drawable/ic_tap_and_play_black_24dp"
         android:title="Recharge"/>
 
     <item

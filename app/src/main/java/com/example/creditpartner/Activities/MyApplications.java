@@ -1,3 +1,4 @@
+
 package com.example.creditpartner.Activities;
 
 import androidx.annotation.NonNull;
@@ -7,16 +8,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.example.creditpartner.Adapters.AdAdapter;
+import com.example.creditpartner.Adapters.ApplicationAdapter;
 import com.example.creditpartner.Adapters.SideProductAdapter;
-import com.example.creditpartner.Classes.Ads;
-import com.example.creditpartner.Classes.Products;
-import com.example.creditpartner.Classes.Users;
+import com.example.creditpartner.Classes.Applications;
+import com.example.creditpartner.Classes.MyApplication;
 import com.example.creditpartner.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,24 +27,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
-public class AdsActivity extends AppCompatActivity {
+public class MyApplications extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private Toolbar mToolbar;
+    private String decideScreen, currentUserID;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private ImageButton additems;
     private DatabaseReference Ref;
-    private ArrayList<Ads> adsArrayList = new ArrayList<>();
-    private AdAdapter adapter;
+    private ArrayList<Applications> applicationsArrayList = new ArrayList<>();
+    private ApplicationAdapter adapter;
+    private TextView noApps;
+    androidx.appcompat.widget.SearchView searchView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ads);
-
+        setContentView(R.layout.activity_my_applications);
 
         Initialize();
 
@@ -52,21 +53,11 @@ public class AdsActivity extends AppCompatActivity {
 
         ImplementSearch();
 
-        additems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(AdsActivity.this, AddAdsActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
     }
-
     private void ImplementSearch() {
 
-        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_ads);
+         searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_apps);
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -85,34 +76,31 @@ public class AdsActivity extends AppCompatActivity {
 
     private void SetupRecyclerView() {
 
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        Ref.child("Banners").addValueEventListener(new ValueEventListener() {
+        Ref.child("My Applications").child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                adsArrayList.clear();
+                applicationsArrayList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    String customerName = dataSnapshot1.child("customerName").getValue().toString();
-                    String adImage = dataSnapshot1.child("adImage").getValue().toString();
-                    String clicks = dataSnapshot1.child("noOfClicks").getValue().toString();
-                    String type = dataSnapshot1.child("adType").getValue().toString();
+                    String productName = dataSnapshot1.child("Name").getValue().toString();
+                    String productImage = dataSnapshot1.child("Image").getValue().toString();
+                    String productDate = dataSnapshot1.child("Date").getValue().toString();
 
-                    adsArrayList.add(new Ads(customerName, clicks, type, adImage));
+                    applicationsArrayList.add(new Applications(productImage, productName, productDate));
 
                 }
 
-                Collections.sort(adsArrayList, new Comparator<Ads>() {
-                    @Override
-                    public int compare(Ads ads, Ads t1) {
-                        String s1 = ads.getCustomerName();
-                        String s2 = t1.getCustomerName();
-                        return s1.compareToIgnoreCase(s2);
-                    }
+                if(applicationsArrayList.size() == 0)
+                {
+                    noApps.setVisibility(View.VISIBLE);
+                    searchView.setVisibility(View.GONE);
+                }
 
-                });
-                adapter = new AdAdapter(AdsActivity.this, adsArrayList);
+                adapter = new ApplicationAdapter(MyApplications.this, applicationsArrayList);
                 recyclerView.setAdapter(adapter);
                 // loadProducts.setVisibility(View.INVISIBLE);
 
@@ -135,18 +123,17 @@ public class AdsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         Ref = FirebaseDatabase.getInstance().getReference();
-
-        recyclerView = (RecyclerView)findViewById(R.id.ads_recycler);
-        additems = (ImageButton)findViewById(R.id.add_ads);
+        currentUserID =  currentUser.getUid();
+        recyclerView = (RecyclerView)findViewById(R.id.apps_recyclerview);
+        noApps = (TextView)findViewById(R.id.no_apps);
     }
 
     private void SetupToolbar() {
 
-        mToolbar = (Toolbar) findViewById(R.id.ads_bar);
+        mToolbar = (Toolbar) findViewById(R.id.myapp_bar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Ads");
+        getSupportActionBar().setTitle("My Applications");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 }
-

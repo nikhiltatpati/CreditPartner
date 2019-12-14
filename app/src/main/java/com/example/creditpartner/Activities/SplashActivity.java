@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import com.example.creditpartner.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class SplashActivity extends AppCompatActivity {
 
     private static final int SPLASH_TIMEOUT = 2000;
-    private ImageView splashLogo;
+    private CircleImageView splashLogo;
     private TextView splashText;
 
     @Override
@@ -34,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void Initialize() {
-        splashLogo = (ImageView)findViewById(R.id.splash_logo);
+        splashLogo = (CircleImageView) findViewById(R.id.splash_logo);
         splashText = (TextView) findViewById(R.id.splash_text);
     }
 

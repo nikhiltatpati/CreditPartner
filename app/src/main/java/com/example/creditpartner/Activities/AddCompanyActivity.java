@@ -49,16 +49,16 @@ public class AddCompanyActivity extends AppCompatActivity {
                 {
                     name.setError("Enter Valid name!");
                 }
-                if(urlString.isEmpty())
+                else if(urlString.isEmpty())
                 {
                     name.setError("Enter Valid url!");
-                }if(imageeString.isEmpty())
+                }else if(imageeString.isEmpty())
                 {
                     name.setError("Enter Valid Image link!");
-                }if(balanceString.isEmpty())
+                }else if(balanceString.isEmpty())
                 {
                     name.setError("Enter Valid balance!");
-                }if(rateString.isEmpty())
+                }else if(rateString.isEmpty())
                 {
                     name.setError("Enter Valid rate!");
                 }

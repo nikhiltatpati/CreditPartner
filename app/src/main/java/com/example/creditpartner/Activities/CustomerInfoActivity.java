@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,16 +28,14 @@ import java.util.HashMap;
 
 public class CustomerInfoActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
-    private TextInputLayout emailTIL, nameTIL, mobileTIL, referenceTIL;
-    private TextInputEditText emailTIET, mobileTIET, referenceTIET, nameTIET;
-    private Button generateOTP;
+    private EditText emailTIET, mobileTIET, referenceTIET, nameTIET;
+    private TextView generateOTP;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
     private FirebaseUser currentUSer;
-    private String isReferenceValid = "False";
+    private boolean isReferenceValid = false;
 
     private String mVerificationId, currentUserID;
 
@@ -48,8 +48,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
 
         InitializeFields();
 
-        if(currentUSer != null)
-        {
+        if (currentUSer != null) {
             Intent intent = new Intent(CustomerInfoActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -59,35 +58,71 @@ public class CustomerInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                    String customerNumber = mobileTIET.getText().toString();
-                    String email = emailTIET.getText().toString();
-                    String name = nameTIET.getText().toString();
-                    final String reference = referenceTIET.getText().toString();;
 
-                    if (name.isEmpty() || name.length() < 5) {
+                String customerNumber = mobileTIET.getText().toString();
+                String email = emailTIET.getText().toString();
+                String name = nameTIET.getText().toString();
+                final String reference = referenceTIET.getText().toString();
+                ;
+
+                CheckReference(reference);
+
+                if (name.isEmpty() || name.length() < 5) {
                     nameTIET.setError("Enter your full name!");
-                    }
+                } else if (customerNumber.length() < 10) {
+                    mobileTIET.setError("Enter a valid number!");
 
-                    if (customerNumber.length() < 10) {
-                        mobileTIET.setError("Enter a valid number!");
+                } else if (!isEmailValid(email)) {
+                    emailTIET.setError("Email is invalid!");
+                } else {
+                    Ref.child("References").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.hasChild(reference))
+                            {
+                                SendDataToNextActivity(countryCode + mobileTIET.getText().toString(), referenceTIET.getText().toString(), emailTIET.getText().toString()
+                                        , nameTIET.getText().toString(), referenceTIET.getText().toString());
+                            }
 
-                    }
+                            else
+                            {
+                                referenceTIET.setError("Reference Code is invalid!");
 
+                            }
+                        }
 
-                    if (!isEmailValid(email)){
-                        emailTIET.setError("Email is invalid!");
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                        }
+                    });
 
-                   else
-                    {
-                        SendDataToNextActivity(countryCode + mobileTIET.getText().toString(), referenceTIET.getText().toString(), emailTIET.getText().toString()
-                                , nameTIET.getText().toString(), referenceTIET.getText().toString());
                 }
 
 
             }
         });
+
+
+    }
+
+    private void CheckReference(String ref) {
+
+        Ref.child("References").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(ref)) {
+                    isReferenceValid = true;
+                }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        Log.e("after", "" + isReferenceValid);
 
 
     }
@@ -100,9 +135,8 @@ public class CustomerInfoActivity extends AppCompatActivity {
         intent.putExtra("email", email);
         intent.putExtra("name", name);
         intent.putExtra("reference", reference);
-
+        intent.putExtra("privilege", "User");
         startActivity(intent);
-
 
 
     }
@@ -114,33 +148,19 @@ public class CustomerInfoActivity extends AppCompatActivity {
     private void InitializeFields() {
 
 
-        SetupToolbar();
-
-        //TextInputLayouts
-        emailTIL = (TextInputLayout) findViewById(R.id.customer_email);
-        mobileTIL = (TextInputLayout) findViewById(R.id.customer_number);
-        nameTIL = (TextInputLayout) findViewById(R.id.customer_name);
-        referenceTIL = (TextInputLayout) findViewById(R.id.customer_reference);
-
-
         //TextInputEditTexts
-        emailTIET = (TextInputEditText) findViewById(R.id.email);
-        mobileTIET = (TextInputEditText) findViewById(R.id.number);
-        nameTIET = (TextInputEditText) findViewById(R.id.name);
-        referenceTIET = (TextInputEditText) findViewById(R.id.reference);
+        emailTIET = (EditText) findViewById(R.id.email);
+        mobileTIET = (EditText) findViewById(R.id.number);
+        nameTIET = (EditText) findViewById(R.id.name);
+        referenceTIET = (EditText) findViewById(R.id.reference);
 
         //Firebase
         mAuth = FirebaseAuth.getInstance();
         Ref = FirebaseDatabase.getInstance().getReference();
 
 
-        generateOTP = (Button) findViewById(R.id.generate_button);
+        generateOTP = (TextView) findViewById(R.id.generate_button);
     }
 
-    private void SetupToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.customer_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Credit Partner");
 
-    }
 }

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorAccent"
     android:layout_height="match_parent"
     tools:context=".Activities.ProductsActivity">
 
@@ -15,8 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/product_bar"
-        android:layout_margin="10dp"
         app:queryHint="Search Categories"
+        android:background="@android:color/white"
+        android:focusedByDefault="false"
+        android:focusable="false"
+        android:layout_marginBottom="5dp"
         app:iconifiedByDefault="false"
         />
 

@@ -1,9 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorAccent"
     android:layout_height="match_parent"
     tools:context=".Activities.AdDetailsActiviy">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ad_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:src="@android:color/white"
+        android:layout_marginTop="50dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ad_logo"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp">
+
+
+        <TextView
+            android:id="@+id/ad_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:text="Loading"
+            android:gravity="center"
+            android:textSize="27dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/ad_detail_sdate"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:textColor="@android:color/white"
+                android:text="start_date"
+                android:layout_marginRight="19dp"
+                android:gravity="center"
+                android:textSize="17dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:textColor="@android:color/white"
+                android:text="-"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="22dp"/>
+
+
+            <TextView
+                android:id="@+id/ad_detail_edtae"
+
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:textColor="@android:color/white"
+                android:text="end_date"
+                android:layout_marginLeft="19dp"
+                android:gravity="center"
+                android:textSize="17dp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ad_detail_clicks"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:textColor="@android:color/white"
+            android:text="Clicks"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="22dp"/>
+
+        <TextView
+            android:id="@+id/ad_detail_type"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:textColor="@android:color/white"
+            android:text="Type"
+            android:gravity="center"
+            android:layout_gravity="center"
+
+            android:textSize="22dp"/>
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

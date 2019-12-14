@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ApplicationDetailsActivity">
+
+
+    <ProgressBar
+        android:id="@+id/load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:id="@+id/appdetailsss_image"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/appdetail_bar"
+        android:background="@color/colorAccent" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/appdetail_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/appdetailsss_image"
+        android:layout_marginTop="-63dp"
+        android:src="@drawable/cplogo" />
+
+    <TextView
+        android:id="@+id/appdetail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appdetail_image"
+        android:layout_marginLeft="15dp"
+        android:layout_centerHorizontal="true"
+        android:text="COmpany Name"
+        android:layout_marginTop="20dp"
+        android:textSize="26dp"
+        />
+
+
+    <TextView
+        android:id="@+id/appdetail_myname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appdetail_name"
+        android:layout_marginLeft="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="My Name"
+        android:textSize="26dp"
+        />
+
+    <TextView
+        android:id="@+id/appdetail_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/appdetail_myname"
+        android:text="email"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/appdetail_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appdetail_email"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/appdetail_pin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appdetail_number"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="20dp" />
+
+
+    <include
+        android:id="@+id/appdetail_bar"
+        layout="@layout/app_bar" />
+
+</RelativeLayout>

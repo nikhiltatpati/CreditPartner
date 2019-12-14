@@ -33,9 +33,8 @@ public class PaisaTrackerActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private String currentUserID;
-    private Toolbar mToolbar;
     private DatabaseReference Ref;
-    private TextView noTransactions;
+    private TextView noTransactions, latestTransactions;
     private int totalValue;
 
     private ArrayList<Expenses> expensesArrayList = new ArrayList<>();
@@ -60,6 +59,12 @@ public class PaisaTrackerActivity extends AppCompatActivity {
         CalculateTotalExpense();
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(PaisaTrackerActivity.this, MainActivity.class));
     }
 
     private void CalculateTotalExpense() {
@@ -87,14 +92,8 @@ public class PaisaTrackerActivity extends AppCompatActivity {
         });
 
 
-
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 
     private void GetLatestTransactions() {
         LinearLayoutManager manager = new LinearLayoutManager(PaisaTrackerActivity.this);
@@ -103,6 +102,7 @@ public class PaisaTrackerActivity extends AppCompatActivity {
         Ref.child("Transactions").child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                expensesArrayList.clear();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         String categoryName = dataSnapshot1.child("categoryName").getValue().toString();
@@ -118,6 +118,8 @@ public class PaisaTrackerActivity extends AppCompatActivity {
 
                 } else {
                     noTransactions.setVisibility(View.VISIBLE);
+                    latestTransactions.setVisibility(View.INVISIBLE);
+
                 }
             }
 
@@ -130,6 +132,7 @@ public class PaisaTrackerActivity extends AppCompatActivity {
 
     }
 
+
     private void ChangeActivity(Class Activity) {
         startActivity(new Intent(PaisaTrackerActivity.this, Activity));
 
@@ -137,23 +140,17 @@ public class PaisaTrackerActivity extends AppCompatActivity {
 
     private void Initialize() {
 
-        SetupTOolbar();
+
         latestTransactionsRecyclerView = (RecyclerView) findViewById(R.id.latest_transactions_recyclerview);
         addExpenseFAB = (FloatingActionButton) findViewById(R.id.add_expense_fab);
         totalExpense = (TextView) findViewById(R.id.total_expense);
         noTransactions = (TextView) findViewById(R.id.no_transactions);
-
+        latestTransactions = (TextView) findViewById(R.id.latest_transactions);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         currentUserID = currentUser.getUid();
         Ref = FirebaseDatabase.getInstance().getReference();
     }
 
-    private void SetupTOolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.paisa_tracker_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Expense Tracker");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
+
 }

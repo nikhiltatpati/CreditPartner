@@ -8,7 +8,8 @@
     android:orientation="vertical">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginTop="20dp"
         android:id="@+id/sidenav_header_image"
         android:layout_centerHorizontal="true"
         android:layout_width="100dp"
@@ -19,43 +20,34 @@
 
     <TextView
         android:id="@+id/sidenav_header_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_below="@id/sidenav_header_image"
         android:text="Loading"
         android:layout_marginTop="10dp"
         android:layout_marginRight="170dp"
-        android:layout_marginLeft="15dp"
+        android:layout_centerHorizontal="true"
+        android:singleLine="true"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
+        android:textSize="20dp"
 
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/sidenav_header_privilege"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sidenav_header_image"
-        android:text="Loading"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:textColor="@android:color/white"
-        android:textSize="18dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"/>
-
-
-    <TextView
-        android:id="@+id/sidenav_header_number_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@id/sidenav_header_name"
-        android:text="Number"
-        android:layout_marginLeft="15dp"
+        android:text="Loading"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginRight="15dp"
+        android:textSize="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="6dp"/>
+
+
 
     <TextView
         android:id="@+id/sidenav_header_number"
@@ -63,13 +55,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/sidenav_header_name"
         android:text="Loading"
-        android:layout_marginLeft="15dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
+        android:layout_alignParentLeft="true"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginLeft="15dp"
+        android:textSize="15dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"/>
 
 
 </RelativeLayout>

@@ -3,59 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     tools:context=".Activities.ReferAndEarnActivity">
 
-    <Button
-        android:id="@+id/refer_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/refer_card"
-        android:layout_marginTop="22dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/colorAccent"
-        android:text="Invite Via WhatsApp"
-        android:textColor="@android:color/white"
-        android:textSize="18dp" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/refer_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_below="@id/refer_bar">
 
-        <LinearLayout
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Refer and Earn!"
+            android:textSize="28dp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="70dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@android:color/white"
+            android:text="@string/refertext"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/refer_button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="40dp"
+            android:background="@android:color/holo_green_light"
+            android:text="Invite Via WhatsApp"
+            android:textColor="@android:color/white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
 
 
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Refer and Earn!"
-                android:textSize="25dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/refertext"
-                android:layout_marginTop="20dp"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="20dp"
-                android:textSize="18dp"/>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <include
-        android:id="@+id/refer_bar"
-        layout="@layout/app_bar" />
 
 
 </RelativeLayout>

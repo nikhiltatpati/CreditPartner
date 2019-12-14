@@ -8,18 +8,22 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.creditpartner.Adapters.CompanyAdapter;
+import com.example.creditpartner.Adapters.SideUserAdapter;
 import com.example.creditpartner.Classes.Companies;
+import com.example.creditpartner.Classes.Users;
 import com.example.creditpartner.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -38,12 +44,14 @@ public class ProductDetailActivity extends AppCompatActivity {
     private RecyclerView companyRecyclerview;
     private ArrayList<Companies> companiesArrayList = new ArrayList<>();
     private String companyName, companyImage, companyRate, companyBalance, companyFeatures;
-    private TextView addCompanyButton;
+    private ImageButton addCompanyButton;
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
     private FirebaseUser currentUser;
     private ProgressBar loadCompanies;
-
+    private SearchView searchView;
+    private CompanyAdapter adapter;
+    private TextView noCOmpanies;
 
 
 
@@ -103,7 +111,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
 
-        loadCompanies.setVisibility(View.INVISIBLE);
 
     }
 
@@ -148,8 +155,26 @@ public class ProductDetailActivity extends AppCompatActivity {
                         companiesArrayList.add(new Companies(companyImage, companyName,companyRate, companyBalance, companyFeatures));
                     }
 
-                    CompanyAdapter adapter = new CompanyAdapter(ProductDetailActivity.this, companiesArrayList);
+                    if(companiesArrayList.size() == 0)
+                    {
+                        noCOmpanies.setVisibility(View.VISIBLE);
+                        searchView.setVisibility(View.GONE);
+                        companyRecyclerview.setVisibility(View.GONE);
+                    }
+
+                    Collections.sort(companiesArrayList, new Comparator<Companies>() {
+                        @Override
+                        public int compare(Companies companies, Companies t1) {
+                            String s1 = companies.getCompanyName();
+                            String s2 = t1.getCompanyName();
+                            return s1.compareToIgnoreCase(s2);
+                        }
+
+                    });
+
+                    adapter = new CompanyAdapter(ProductDetailActivity.this, companiesArrayList);
                     companyRecyclerview.setAdapter(adapter);
+                    loadCompanies.setVisibility(View.INVISIBLE);
 
 
                 }
@@ -159,6 +184,24 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                 }
             });
+
+        searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_companies);
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (adapter != null){
+                    adapter.getFilter().filter(newText);
+                }
+                return false;
+            }
+        });
         }
 
     private void Initialize() {
@@ -170,9 +213,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         currentUserID = currentUser.getUid();
         productTitle = getIntent().getStringExtra("productName");
 
+        noCOmpanies = (TextView)findViewById(R.id.no_companies);
         companyRecyclerview = (RecyclerView) findViewById(R.id.company_recyclerview);
         Ref = FirebaseDatabase.getInstance().getReference();
-        addCompanyButton = (TextView) findViewById(R.id.add_company);
+        addCompanyButton = (ImageButton) findViewById(R.id.add_company);
         addCompanyButton.setVisibility(View.GONE);
 
         loadCompanies = (ProgressBar) findViewById(R.id.load_companies);

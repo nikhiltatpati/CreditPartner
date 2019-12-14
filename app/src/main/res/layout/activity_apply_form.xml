@@ -1,45 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context=".Activities.CustomerInfoActivity">
+    tools:context=".Activities.ApplyFormActivity">
 
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/main_logo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/cplogo" />
-
-
-    <TextView
-        android:id="@+id/generate_button"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/buttons"
-        android:gravity="center"
-        android:text="NEXT"
-        android:textColor="@android:color/white"
-        android:textSize="21dp" />
+    <include
+        layout="@layout/app_bar"
+        android:id="@+id/apply_form_bar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/main_logo"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="100dp"
         android:orientation="vertical">
 
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/form_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
@@ -49,7 +29,7 @@
 
         <EditText
             android:inputType="number"
-            android:id="@+id/number"
+            android:id="@+id/form_number"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
@@ -59,7 +39,7 @@
 
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/form_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
@@ -69,16 +49,32 @@
 
 
         <EditText
-            android:id="@+id/reference"
-
+            android:inputType="number"
+            android:id="@+id/form_pin_code"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/inputs"
             android:gravity="center"
-            android:hint="Reference Number (If any)" />
+            android:hint="Pin Code" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/apply_form"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:text="Apply"
+        android:gravity="center"
+        android:textSize="21dp"/>
+
+
 
 
 </RelativeLayout>

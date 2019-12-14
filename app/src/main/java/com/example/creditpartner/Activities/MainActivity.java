@@ -134,11 +134,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("privilege").getValue().equals("SuperAdmin")) {
+                if (dataSnapshot.hasChild("privilege")) {
                     //  addAdminButton.setVisibility(View.VISIBLE);
-                    isSuperAdmin = true;
-                    superAdmin = "True";
-                    navigationView.getMenu().setGroupVisible(R.id.admin_menu, true);
+                    if (dataSnapshot.child("privilege").getValue().equals("SuperAdmin")) {
+                        isSuperAdmin = true;
+                        superAdmin = "True";
+                        navigationView.getMenu().setGroupVisible(R.id.admin_menu, true);
+                    }
+
                 }
 
             }
@@ -227,8 +230,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
 
 
         final View header = navigationView.getHeaderView(0);
@@ -320,11 +321,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
 
+            case R.id.side_myapps: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, MyApplications.class);
+
+                startActivity(intent);
+                break;
+            }
+
             case R.id.side_credit_card: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
                 intent.putExtra("productName", "Credit Card");
+                startActivity(intent);
+                break;
+            }
+
+            case R.id.side_taxes: {
+                boolean b = !menu.findItem(R.id.side_taxes_reg).isVisible();
+                menu.findItem(R.id.side_taxes_reg).setVisible(b);
+                menu.findItem(R.id.side_taxes_ret).setVisible(b);
+                break;
+            }
+
+            case R.id.side_taxes_reg: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, TaxesActivity.class);
+                intent.putExtra("currentUserID", currentUserID);
+                intent.putExtra("productName", "Tax Registration");
+                startActivity(intent);
+                break;
+            }
+
+            case R.id.side_taxes_ret: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, TaxesActivity.class);
+                intent.putExtra("currentUserID", currentUserID);
+                intent.putExtra("productName", "Tax Returns");
                 startActivity(intent);
                 break;
             }

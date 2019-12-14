@@ -3,6 +3,7 @@ package com.example.creditpartner.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,12 +18,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class AddExpenseActivity extends AppCompatActivity {
-    
+
     private EditText expense_value, category_name;
-    private DatePicker datePicker;
     private TextView addExpense;
     private Toolbar mToolbar;
 
@@ -30,39 +33,66 @@ public class AddExpenseActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private String currentUserID;
     private DatabaseReference Ref;
-    
+    final Calendar myCalendar = Calendar.getInstance();
+    private EditText expenseDate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
-        
+
         Initialize();
-        
+
         addExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AddTransactionTODatabase();
             }
         });
-        
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+
+
+            }
+        };
+
+        expenseDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(AddExpenseActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+    }
+
+    private void updateLabel() {
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        expenseDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void AddTransactionTODatabase() {
         String expense = expense_value.getText().toString();
         String category = category_name.getText().toString();
-        int date_day = datePicker.getDayOfMonth();
-        int date_month = datePicker.getMonth();
-        int date_year = datePicker.getYear();
-        String date = date_day + "/" + date_month + "/" + date_year;
+        String date = expenseDate.getText().toString();
 
-        if(expense.isEmpty() || category.isEmpty() || date.length() < 7)
-        {
-            Toast.makeText(AddExpenseActivity.this,"Enter valid details",Toast.LENGTH_LONG).show();
-        }
-
-        else
-        {
+        if (expense.isEmpty() || category.isEmpty() || date.length() < 7) {
+            Toast.makeText(AddExpenseActivity.this, "Enter valid details", Toast.LENGTH_LONG).show();
+        } else {
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("expenseValue", expense);
             hashMap.put("categoryName", category);
@@ -76,22 +106,25 @@ public class AddExpenseActivity extends AppCompatActivity {
         }
 
 
+
+
     }
 
-    private void Initialize() {
-        
-        SetupToolbar();
-        expense_value = (EditText)findViewById(R.id.expense_value);
-        category_name = (EditText)findViewById(R.id.category_name);
-        datePicker = (DatePicker) findViewById(R.id.date_picker);
-        addExpense = (TextView) findViewById(R.id.add_transaction);
 
+
+    private void Initialize() {
+
+        SetupToolbar();
+        expense_value = (EditText) findViewById(R.id.expense_value);
+        category_name = (EditText) findViewById(R.id.category_name);
+        addExpense = (TextView) findViewById(R.id.add_transaction);
+        expenseDate = (EditText) findViewById(R.id.expense_date);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         currentUserID = currentUser.getUid();
 
         Ref = FirebaseDatabase.getInstance().getReference();
-        
+
     }
 
     private void SetupToolbar() {

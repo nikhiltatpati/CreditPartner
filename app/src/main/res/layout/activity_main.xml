@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".Activities.MainActivity">
 
     <RelativeLayout
@@ -22,17 +23,25 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
+            android:layout_height="165dp"
             android:layout_below="@id/main_toolbar" />
+
+
+        <View
+            android:id="@+id/horizontal_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="55dp"
+            android:background="@android:color/darker_gray" />
+
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bot_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:labelVisibilityMode="labeled"
-
             android:layout_alignParentBottom="true"
-
             app:menu="@menu/bot_nav" />
 
 
@@ -45,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/main_viewpager"
-            android:layout_above="@id/bot_nav"
+            android:layout_above="@id/horizontal_line"
              />
 
     </RelativeLayout>

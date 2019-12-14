@@ -17,9 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.creditpartner.Activities.MainActivity;
 import com.example.creditpartner.Activities.ProductDetailActivity;
+import com.example.creditpartner.Activities.TaxesActivity;
 import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -28,10 +32,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private View myView;
     private Context mContext;
     private ArrayList<Products> products;
+    private FirebaseAuth mAuth;
+    private String currentUserID;
 
     public ProductAdapter(Context mContext, ArrayList<Products> products) {
         this.mContext = mContext;
         this.products = products;
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+
     }
 
     @NonNull
@@ -47,9 +57,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         final Products product = products.get(position);
         holder.productName.setText(product.getProductName());
-     /*   Glide.with(mContext)
+        Glide.with(mContext)
                 .load(product.getProductImage())
-                .into(holder.productImage);*/
+                .into(holder.productImage);
 
         holder.productCardview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +68,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 if(product.getProductName().equals("Credit Report"))
                 {
                     Toast.makeText(mContext,"Coming soon! Hang on!", Toast.LENGTH_SHORT).show();
+                }
+
+                else if(product.getProductName().equals("Tax Registration") || product.getProductName().equals("Tax Returns"))
+                {
+                    Intent intent = new Intent(mContext.getApplicationContext(), TaxesActivity.class);
+                    intent.putExtra("productName", product.getProductName());
+                    intent.putExtra("currentUserID", currentUserID);
+                    mContext.startActivity(intent);
                 }
                 else {
 

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,18 +18,21 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.creditpartner.Activities.ApplyFormActivity;
 import com.example.creditpartner.Activities.CompanyWebsiteActivity;
 import com.example.creditpartner.Classes.Companies;
+import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.R;
 
 import java.util.ArrayList;
 
-public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHolder> {
+public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHolder> implements Filterable {
 
 
     private View myView;
     private Context mContext;
     private ArrayList<Companies> companiesArrayList;
+    private ArrayList<Companies> companiesArrayListFull;
     private String productName;
     private boolean isShown = false;
 
@@ -39,6 +44,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
     public CompanyAdapter(Context mContext, ArrayList<Companies> companiesArrayList) {
         this.mContext = mContext;
         this.companiesArrayList = companiesArrayList;
+        companiesArrayListFull = new ArrayList<>(companiesArrayList);
     }
 
     @NonNull
@@ -71,8 +77,9 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         holder.selectCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext.getApplicationContext(), CompanyWebsiteActivity.class);
+                Intent intent = new Intent(mContext.getApplicationContext(), ApplyFormActivity.class);
                 intent.putExtra("companyTitle",companies.getCompanyName());
+                intent.putExtra("companyImage",companies.getCompanyImage());
                 intent.putExtra("productTitle",productName);
                 mContext.startActivity(intent);
             }
@@ -108,6 +115,51 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
     public int getItemCount() {
         return companiesArrayList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+
+        return companyFIlter;
+
+
+    }
+
+
+    private Filter companyFIlter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Companies> filteredList = new ArrayList<>();
+
+            if(constraint== null || constraint.length() ==0)
+            {
+                filteredList.addAll(companiesArrayListFull);
+            }
+            else
+            {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for(Companies companies : companiesArrayListFull)
+                {
+                    if(companies.getCompanyName().toLowerCase().contains(filterPattern))
+                    {
+                        filteredList.add(companies);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            companiesArrayList.clear();
+            companiesArrayList.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 

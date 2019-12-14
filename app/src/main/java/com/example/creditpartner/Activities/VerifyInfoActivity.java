@@ -36,12 +36,11 @@ import java.util.concurrent.TimeUnit;
 
 public class VerifyInfoActivity extends AppCompatActivity {
     private Toolbar mToolbar;
-    private String phoneNumber, name, email, reference;
+    private String phoneNumber, name, email, reference, privilege;
     private String verificationID, currentUserID;
     private ImageView verifyLogo;
-    private Button verifyButton;
+    private TextView verifyButton;
     private EditText otpCode;
-    private ProgressBar loadOTP;
     private FirebaseAuth mAuth;
     private TextView otpMessage, resendOTP;
     private DatabaseReference Ref;
@@ -70,7 +69,6 @@ public class VerifyInfoActivity extends AppCompatActivity {
                     otpCode.requestFocus();
                     return;
                 }
-                loadOTP.setVisibility(View.VISIBLE);
                 verifyCode(code);
             }
         });
@@ -116,15 +114,14 @@ public class VerifyInfoActivity extends AppCompatActivity {
                             hashMap.put("name", name);
                             hashMap.put("reference", reference);
                             hashMap.put("email", email);
+                            hashMap.put("privilege", privilege);
 
 
                             Ref.child("Customers").child("BasicInfo").child(currentUserID).setValue(hashMap);
-                            loadOTP.setVisibility(View.INVISIBLE);
 
 
                         } else {
                             Toast.makeText(VerifyInfoActivity.this, task.getException().getMessage().toString(), Toast.LENGTH_LONG).show();
-                            loadOTP.setVisibility(View.INVISIBLE);
 
                         }
                     }
@@ -175,18 +172,16 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
 
     private void Initialize() {
-        SetupToolbar();
 
         //Get all user details previously filled
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         name = getIntent().getStringExtra("name");
         email = getIntent().getStringExtra("email");
         reference = getIntent().getStringExtra("reference");
+        privilege = getIntent().getStringExtra("privilege");
 
         otpCode = (EditText) findViewById(R.id.otp_code);
-        verifyButton = (Button) findViewById(R.id.verify_button);
-        loadOTP = (ProgressBar) findViewById(R.id.load_otp);
-        loadOTP.setVisibility(View.GONE); //Dont show before verify
+        verifyButton = (TextView) findViewById(R.id.verify_button);
         verifyLogo = (ImageView)findViewById(R.id.verify_logo);
 
         resendOTP = (TextView)findViewById(R.id.otp_resend);
@@ -197,12 +192,5 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
     }
 
-    private void SetupToolbar() {
-
-        mToolbar = (Toolbar) findViewById(R.id.verify_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Credit Partner");
-
-    }
 
 }

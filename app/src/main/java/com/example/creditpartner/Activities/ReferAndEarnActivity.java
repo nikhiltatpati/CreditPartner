@@ -30,7 +30,6 @@ import java.util.Random;
 
 public class ReferAndEarnActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
     private Button referButton;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -62,8 +61,8 @@ public class ReferAndEarnActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue().toString().trim();
                 name.replaceAll("\\s+", "");
-                String code = "" + name + String.valueOf(random.nextInt(10000)) + "";
-                Ref.child("References").child(currentUserID).push().setValue(code);
+                String code = "" + currentUserID + name + random.nextInt(1000)+ "";
+                Ref.child("References").child(code).setValue("true");
                 OpenWhatsapp(code);
 
             }
@@ -100,7 +99,6 @@ public class ReferAndEarnActivity extends AppCompatActivity {
     }
 
         private void Initialize() {
-        SetupTOolbar();
         referButton = (Button)findViewById(R.id.refer_button);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -108,12 +106,5 @@ public class ReferAndEarnActivity extends AppCompatActivity {
         Ref = FirebaseDatabase.getInstance().getReference();
     }
 
-    private void SetupTOolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.refer_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Refer And Earn");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-    }
 }

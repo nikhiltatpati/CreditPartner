@@ -3,62 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAccent"
     tools:context=".Activities.VerifyInfoActivity">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/verify_logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/cplogo"
-        android:layout_below="@id/load_otp"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="25dp"
+        android:src="@drawable/cplogo" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/customer_otp"
-        android:layout_centerInParent="true"
+
+    <EditText
+        android:inputType="number"
+        android:id="@+id/otp_code"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/otp_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="OTP"
-            android:gravity="center"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/verify_logo"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/inputs"
+        android:gravity="center"
+        android:hint="OTP" />
 
 
     <TextView
         android:id="@+id/otp_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/customer_otp"
-        android:text="@string/otp_name"
-        android:textSize="19dp"
+        android:layout_below="@id/otp_code"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
-        android:textColor="@color/colorAccent"/>
+        android:text="@string/otp_name"
+        android:textColor="@android:color/white"
+        android:textSize="19dp" />
 
 
-    <ProgressBar
-        android:id="@+id/load_otp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/verify_bar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
-
-
-
-    <include
-        android:id="@+id/verify_bar"
-        layout="@layout/app_bar" />
-
-    <Button
+    <TextView
         android:id="@+id/verify_button"
         android:layout_width="140dp"
         android:layout_height="50dp"
@@ -66,10 +50,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/buttons"
+        android:gravity="center"
         android:text="Verify"
         android:textColor="@android:color/white"
-        android:textSize="17dp" />
+        android:textSize="23dp" />
 
 
 </RelativeLayout>

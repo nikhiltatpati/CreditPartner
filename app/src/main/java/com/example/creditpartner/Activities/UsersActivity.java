@@ -27,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class UsersActivity extends AppCompatActivity {
 
@@ -77,6 +79,15 @@ public class UsersActivity extends AppCompatActivity {
                     usersArrayList.add(new Users(username, usertype, usernumber));
 
                 }
+                Collections.sort(usersArrayList, new Comparator<Users>() {
+                    @Override
+                    public int compare(Users users, Users t1) {
+                        String s1 = users.getUserName();
+                        String s2 = t1.getUserName();
+                        return s1.compareToIgnoreCase(s2);
+                    }
+
+                });
                 adapter = new SideUserAdapter(UsersActivity.this, usersArrayList);
                 recyclerView.setAdapter(adapter);
                 // loadProducts.setVisibility(View.INVISIBLE);
