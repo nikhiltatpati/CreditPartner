@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.EMICalculatorActivity">
+
+
+    <include
+        android:id="@+id/emi_bar"
+        layout="@layout/app_bar" />
+
+
+    <EditText
+        android:id="@+id/emi_loan"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/emi_bar"
+        android:hint="Enter Loan Amount" />
+
+    <EditText
+        android:id="@+id/emi_rate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_below="@id/emi_loan"
+
+        android:hint="Enter Rate of Interest"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/emi_tenure"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_below="@id/emi_rate"
+
+        android:hint="Enter Tenure in Years"
+        android:inputType="number" />
+
+
+    <View
+        android:id="@+id/horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/emi_tenure"
+        android:background="@android:color/darker_gray" />
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_below="@id/emi_tenure"
+        android:layout_toLeftOf="@id/vertical_line"
+        android:text="EMI"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="60dp"
+        android:textSize="22dp" />
+
+
+    <View
+        android:id="@+id/vertical_line"
+        android:layout_width="1dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/emi_tenure"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/darker_gray" />
+
+    <View
+        android:id="@+id/horizontal_line2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/vertical_line"
+        android:background="@android:color/darker_gray" />
+
+
+    <TextView
+        android:id="@+id/emi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@id/emi_tenure"
+        android:text="₹0"
+        android:layout_marginTop="60dp"
+        android:layout_toRightOf="@id/vertical_line"
+        android:textSize="22dp" />
+
+
+    <Button
+        android:id="@+id/emi_calc"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/horizontal_line2"
+        android:background="@drawable/buttons"
+        android:text="Calculate EMI"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="20dp" />
+
+
+</RelativeLayout>

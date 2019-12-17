@@ -1,5 +1,6 @@
 package com.example.creditpartner.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,11 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.creditpartner.Activities.AddExpenseActivity;
 import com.example.creditpartner.Activities.ProductDetailActivity;
-import com.example.creditpartner.Activities.TaxInfoActivity;
 import com.example.creditpartner.Activities.TaxesActivity;
 import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.R;
@@ -23,7 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private View myView;
     private Context mContext;
@@ -31,7 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private FirebaseAuth mAuth;
     private String currentUserID;
 
-    public ProductAdapter(Context mContext, ArrayList<Products> products) {
+    public CategoryAdapter(Context mContext, ArrayList<Products> products) {
         this.mContext = mContext;
         this.products = products;
 
@@ -42,14 +44,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @NonNull
     @Override
-    public ProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        myView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_layout,parent,false);
-        return new ProductAdapter.ViewHolder(myView);
+        myView = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_layout, parent, false);
+        return new ViewHolder(myView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         final Products product = products.get(position);
         holder.productName.setText(product.getProductName());
@@ -61,25 +63,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override
             public void onClick(View view) {
 
-                if(product.getProductName().equals("Cibile Score"))
-                {
-                    Toast.makeText(mContext,"Coming soon! Hang on!", Toast.LENGTH_SHORT).show();
-                }
 
-                else if(product.getProductName().equals("Taxes"))
-                {
-                    Intent intent = new Intent(mContext.getApplicationContext(), TaxInfoActivity.class);
-                    intent.putExtra("productName", product.getProductName());
-                    intent.putExtra("currentUserID", currentUserID);
-                    mContext.startActivity(intent);
-                }
-                else {
+                Intent intent = new Intent(mContext, AddExpenseActivity.class);
+                intent.putExtra("productName", product.getProductName());
+                mContext.startActivity(intent);
+                ((Activity)mContext).finish();
 
-
-                    Intent intent = new Intent(mContext.getApplicationContext(), ProductDetailActivity.class);
-                    intent.putExtra("productName", product.getProductName());
-                    mContext.startActivity(intent);
-                }
             }
         });
 
@@ -95,13 +84,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         private ImageView productImage;
         private TextView productName;
         private FrameLayout productCardview;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            productImage = (ImageView)myView.findViewById(R.id.product_image);
-            productName = (TextView)myView.findViewById(R.id.product_name);
-            productCardview = (FrameLayout)myView.findViewById(R.id.product_cardview);
+            productImage = (ImageView) myView.findViewById(R.id.categoryy_image);
+            productName = (TextView) myView.findViewById(R.id.categoryy_name);
+            productCardview = (FrameLayout) myView.findViewById(R.id.category_cardview);
 
         }
     }
 }
+

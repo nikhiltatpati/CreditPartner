@@ -99,7 +99,7 @@
             android:layout_marginLeft="35dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/vertical_line"
-            android:text="Interest Rate"
+            android:text="Minimum Balance"
             android:textSize="16dp" />
 
         <View

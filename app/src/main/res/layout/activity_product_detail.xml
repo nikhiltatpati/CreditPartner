@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@android:color/white"
     tools:context=".Activities.ProductDetailActivity">
 
     <include
@@ -30,7 +30,7 @@
         android:layout_below="@id/search_companies"
         android:text="No Products in this Category!"
         android:textSize="22dp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorAccent"
         android:visibility="gone"
         android:layout_marginTop="30dp"/>
 

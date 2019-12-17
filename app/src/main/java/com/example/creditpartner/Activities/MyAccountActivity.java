@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ public class MyAccountActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextView nameText, emailText, phoneNumberText, privilegeText;
     private ProgressBar loadAccountDetails;
+    private Button gotoApp;
 
 
     @Override
@@ -38,15 +41,16 @@ public class MyAccountActivity extends AppCompatActivity {
 
         GetUserDetails();
 
-        DisplayUserDetails();
-
+        gotoApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyAccountActivity.this, MyApplications.class));
+            }
+        });
 
     }
 
-    private void DisplayUserDetails() {
 
-
-    }
 
     private void GetUserDetails() {
 
@@ -99,6 +103,8 @@ public class MyAccountActivity extends AppCompatActivity {
         emailText = (TextView)findViewById(R.id.email);
         phoneNumberText = (TextView)findViewById(R.id.number);
         privilegeText = (TextView)findViewById(R.id.privilege);
+
+        gotoApp = (Button)findViewById(R.id.myacc_app);
 
         loadAccountDetails = (ProgressBar)findViewById(R.id.load_account_details);
     }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.creditpartner.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -22,12 +24,13 @@ public class CreditReportActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
-    private TextInputEditText panNumber, emailText;
+    private TextInputEditText panNumber, emailText, nameText, numberText;
     private Button getCreditReport;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private String currentUSerID;
     private DatabaseReference Ref;
+    private ProgressBar loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,27 +54,49 @@ public class CreditReportActivity extends AppCompatActivity {
     private void GetCreditReport() {
         String emailTextString = emailText .getText().toString();
         String panNumberString = panNumber.getText().toString();
+        String nameTextString = nameText.getText().toString();
+        String numberTextString = numberText.getText().toString();
 
-        if(emailTextString.isEmpty())
+        if(!isEmailValid(emailTextString))
         {
             emailText.setError("Enter Valid Email");
         }
 
         else if(panNumberString.isEmpty())
         {
-            panNumber.setError("Pan Number");
+            panNumber.setError("Enter valid Pan Number");
 
+        }
+        else if(nameTextString.isEmpty())
+        {
+            nameText.setError("Enter Valid Name");
+        }
+
+        else if(numberTextString.isEmpty() || numberTextString.length()!= 10)
+        {
+            numberText.setError("Invalid number");
         }
 
         else
         {
+            loadingBar.setVisibility(View.VISIBLE);
+
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("panNumber", panNumberString);
             hashMap.put("email", emailTextString);
-            Ref.child("CreditReportDetails").child(currentUSerID).setValue(hashMap);
+            hashMap.put("name", nameTextString);
+            hashMap.put("number", numberTextString);
+            Ref.child("CreditReportDetails").child(currentUSerID).push().setValue(hashMap);
+            Toast.makeText(CreditReportActivity.this, "Credit Report added to Database", Toast.LENGTH_SHORT).show();
+            loadingBar.setVisibility(View.INVISIBLE);
 
         }
     }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
 
     private void Initialize() {
 
@@ -81,11 +106,20 @@ public class CreditReportActivity extends AppCompatActivity {
         currentUSerID = currentUser.getUid();
         Ref = FirebaseDatabase.getInstance().getReference();
 
+        panNumber = (TextInputEditText)findViewById(R.id.credit_pan);
+        nameText = (TextInputEditText)findViewById(R.id.credit_name);
+        emailText = (TextInputEditText)findViewById(R.id.credit_email);
+        numberText = (TextInputEditText)findViewById(R.id.credit_number);
+
+        getCreditReport = (Button)findViewById(R.id.credit_button);
+
+        loadingBar = (ProgressBar)findViewById(R.id.load_credit_report);
+
 
     }
 
     private void SetupTOolbar() {
-        mToolbar = (Toolbar)findViewById(R.id.company_bar);
+        mToolbar = (Toolbar)findViewById(R.id.credit_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Credit Report");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

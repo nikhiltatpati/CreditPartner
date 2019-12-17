@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,7 +33,10 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class VerifyInfoActivity extends AppCompatActivity {
@@ -56,8 +61,6 @@ public class VerifyInfoActivity extends AppCompatActivity {
         Initialize();
 
 
-
-
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,8 +81,6 @@ public class VerifyInfoActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-
         sendVerificationCode(phoneNumber);
 
     }
@@ -88,10 +89,8 @@ public class VerifyInfoActivity extends AppCompatActivity {
         try {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID, code);
             signInWithCredentials(credential);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(VerifyInfoActivity.this,""+e.getMessage(),Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(VerifyInfoActivity.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -103,11 +102,19 @@ public class VerifyInfoActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             currentUser = mAuth.getCurrentUser();
-                            currentUserID = currentUser.getUid();
-                            Intent intent = new Intent(VerifyInfoActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            finish();
+                            currentUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                    } else {
+
+                                    }
+                                }
+                            });
+
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
+                            Date date = new Date();
+                            String timeStamp = simpleDateFormat.format(date);
 
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("phoneNumber", phoneNumber);
@@ -115,9 +122,16 @@ public class VerifyInfoActivity extends AppCompatActivity {
                             hashMap.put("reference", reference);
                             hashMap.put("email", email);
                             hashMap.put("privilege", privilege);
+                            hashMap.put("timeStamp",timeStamp);
 
+                            currentUserID = currentUser.getUid();
 
                             Ref.child("Customers").child("BasicInfo").child(currentUserID).setValue(hashMap);
+                            Intent intent = new Intent(VerifyInfoActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+
 
 
                         } else {
@@ -182,10 +196,10 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
         otpCode = (EditText) findViewById(R.id.otp_code);
         verifyButton = (TextView) findViewById(R.id.verify_button);
-        verifyLogo = (ImageView)findViewById(R.id.verify_logo);
+        verifyLogo = (ImageView) findViewById(R.id.verify_logo);
 
-        resendOTP = (TextView)findViewById(R.id.otp_resend);
-        otpMessage = (TextView)findViewById(R.id.otp_message);
+        resendOTP = (TextView) findViewById(R.id.otp_resend);
+        otpMessage = (TextView) findViewById(R.id.otp_message);
 
         mAuth = FirebaseAuth.getInstance();
         Ref = FirebaseDatabase.getInstance().getReference();

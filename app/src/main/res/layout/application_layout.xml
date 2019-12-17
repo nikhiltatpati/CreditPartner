@@ -34,4 +34,12 @@
         android:layout_marginRight="15dp"
         android:textSize="17dp" />
 
+    <View
+        android:id="@+id/horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/app_image"
+        android:background="@android:color/darker_gray" />
+
+
 </RelativeLayout>

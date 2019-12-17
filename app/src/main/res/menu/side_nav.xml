@@ -33,6 +33,11 @@
     <item
         android:id="@+id/side_myapps"
         android:title="My Applications" />
+
+    <item
+        android:id="@+id/side_saving"
+        android:title="Savings Account" />
+
     <item
         android:id="@+id/side_credit_report"
         android:title="Credit Report" />
@@ -40,28 +45,10 @@
         android:id="@+id/side_credit_card"
         android:title="Credit Card" />
 
-    <group
-        android:id="@+id/taxes"
-        android:checkableBehavior="single">
 
-        <item
-            android:id="@+id/side_taxes"
-            android:title="Taxes"/>
-
-        <item
-            android:id="@+id/side_taxes_reg"
-            android:title="Tax Registration"
-            android:visible="false"/>
-
-        <item
-            android:id="@+id/side_taxes_ret"
-            android:title="Tax Returns"
-            android:visible="false"/>
-
-
-
-
-    </group>
+    <item
+        android:id="@+id/side_taxes"
+        android:title="Taxes" />
 
 
     <group
@@ -129,19 +116,45 @@
             android:title="Car Insurance"
             android:visible="false" />
     </group>
+
+
     <group
-        android:id="@+id/log"
+        android:id="@+id/tools"
         android:checkableBehavior="single">
 
 
         <item
-            android:id="@+id/side_refer_and_earn"
-            android:title="Refer and Earn" />
+            android:id="@+id/Tools"
+            android:title="Tools" />
+
         <item
-            android:id="@+id/side_logout"
-            android:title="Logout" />
+            android:id="@+id/side_emi_cal"
+            android:title="Emi Calculator"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_ifsc"
+            android:title="IFSC Code Finder"
+            android:visible="false" />
 
     </group>
+
+
+    <item
+        android:id="@+id/notice"
+        android:title="Notice to customer"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/side_myoffer"
+        android:title="My Offer"
+         />
+
+    <item
+        android:id="@+id/side_logout"
+        android:title="Logout" />
+
+
 
 
 </menu>

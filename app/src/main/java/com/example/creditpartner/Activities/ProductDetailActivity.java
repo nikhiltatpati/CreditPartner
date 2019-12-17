@@ -172,7 +172,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                     });
 
-                    adapter = new CompanyAdapter(ProductDetailActivity.this, companiesArrayList);
+                    adapter = new CompanyAdapter(ProductDetailActivity.this, companiesArrayList, productTitle);
                     companyRecyclerview.setAdapter(adapter);
                     loadCompanies.setVisibility(View.INVISIBLE);
 

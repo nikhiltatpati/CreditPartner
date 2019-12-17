@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".Activities.IFSCCodeFinderActivity">
+
+    <include
+        android:id="@+id/ifsc_bar"
+        layout="@layout/app_bar"/>
+
+    <LinearLayout
+        android:id="@+id/lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/ifsc_bank"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:hint="Select your Bank" />
+
+        <EditText
+            android:id="@+id/ifsc_state"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:hint="Select State"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/ifsc_city"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:hint="City"
+            android:inputType="number" />
+
+
+        <EditText
+            android:id="@+id/ifsc_branch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:hint="Select Branch" />
+
+
+
+
+        <Button
+            android:id="@+id/ifsc_find"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/buttons"
+            android:layout_marginBottom="20dp"
+            android:text="Find IFSC Code"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

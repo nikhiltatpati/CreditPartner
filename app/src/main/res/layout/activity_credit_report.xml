@@ -6,97 +6,150 @@
     android:layout_height="match_parent"
     tools:context=".Activities.CreditReportActivity">
 
-
     <include
-        layout="@layout/app_bar"
-        android:id="@+id/credit_bar"/>
+        android:id="@+id/credit_bar"
+        layout="@layout/app_bar" />
 
-    <ImageView
-        android:id="@+id/credit_logo"
-        android:layout_width="400dp"
-        android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/credit_bar"
-        android:src="@drawable/creditscore"
-        android:scaleType="centerCrop"/>
-
-    <TextView
-        android:id="@+id/textcredit"
+    <ProgressBar
+        android:id="@+id/load_credit_report"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/credit_logo"
-        android:text="@string/creditscore"
-        android:textSize="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"/>
+        android:visibility="invisible"
+        android:layout_centerInParent="true"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/credit_details_card"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textcredit"
-        android:layout_margin="30dp">
+        android:layout_below="@id/credit_bar">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/credit_email_text"
-                android:layout_centerInParent="true"
+
+
+            <ImageView
+                android:id="@+id/credit_logo"
+                android:layout_width="400dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/creditscore" />
+
+            <TextView
+                android:id="@+id/textcredit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/credit_logo"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:text="@string/creditscore"
+                android:textSize="20dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/credit_details_card"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_height="match_parent"
+                android:layout_below="@id/textcredit"
+                android:layout_margin="20dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/credit_email"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="Email"
-                    android:gravity="center"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/credit_name_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="20dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/credit_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center"
+                            android:hint="Name" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/credit_number_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/credit_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center"
+                            android:hint="10-digit Mobile Number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/credit_email_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/credit_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center"
+                            android:hint="Email" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/credit_pan_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/credit_email_text"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/credit_pan_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/credit_email_text"
 
-                >
+                        >
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/credit_pan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_margin="10dp"
-                    android:hint="Enter PAN number" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/credit_pan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="center_horizontal"
+                            android:hint="Enter PAN number" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <Button
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/buttons"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="20dp"
-                android:text="Get Credit Score"
-                android:textColor="@android:color/white"
-                android:textSize="18dp"
-                android:layout_centerHorizontal="true"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
+                    <Button
+                        android:id="@+id/credit_button"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/buttons"
+                        android:text="Get Credit Score"
+                        android:textColor="@android:color/white"
+                        android:textSize="18dp" />
 
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
         </RelativeLayout>
 
-
-
-    </androidx.cardview.widget.CardView>
-
+    </ScrollView>
 
 </RelativeLayout>

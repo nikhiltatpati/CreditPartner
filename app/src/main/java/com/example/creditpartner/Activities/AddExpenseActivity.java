@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -31,10 +32,11 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private String currentUserID;
+    private String currentUserID, category;
     private DatabaseReference Ref;
     final Calendar myCalendar = Calendar.getInstance();
     private EditText expenseDate;
+    String monthString;
 
 
     @Override
@@ -59,11 +61,20 @@ public class AddExpenseActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, month);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                monthString = String.valueOf(month + 1);
                 updateLabel();
 
 
             }
         };
+
+        category_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(AddExpenseActivity.this, SeletCategoryActivity.class));
+            }
+        });
 
         expenseDate.setOnClickListener(new View.OnClickListener() {
 
@@ -100,7 +111,6 @@ public class AddExpenseActivity extends AppCompatActivity {
 
             Ref.child("Transactions").child(currentUserID).push().setValue(hashMap);
             startActivity(new Intent(AddExpenseActivity.this, PaisaTrackerActivity.class));
-            finish();
 
 
         }
@@ -115,8 +125,14 @@ public class AddExpenseActivity extends AppCompatActivity {
     private void Initialize() {
 
         SetupToolbar();
+
+        if(getIntent() != null) {
+            category = getIntent().getStringExtra("productName");
+        }
         expense_value = (EditText) findViewById(R.id.expense_value);
         category_name = (EditText) findViewById(R.id.category_name);
+        category_name.setText(category);
+
         addExpense = (TextView) findViewById(R.id.add_transaction);
         expenseDate = (EditText) findViewById(R.id.expense_date);
         mAuth = FirebaseAuth.getInstance();
@@ -125,6 +141,12 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         Ref = FirebaseDatabase.getInstance().getReference();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(AddExpenseActivity.this, PaisaTrackerActivity.class));
     }
 
     private void SetupToolbar() {

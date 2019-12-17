@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
         android:name=".Classes.MyApplication"
@@ -15,11 +16,45 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ApplicationDetailsActivity"></activity>
+        <service
+            android:name=".Services.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".Services.MyFirebaseInstanceIDService"
+            android:enabled="true"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".Activities.NoticeToCustomerActivity"
+            android:parentActivityName=".Activities.MainActivity"/>
+        <activity android:name=".Activities.MyOfferActivity"
+            android:parentActivityName=".Activities.MainActivity"/>
+        <activity android:name=".Activities.IFSCCodeFinderActivity"
+            android:parentActivityName=".Activities.MainActivity"/>
+        <activity android:name=".Activities.EMICalculatorActivity"
+            android:parentActivityName=".Activities.MainActivity"/>
+        <activity
+            android:name=".Activities.TaxInfoActivity"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.SeletCategoryActivity" />
+        <activity
+            android:name=".Activities.ApplicationDetailsActivity"
+            android:parentActivityName=".Activities.MyApplications" />
         <activity
             android:name=".Activities.MyApplications"
             android:parentActivityName=".Activities.MainActivity" />
-        <activity android:name=".Activities.ApplyFormActivity" />
+        <activity android:name=".Activities.ApplyFormActivity"
+            android:parentActivityName=".Activities.MainActivity"/>
         <activity
             android:name=".Activities.TaxWebsiteActivity"
             android:parentActivityName=".Activities.MainActivity" />

@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ApplicationDetailsActivity extends AppCompatActivity {
 
-    private TextView emailTIET, mobileTIET, pinTIET, nameTIET, productName;
+    private TextView emailTIET, mobileTIET, pinTIET, nameTIET, productName, rateText, mbText;
     private CircleImageView productImage;
     private Toolbar mToolbar;
     private FirebaseAuth mAuth;
@@ -45,7 +45,37 @@ public class ApplicationDetailsActivity extends AppCompatActivity {
         GetKey();
         
         SetupDetails();
+
+        GetCompanyDetails();
         
+    }
+
+    private void GetCompanyDetails() {
+
+        Ref.child("CompanyList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
+                {
+                    for(DataSnapshot dataSnapshot11 : dataSnapshot1.getChildren())
+                    {
+                        if(dataSnapshot11.child("companyName").getValue().toString().equals(name) &&
+                                dataSnapshot11.child("companyImage").getValue().toString().equals(Image))
+                        {
+                            rateText.setText(dataSnapshot11.child("companyRate").getValue().toString());
+                            mbText.setText(dataSnapshot11.child("companyMinimumBalance").getValue().toString());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     private void GetKey() {
@@ -59,7 +89,7 @@ public class ApplicationDetailsActivity extends AppCompatActivity {
                         nameTIET.setText(dataSnapshot1.child("myName").getValue().toString());
                         mobileTIET.setText(dataSnapshot1.child("myMobile").getValue().toString());
                         emailTIET.setText(dataSnapshot1.child("myEmail").getValue().toString());
-                        pinTIET.setText(dataSnapshot1.child("myPin").getValue().toString());
+                        pinTIET.setText("Pin Code - " + dataSnapshot1.child("myPin").getValue().toString());
 
                         loadingBar.setVisibility(View.GONE);
 
@@ -106,6 +136,8 @@ public class ApplicationDetailsActivity extends AppCompatActivity {
         mobileTIET = (TextView) findViewById(R.id.appdetail_number);
         nameTIET = (TextView) findViewById(R.id.appdetail_myname);
         pinTIET = (TextView) findViewById(R.id.appdetail_pin);
+        rateText = (TextView) findViewById(R.id.app_rate);
+        mbText = (TextView) findViewById(R.id.app_mb);
         productImage = (CircleImageView)findViewById(R.id.appdetail_image);
         productName = (TextView)findViewById(R.id.appdetail_name);
 
@@ -120,7 +152,7 @@ public class ApplicationDetailsActivity extends AppCompatActivity {
     private void SetupToolbar() {
         mToolbar = findViewById(R.id.appdetail_bar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(name);
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

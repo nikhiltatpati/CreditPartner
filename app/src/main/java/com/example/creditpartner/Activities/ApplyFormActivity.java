@@ -26,13 +26,13 @@ import java.util.HashMap;
 public class ApplyFormActivity extends AppCompatActivity {
 
 
-    private EditText emailTIET, mobileTIET, pinTIET, nameTIET;
+    private EditText emailTIET, mobileTIET, pinTIET, nameTIET, gstText, panText;
     private Toolbar mToolbar;
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
     private FirebaseUser currentUSer;
     private TextView applyForm;
-    private String currentUSerID, companyTitle, productTitle, companyImage;
+    private String currentUSerID, companyTitle, productTitle, companyImage, type;
 
 
     @Override
@@ -58,16 +58,14 @@ public class ApplyFormActivity extends AppCompatActivity {
 
                 if (name.isEmpty()) {
                     nameTIET.setError("Enter your full name!");
-                } else if (customerNumber.length() < 10) {
+                } else if (customerNumber.length() != 10) {
                     mobileTIET.setError("Enter a valid number!");
 
                 } else if (!isEmailValid(email)) {
                     emailTIET.setError("Email is invalid!");
-                }
-
-                else if (pin.isEmpty()) {
+                } else if (pin.isEmpty()) {
                     pinTIET.setError("Pin Code is invalid!");
-                }else {
+                } else {
 
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date date = new Date();
@@ -87,9 +85,9 @@ public class ApplyFormActivity extends AppCompatActivity {
                     Ref.child("My Applications").child(currentUSerID).push().setValue(hashMap);
 
 
-                    Intent intent = new Intent(ApplyFormActivity.this, CompanyWebsiteActivity.class);
-                    intent.putExtra("companyTitle",companyTitle);
-                    intent.putExtra("productTitle",productTitle);
+                    Intent intent = new Intent(ApplyFormActivity.this, TaxWebsiteActivity.class);
+                    intent.putExtra("companyTitle", companyTitle);
+                    intent.putExtra("productTitle", productTitle);
                     startActivity(intent);
 
                 }
@@ -97,9 +95,6 @@ public class ApplyFormActivity extends AppCompatActivity {
 
             }
         });
-
-
-
 
 
     }
@@ -138,15 +133,19 @@ public class ApplyFormActivity extends AppCompatActivity {
     private void InitializeFields() {
 
 
-
         SetupToolbar();
 
         companyTitle = getIntent().getStringExtra("companyTitle");
         productTitle = getIntent().getStringExtra("productTitle");
         companyImage = getIntent().getStringExtra("companyImage");
 
+        type = getIntent().getStringExtra("type");
+
+
         //TextInputEditTexts
         emailTIET = (EditText) findViewById(R.id.form_email);
+        gstText = (EditText) findViewById(R.id.form_gst_number);
+        panText = (EditText) findViewById(R.id.form_pan_number);
         mobileTIET = (EditText) findViewById(R.id.form_number);
         nameTIET = (EditText) findViewById(R.id.form_name);
         pinTIET = (EditText) findViewById(R.id.form_pin_code);
@@ -154,7 +153,15 @@ public class ApplyFormActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         Ref = FirebaseDatabase.getInstance().getReference();
         currentUSerID = mAuth.getCurrentUser().getUid();
-        applyForm = (TextView)findViewById(R.id.apply_form);
+        applyForm = (TextView) findViewById(R.id.apply_form);
+
+
+        if (type.equals("Pan")) {
+            panText.setVisibility(View.VISIBLE);
+        } else if (type.equals("GST")) {
+            gstText.setVisibility(View.VISIBLE);
+        }
+
 
     }
 

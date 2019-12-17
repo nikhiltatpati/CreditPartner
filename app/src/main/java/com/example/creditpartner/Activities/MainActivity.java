@@ -3,13 +3,10 @@ package com.example.creditpartner.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.creditpartner.Adapters.CategoryAdapter;
 import com.example.creditpartner.Adapters.ProductAdapter;
 import com.example.creditpartner.Adapters.SliderAdapter;
 import com.example.creditpartner.Classes.Products;
@@ -140,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         isSuperAdmin = true;
                         superAdmin = "True";
                         navigationView.getMenu().setGroupVisible(R.id.admin_menu, true);
+                        navigationView.getMenu().findItem(R.id.notice).setVisible(true);
                     }
 
                 }
@@ -266,6 +265,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+
+
     private void ChangeActivity(Class Activity) {
         Intent intent = new Intent(MainActivity.this, Activity);
         startActivity(intent);
@@ -340,31 +341,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             case R.id.side_taxes: {
-                boolean b = !menu.findItem(R.id.side_taxes_reg).isVisible();
-                menu.findItem(R.id.side_taxes_reg).setVisible(b);
-                menu.findItem(R.id.side_taxes_ret).setVisible(b);
-                break;
-            }
-
-            case R.id.side_taxes_reg: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, TaxesActivity.class);
-                intent.putExtra("currentUserID", currentUserID);
-                intent.putExtra("productName", "Tax Registration");
+                Intent intent = new Intent(MainActivity.this, TaxInfoActivity.class);
                 startActivity(intent);
                 break;
             }
 
-            case R.id.side_taxes_ret: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, TaxesActivity.class);
-                intent.putExtra("currentUserID", currentUserID);
-                intent.putExtra("productName", "Tax Returns");
-                startActivity(intent);
-                break;
-            }
+
+
 
             case R.id.side_loan: {
 
@@ -390,6 +375,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
+            case R.id.Tools:
+            {
+                boolean b = !menu.findItem(R.id.side_emi_cal).isVisible();
+                menu.findItem(R.id.side_emi_cal).setVisible(b);
+                menu.findItem(R.id.side_ifsc).setVisible(b);
+
+                break;
+            }
+
+            case R.id.side_emi_cal:
+            {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(MainActivity.this, EMICalculatorActivity.class));
+
+                break;
+            }
+
+
+            case R.id.side_ifsc:
+            {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(MainActivity.this, IFSCCodeFinderActivity.class));
+
+                break;
+            }
+
 
             case R.id.side_logout: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -407,18 +420,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             }
-            case R.id.side_refer_and_earn: {
+
+            case R.id.side_myoffer:
+            {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(MainActivity.this, MyOfferActivity.class));
+                break;
+
+            }
+
+            case R.id.notice:
+            {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(MainActivity.this, NoticeToCustomerActivity.class));
+                break;
+
+            }
+       /*     case R.id.side_refer_and_earn: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 ChangeActivity(ReferAndEarnActivity.class);
                 break;
 
-            }
+            }*/
 
             case R.id.side_credit_report: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-                Snackbar.make(drawerLayout, "Coming Soon, hang on!", 3000).show();
+                startActivity(new Intent(MainActivity.this, CreditReportActivity.class));
                 break;
 
             }
@@ -446,6 +477,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawer.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
                 intent.putExtra("productName", "Education Loan");
+                startActivity(intent);
+                break;
+
+            }
+
+            case R.id.side_saving: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                intent.putExtra("productName", "Saving Account");
                 startActivity(intent);
                 break;
 
@@ -615,6 +656,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        finishAffinity();
+
     }
 }

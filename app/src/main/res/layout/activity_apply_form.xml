@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@android:color/white"
     tools:context=".Activities.ApplyFormActivity">
 
     <include
-        layout="@layout/app_bar"
-        android:id="@+id/apply_form_bar"/>
+        android:id="@+id/apply_form_bar"
+        layout="@layout/app_bar" />
 
     <LinearLayout
+        android:id="@+id/lin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:orientation="vertical">
 
@@ -23,19 +24,17 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/inputs"
             android:gravity="center"
             android:hint="Your name" />
 
         <EditText
-            android:inputType="number"
             android:id="@+id/form_number"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/inputs"
             android:gravity="center"
-            android:hint="10-digit Mobile Number" />
+            android:hint="10-digit Mobile Number"
+            android:inputType="number" />
 
 
         <EditText
@@ -43,38 +42,57 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/inputs"
             android:gravity="center"
             android:hint="Your Email" />
 
 
         <EditText
-            android:inputType="number"
             android:id="@+id/form_pin_code"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/inputs"
             android:gravity="center"
-            android:hint="Pin Code" />
+            android:hint="Pin Code"
+            android:inputType="number" />
 
     </LinearLayout>
 
-    <TextView
+    <EditText
+        android:id="@+id/form_pan_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/lin"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:hint="Pan Number"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/form_gst_number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/lin"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:hint="GST Number"
+        android:inputType="number"
+        android:visibility="gone" />
+
+
+    <Button
         android:id="@+id/apply_form"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
-        android:text="Apply"
         android:gravity="center"
-        android:textSize="21dp"/>
-
-
+        android:background="@drawable/buttons"
+        android:text="Apply"
+        android:textColor="@android:color/white"
+        android:textSize="21dp" />
 
 
 </RelativeLayout>

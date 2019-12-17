@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.creditpartner.Adapters.ApplicationAdapter;
@@ -40,7 +41,7 @@ public class MyApplications extends AppCompatActivity {
     private ApplicationAdapter adapter;
     private TextView noApps;
     androidx.appcompat.widget.SearchView searchView;
-
+    private ProgressBar loadProducts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,10 @@ public class MyApplications extends AppCompatActivity {
         ImplementSearch();
 
     }
+
     private void ImplementSearch() {
 
-         searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_apps);
+        searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_apps);
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -78,6 +80,8 @@ public class MyApplications extends AppCompatActivity {
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
@@ -94,15 +98,14 @@ public class MyApplications extends AppCompatActivity {
 
                 }
 
-                if(applicationsArrayList.size() == 0)
-                {
+                if (applicationsArrayList.size() == 0) {
                     noApps.setVisibility(View.VISIBLE);
                     searchView.setVisibility(View.GONE);
                 }
 
                 adapter = new ApplicationAdapter(MyApplications.this, applicationsArrayList);
                 recyclerView.setAdapter(adapter);
-                // loadProducts.setVisibility(View.INVISIBLE);
+                loadProducts.setVisibility(View.INVISIBLE);
 
             }
 
@@ -113,9 +116,6 @@ public class MyApplications extends AppCompatActivity {
         });
 
 
-
-
-
     }
 
     private void Initialize() {
@@ -123,9 +123,10 @@ public class MyApplications extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         Ref = FirebaseDatabase.getInstance().getReference();
-        currentUserID =  currentUser.getUid();
-        recyclerView = (RecyclerView)findViewById(R.id.apps_recyclerview);
-        noApps = (TextView)findViewById(R.id.no_apps);
+        currentUserID = currentUser.getUid();
+        recyclerView = (RecyclerView) findViewById(R.id.apps_recyclerview);
+        noApps = (TextView) findViewById(R.id.no_apps);
+        loadProducts = (ProgressBar) findViewById(R.id.load_companies);
     }
 
     private void SetupToolbar() {

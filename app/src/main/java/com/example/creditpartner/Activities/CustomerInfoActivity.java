@@ -37,7 +37,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
     private FirebaseUser currentUSer;
     private boolean isReferenceValid = false;
 
-    private String mVerificationId, currentUserID;
+
 
     private static final String countryCode = "+91";
 

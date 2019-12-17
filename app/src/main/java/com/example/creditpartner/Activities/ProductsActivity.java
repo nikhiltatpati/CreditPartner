@@ -11,14 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
-import com.example.creditpartner.Adapters.CompanyAdapter;
-import com.example.creditpartner.Adapters.ProductAdapter;
 import com.example.creditpartner.Adapters.SideProductAdapter;
-import com.example.creditpartner.Adapters.SideUserAdapter;
 import com.example.creditpartner.Classes.Products;
-import com.example.creditpartner.Classes.Users;
 import com.example.creditpartner.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
