@@ -11,122 +11,141 @@
         android:layout_height="match_parent">
 
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <ProgressBar
-        android:id="@+id/add_company_progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/company_name"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp">
+            android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
+            <ProgressBar
+                android:id="@+id/add_company_progressbar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:maxLines="1"
-                android:hint="Company Name" />
+                android:layout_centerInParent="true" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/company_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/image"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Company Image Logo Url" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/company_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:hint="Product Name"
+                        android:maxLines="1" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Company URL" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/company_interese_rate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/rate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Company Interest Rate" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/company_minimum_balance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/balance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Company Minimum Balance Required" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <EditText
-            android:id="@+id/features"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="Add Features"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/company_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/url"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:hint="Product URL" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/company_interese_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="numberDecimal"
+                        android:id="@+id/rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:hint="Product Interest Rate" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/company_minimum_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:inputType="numberDecimal"
+                        android:id="@+id/balance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:hint="Product Minimum Balance Required" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/company_product_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:hint="Product ID" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
-            android:id="@+id/add_company_button"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
-            android:background="@drawable/buttons"
-            android:text="Add"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="20dp"
-            android:textSize="17dp" />
-
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/features"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:hint="Add Features" />
 
 
+                <Button
+                    android:id="@+id/choose_image"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/buttons"
+                    android:text="Choose Image"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp" />
 
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/image_chose"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop" />
+
+
+                <Button
+                    android:id="@+id/add_company_button"
+                    android:layout_width="140dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/buttons"
+                    android:text="Add"
+                    android:textColor="@android:color/white"
+                    android:textSize="17dp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
     </ScrollView>
 

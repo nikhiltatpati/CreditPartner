@@ -57,6 +57,7 @@ public class AdsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(AdsActivity.this, AddAdsActivity.class);
+                intent.putExtra("type", "add");
                 startActivity(intent);
 
             }
@@ -76,7 +77,11 @@ public class AdsActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                if(adapter.getFilter() != null)
+                {
+                    adapter.getFilter().filter(newText);
+
+                }
 
                 return false;
             }

@@ -137,6 +137,11 @@
             android:title="IFSC Code Finder"
             android:visible="false" />
 
+        <item
+            android:id="@+id/side_income"
+            android:title="Income tax Calculator"
+            android:visible="false" />
+
     </group>
 
 

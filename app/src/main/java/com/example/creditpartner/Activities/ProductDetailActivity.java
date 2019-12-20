@@ -6,17 +6,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +27,10 @@ import com.example.creditpartner.Adapters.CompanyAdapter;
 import com.example.creditpartner.Adapters.SideUserAdapter;
 import com.example.creditpartner.Classes.Companies;
 import com.example.creditpartner.Classes.Users;
+import com.example.creditpartner.Interfaces.OnStartDragListener;
 import com.example.creditpartner.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,15 +38,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ProductDetailActivity extends AppCompatActivity {
+public class ProductDetailActivity extends AppCompatActivity  {
 
     private Toolbar mToolbar;
-    private String productTitle, currentUserID,phoneNumber;
+    private String productTitle, currentUserID, phoneNumber;
     private RecyclerView companyRecyclerview;
     private ArrayList<Companies> companiesArrayList = new ArrayList<>();
     private String companyName, companyImage, companyRate, companyBalance, companyFeatures;
@@ -52,7 +60,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     private SearchView searchView;
     private CompanyAdapter adapter;
     private TextView noCOmpanies;
+    private boolean isSuperAdmin = false;
 
+    ItemTouchHelper mItemTouchHelper;
 
 
     @Override
@@ -84,12 +94,20 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProductDetailActivity.this, AddCompanyActivity.class);
-                intent.putExtra("productTitle",productTitle);
+                intent.putExtra("productTitle", productTitle);
+                intent.putExtra("type", "add");
+                intent.putExtra("key", "null");
                 startActivity(intent);
             }
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
     }
 
     private void CheckUserOrAdmin() {
@@ -99,6 +117,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("privilege").getValue().equals("SuperAdmin")) {
                     addCompanyButton.setVisibility(View.VISIBLE);
+                    isSuperAdmin = true;
+
 
                 }
             }
@@ -110,13 +130,33 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
 
-
-
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN
+            | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+
+            Collections.swap(companiesArrayList, fromPosition, toPosition);
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+
+
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
 
     private void SetupRecyclerview() {
 
         //Linear layout for all companies
+        loadCompanies.setVisibility(View.VISIBLE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         companyRecyclerview.setLayoutManager(linearLayoutManager);
 
@@ -127,63 +167,71 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
         //Get Company list from firebase
-            Ref.child("CompanyList").child(productTitle).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    companiesArrayList.clear();
+        Ref.child("CompanyList").child(productTitle).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                companiesArrayList.clear();
 
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        if (dataSnapshot1.hasChild("companyName")) {
-                            companyName = dataSnapshot1.child("companyName").getValue().toString();
-                        }
-                        if (dataSnapshot1.hasChild("companyImage")) {
-                            companyImage = dataSnapshot1.child("companyImage").getValue().toString();
-                        }
-
-                        if (dataSnapshot1.hasChild("companyRate")) {
-                            companyRate = dataSnapshot1.child("companyRate").getValue().toString();
-                        }
-
-                        if (dataSnapshot1.hasChild("companyMinimumBalance")) {
-                            companyBalance = dataSnapshot1.child("companyMinimumBalance").getValue().toString();
-                        }
-
-                        if (dataSnapshot1.hasChild("companyFeatures")) {
-                            companyFeatures = dataSnapshot1.child("companyFeatures").getValue().toString();
-                        }
-
-                        companiesArrayList.add(new Companies(companyImage, companyName,companyRate, companyBalance, companyFeatures));
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.hasChild("companyName")) {
+                        companyName = dataSnapshot1.child("companyName").getValue().toString();
+                    }
+                    if (dataSnapshot1.hasChild("companyImage")) {
+                        companyImage = dataSnapshot1.child("companyImage").getValue().toString();
                     }
 
-                    if(companiesArrayList.size() == 0)
-                    {
-                        noCOmpanies.setVisibility(View.VISIBLE);
-                        searchView.setVisibility(View.GONE);
-                        companyRecyclerview.setVisibility(View.GONE);
+                    if (dataSnapshot1.hasChild("companyRate")) {
+                        companyRate = dataSnapshot1.child("companyRate").getValue().toString();
                     }
 
-                    Collections.sort(companiesArrayList, new Comparator<Companies>() {
-                        @Override
-                        public int compare(Companies companies, Companies t1) {
-                            String s1 = companies.getCompanyName();
-                            String s2 = t1.getCompanyName();
-                            return s1.compareToIgnoreCase(s2);
-                        }
+                    if (dataSnapshot1.hasChild("companyMinimumBalance")) {
+                        companyBalance = dataSnapshot1.child("companyMinimumBalance").getValue().toString();
+                    }
 
-                    });
+                    if (dataSnapshot1.hasChild("companyFeatures")) {
+                        companyFeatures = dataSnapshot1.child("companyFeatures").getValue().toString();
+                    }
 
-                    adapter = new CompanyAdapter(ProductDetailActivity.this, companiesArrayList, productTitle);
-                    companyRecyclerview.setAdapter(adapter);
-                    loadCompanies.setVisibility(View.INVISIBLE);
+                    companiesArrayList.add(new Companies(companyImage, companyName, companyRate, companyBalance, companyFeatures));
+                }
 
+                if (companiesArrayList.size() == 0) {
+                    noCOmpanies.setVisibility(View.VISIBLE);
+                    searchView.setVisibility(View.GONE);
+                    companyRecyclerview.setVisibility(View.GONE);
+                }
+
+                Collections.sort(companiesArrayList, new Comparator<Companies>() {
+                    @Override
+                    public int compare(Companies companies, Companies t1) {
+                        String s1 = companies.getCompanyName();
+                        String s2 = t1.getCompanyName();
+                        return s1.compareToIgnoreCase(s2);
+                    }
+
+                });
+
+                adapter = new CompanyAdapter(ProductDetailActivity.this, companiesArrayList, productTitle);
+                companyRecyclerview.setAdapter(adapter);
+                loadCompanies.setVisibility(View.INVISIBLE);
+
+                ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+
+                if(isSuperAdmin)
+                {
+
+                    itemTouchHelper.attachToRecyclerView(companyRecyclerview);
 
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_companies);
 
@@ -196,13 +244,13 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (adapter != null){
+                if (adapter != null) {
                     adapter.getFilter().filter(newText);
                 }
                 return false;
             }
         });
-        }
+    }
 
     private void Initialize() {
 
@@ -213,7 +261,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         currentUserID = currentUser.getUid();
         productTitle = getIntent().getStringExtra("productName");
 
-        noCOmpanies = (TextView)findViewById(R.id.no_companies);
+        noCOmpanies = (TextView) findViewById(R.id.no_companies);
         companyRecyclerview = (RecyclerView) findViewById(R.id.company_recyclerview);
         Ref = FirebaseDatabase.getInstance().getReference();
         addCompanyButton = (ImageButton) findViewById(R.id.add_company);
@@ -233,3 +281,5 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     }
 }
+
+

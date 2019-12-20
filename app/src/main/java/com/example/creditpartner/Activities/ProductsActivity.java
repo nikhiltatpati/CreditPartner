@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 
 import com.example.creditpartner.Adapters.SideProductAdapter;
 import com.example.creditpartner.Classes.Products;
+import com.example.creditpartner.Interfaces.OnStartDragListener;
 import com.example.creditpartner.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ProductsActivity extends AppCompatActivity {
 
@@ -51,6 +54,26 @@ public class ProductsActivity extends AppCompatActivity {
 
 
     }
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN
+            | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+
+            Collections.swap(productsArrayList, fromPosition, toPosition);
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
+
 
     private void ImplementSearch() {
 
@@ -95,6 +118,11 @@ public class ProductsActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
                    // loadProducts.setVisibility(View.INVISIBLE);
 
+
+                    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                    itemTouchHelper.attachToRecyclerView(recyclerView);
+
+
                 }
 
                 @Override
@@ -127,4 +155,6 @@ public class ProductsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
+
 }

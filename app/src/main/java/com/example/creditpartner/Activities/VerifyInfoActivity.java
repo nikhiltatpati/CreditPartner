@@ -30,8 +30,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,8 +53,10 @@ public class VerifyInfoActivity extends AppCompatActivity {
     private TextView otpMessage, resendOTP;
     private DatabaseReference Ref;
     private FirebaseUser currentUser;
+    String key;
     private String[] permissionArray = {Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS};
     private static final int requestCode = 1;
+    HashMap<String, String> hashMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,8 @@ public class VerifyInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verify_info);
 
         Initialize();
+
+        checkPrivilege();
 
 
         verifyButton.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +102,34 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
     }
 
+    private void checkPrivilege() {
+
+
+        privilege = "User";
+        Ref.child("Customers").child("BasicInfo").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.child("phoneNumber").getValue().toString().equals(phoneNumber)) {
+                        privilege = dataSnapshot1.child("privilege").getValue().toString();
+                        break;
+
+                    }
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     private void signInWithCredentials(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -102,36 +137,26 @@ public class VerifyInfoActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             currentUser = mAuth.getCurrentUser();
-                            currentUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                    } else {
+                            currentUserID = currentUser.getUid();
 
-                                    }
-                                }
-                            });
 
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
                             Date date = new Date();
                             String timeStamp = simpleDateFormat.format(date);
 
-                            HashMap<String, String> hashMap = new HashMap<>();
+
                             hashMap.put("phoneNumber", phoneNumber);
                             hashMap.put("name", name);
                             hashMap.put("reference", reference);
                             hashMap.put("email", email);
+                            hashMap.put("timeStamp", timeStamp);
                             hashMap.put("privilege", privilege);
-                            hashMap.put("timeStamp",timeStamp);
-
-                            currentUserID = currentUser.getUid();
-
                             Ref.child("Customers").child("BasicInfo").child(currentUserID).setValue(hashMap);
+
                             Intent intent = new Intent(VerifyInfoActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish();
-
 
 
                         } else {
@@ -187,12 +212,12 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
     private void Initialize() {
 
-        //Get all user details previously filled
         phoneNumber = getIntent().getStringExtra("phoneNumber");
+
+        //Get all user details previously filled
         name = getIntent().getStringExtra("name");
         email = getIntent().getStringExtra("email");
         reference = getIntent().getStringExtra("reference");
-        privilege = getIntent().getStringExtra("privilege");
 
         otpCode = (EditText) findViewById(R.id.otp_code);
         verifyButton = (TextView) findViewById(R.id.verify_button);

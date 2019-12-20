@@ -27,6 +27,16 @@
         android:text="Loading"
         android:textSize="17dp" />
 
+    <ImageButton
+        android:id="@+id/drag_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"
+        android:background="@android:color/white"
+        android:src="@drawable/ic_view_headline_black_24dp" />
+
     <View
         android:id="@+id/horizontal_line"
         android:layout_width="match_parent"

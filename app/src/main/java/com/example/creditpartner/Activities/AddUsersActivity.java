@@ -20,8 +20,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,13 +35,14 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
     private Toolbar mToolbar;
     private TextInputLayout emailTIL, nameTIL, mobileTIL;
     private Spinner privilegeSpinner;
-    private TextInputEditText emailTIET, mobileTIET, nameTIET;
+    private TextInputEditText emailTIET, mobileTIET, nameTIET, idTIET;
     private Button addUserButton;
 
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
     private FirebaseUser currentUSer;
     private static final String countryCode = "+91";
+    private String type, key;
 
 
     @Override
@@ -48,6 +52,11 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
 
 
         InitializeFields();
+
+        if(type.equals("edit"))
+        {
+            GetDetails();
+        }
 
         privilegeSpinner.setOnItemSelectedListener(this);
 
@@ -77,6 +86,7 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
                 String customerNumber = mobileTIET.getText().toString();
                 String email = emailTIET.getText().toString();
                 String name = nameTIET.getText().toString();
+                String userid = idTIET.getText().toString();
                 String privilege = privilegeSpinner.getSelectedItem().toString();
 
                 if (name.isEmpty() || name.length() < 5) {
@@ -97,11 +107,16 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
                     Toast.makeText(AddUsersActivity.this, "Add a privilege!", Toast.LENGTH_SHORT).show();
                 }
 
+                else if (userid.isEmpty()){
+                    Toast.makeText(AddUsersActivity.this, "Add a User ID!", Toast.LENGTH_SHORT).show();
+                }
+
+
 
                 else
                 {
                     SendDataToDatabase(countryCode + mobileTIET.getText().toString(),privilegeSpinner.getSelectedItem().toString(),emailTIET.getText().toString()
-                            , nameTIET.getText().toString());
+                            , nameTIET.getText().toString(), idTIET.getText().toString());
                 }
 
 
@@ -112,12 +127,31 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
+    private void GetDetails() {
+
+        Ref.child("Customers").child("BasicInfo").child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                nameTIET.setText(dataSnapshot.child("name").getValue().toString());
+                emailTIET.setText(dataSnapshot.child("email").getValue().toString());
+                mobileTIET.setText(dataSnapshot.child("phoneNumber").getValue().toString());
+                idTIET.setText(dataSnapshot.child("userID").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
 
-    private void SendDataToDatabase(String phoneNumber,String privilege, String email, String name) {
+    private void SendDataToDatabase(String phoneNumber,String privilege, String email, String name, String id) {
 
 
         HashMap<String, String> hashMap = new HashMap<>();
@@ -125,6 +159,7 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
         hashMap.put("name", name);
         hashMap.put("email", email);
         hashMap.put("privilege", privilege);
+        hashMap.put("userID", id);
 
         Ref.child("Customers").child("BasicInfo").push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -145,6 +180,9 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
 
         SetupToolbar();
 
+        key = getIntent().getStringExtra("key");
+        type = getIntent().getStringExtra("type");
+
         //TextInputLayouts
         emailTIL = (TextInputLayout) findViewById(R.id.add_user_mail);
         mobileTIL = (TextInputLayout) findViewById(R.id.add_user_number);
@@ -155,6 +193,7 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
         emailTIET = (TextInputEditText) findViewById(R.id.useremail);
         mobileTIET = (TextInputEditText) findViewById(R.id.usernumber);
         nameTIET = (TextInputEditText) findViewById(R.id.username);
+        idTIET = (TextInputEditText) findViewById(R.id.userid);
         privilegeSpinner = (Spinner) findViewById(R.id.privilegeSpinner);
 
         //Firebase

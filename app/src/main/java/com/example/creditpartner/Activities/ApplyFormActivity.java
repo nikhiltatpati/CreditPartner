@@ -32,7 +32,7 @@ public class ApplyFormActivity extends AppCompatActivity {
     private DatabaseReference Ref;
     private FirebaseUser currentUSer;
     private TextView applyForm;
-    private String currentUSerID, companyTitle, productTitle, companyImage, type;
+    private String currentUSerID, companyTitle, productTitle, companyRate, type;
 
 
     @Override
@@ -75,7 +75,6 @@ public class ApplyFormActivity extends AppCompatActivity {
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("Date", dates);
                     hashMap.put("Name", companyTitle);
-                    hashMap.put("Image", companyImage);
                     hashMap.put("myName", name);
                     hashMap.put("myEmail", email);
                     hashMap.put("myPin", pin);
@@ -137,7 +136,7 @@ public class ApplyFormActivity extends AppCompatActivity {
 
         companyTitle = getIntent().getStringExtra("companyTitle");
         productTitle = getIntent().getStringExtra("productTitle");
-        companyImage = getIntent().getStringExtra("companyImage");
+        companyRate = getIntent().getStringExtra("companyRate");
 
         type = getIntent().getStringExtra("type");
 

@@ -19,11 +19,18 @@ import com.example.creditpartner.Classes.MySingletonClass;
 import com.example.creditpartner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,10 +41,14 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
     final private String contentType = "application/json";
     final String TAG = "NOTIFICATION TAG";
     private Toolbar mToolbar;
+    private DatabaseReference Ref;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+
 
     String NOTIFICATION_TITLE;
     String NOTIFICATION_MESSAGE;
-    String TOPIC;
+    String TOPIC, currentUserID;
 
 
     EditText edtTitle;
@@ -55,6 +66,10 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
         edtImage = findViewById(R.id.noti_image_link);
         Button btnSend = findViewById(R.id.send_noti);
 
+        Ref= FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+
 
         SetupToolbar();
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +78,18 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 TOPIC = "/topics/offers"; //topic must match with what the receiver subscribed to
                 NOTIFICATION_TITLE = edtTitle.getText().toString();
                 NOTIFICATION_MESSAGE = edtMessage.getText().toString();
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/mm/yyyy");
+                String date = simpleDateFormat.format(new Date());
+
+
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("title", NOTIFICATION_TITLE);
+                hashMap.put("message", NOTIFICATION_MESSAGE);
+                hashMap.put("date", date);
+                Ref.child("MyOffers").push().setValue(hashMap);
+
+
 
                 JSONObject notification = new JSONObject();
                 JSONObject notifcationBody = new JSONObject();

@@ -52,20 +52,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ad_image_link"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/adimagelink"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="Ad Image Link" />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ad_clicks_number"
@@ -90,6 +76,7 @@
                 android:layout_margin="10dp"
                 android:clickable="true"
                 android:editable="false"
+                android:focusable="false"
                 android:hint="Start Date" />
 
             <EditText
@@ -99,6 +86,7 @@
                 android:layout_margin="10dp"
                 android:clickable="true"
                 android:editable="false"
+                android:focusable="false"
                 android:hint="End Date" />
 
 
@@ -107,6 +95,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_margin="20dp" />
+
+            <Button
+                android:id="@+id/choose_image"
+                android:layout_width="140dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/buttons"
+                android:text="Choose Image"
+                android:textColor="@android:color/white"
+                android:textSize="17dp" />
+
+            <ImageView
+                android:id="@+id/view_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"/>
 
             <Button
                 android:id="@+id/add_ad_button"

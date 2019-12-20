@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 
 public class UsersActivity extends AppCompatActivity {
 
@@ -57,7 +58,10 @@ public class UsersActivity extends AppCompatActivity {
         adduser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UsersActivity.this, AddUsersActivity.class));
+                Intent intent = new Intent(UsersActivity.this, AddUsersActivity.class);
+                intent.putExtra("type", "add");
+                intent.putExtra("key", "null");
+                startActivity(intent);
             }
         });
     }
@@ -73,12 +77,13 @@ public class UsersActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersArrayList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    username = dataSnapshot1.child("name").getValue().toString();
-                    usernumber = dataSnapshot1.child("phoneNumber").getValue().toString();
-                    usertype = dataSnapshot1.child("privilege").getValue().toString();
-                    usersArrayList.add(new Users(username, usertype, usernumber));
 
+                        username = dataSnapshot1.child("name").getValue().toString();
+                        usernumber = dataSnapshot1.child("phoneNumber").getValue().toString();
+                        usertype = dataSnapshot1.child("privilege").getValue().toString();
+                        usersArrayList.add(new Users(username, usertype, usernumber));
                 }
+
                 Collections.sort(usersArrayList, new Comparator<Users>() {
                     @Override
                     public int compare(Users users, Users t1) {

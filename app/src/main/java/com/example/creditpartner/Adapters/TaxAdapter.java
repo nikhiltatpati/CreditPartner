@@ -140,7 +140,7 @@ public class TaxAdapter extends RecyclerView.Adapter<TaxAdapter.ViewHolder>{
             super(itemView);
 
 
-            companyImage = (ImageView)myView.findViewById(R.id.company_image);
+            companyImage = (ImageView)myView.findViewById(R.id.tax_image);
             companyName = (TextView)myView.findViewById(R.id.company_name);
             companyInterestRate = (TextView)myView.findViewById(R.id.percent_rate);
             companyMinimumBalance = (TextView)myView.findViewById(R.id.minimum_balance_money);

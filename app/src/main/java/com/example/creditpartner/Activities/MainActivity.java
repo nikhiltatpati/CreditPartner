@@ -1,14 +1,18 @@
 package com.example.creditpartner.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,6 +30,10 @@ import com.example.creditpartner.Adapters.SliderAdapter;
 import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.Classes.Slides;
 import com.example.creditpartner.R;
+import com.example.creditpartner.SendMailTask;
+import com.example.creditpartner.Services.MailService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -36,10 +44,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.SendFailedException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -69,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ArrayList<Products> productsArrayList = new ArrayList<>();
     private ArrayList<Slides> slidesList = new ArrayList<>();
 
+    private String email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,8 +106,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ChangeActivity(CustomerInfoActivity.class);
         } else {
             Initialize();
-
             CheckSuperAdmin();
+
+            sendMail();
+            FirebaseMessaging.getInstance().subscribeToTopic("offers")
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (!task.isSuccessful()) {
+                            }
+                        }
+                    });
+
+        /*    MailService mailer = new MailService("howto257257@gmail.com",email,"Welcome","Welcome to CreditPartner", "<b>HtmlBody</b>");
+            try {
+                mailer.sendAuthenticated();
+            } catch (Exception e) {
+                Log.e("mail", "Failed sending email.", e);
+            }*/
+
+         /*   String fromEmail = "howto257257@gmail.com";
+            String fromPassword = "nopassword@752";
+            String toEmails = email;
+            String emailSubject = "Welcome to credit partner";
+            String emailBody = "Hello";
+            new SendMailTask(MainActivity.this).execute(fromEmail,
+                    fromPassword, toEmails, emailSubject, emailBody);*/
+
 
             SetNavigationView();
 
@@ -92,6 +140,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
             SetupRecyclerView();
+
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                            if (!task.isSuccessful()) {
+                                return;
+                            }
+
+                            // Get new Instance ID token
+                            String token = task.getResult().getToken();
+
+
+                        }
+                    });
+
 
 
          /*   addAdminButton.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +190,92 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    protected void sendMail() {
+        final String username = "howto257257@gmail.com";
+        final String password = "nopassword@752";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse("parekhdhanam@gmail.com"));
+            message.setSubject("Sent from MobileApp");
+            message.setText("Message : ");
+
+            new SendMailTask().execute(message);
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+
+
+    }
+
+    private class SendMailTask extends AsyncTask<Message,String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(MainActivity.this,null, "Sending mail", true, false);
+        }
+
+
+
+        @Override
+        protected String doInBackground(Message... messages) {
+            try {
+                Transport.send(messages[0]);
+                return "Success";
+            }
+            catch(SendFailedException ee)
+            {
+                if(progressDialog.isShowing())
+                    progressDialog.dismiss();
+                return "error1";
+            }catch (MessagingException e) {
+                if(progressDialog.isShowing())
+                    progressDialog.dismiss();
+                return "error2";
+            }
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            if(result.equals("Success"))
+            {
+
+                super.onPostExecute(result);
+                progressDialog.dismiss();
+                Toast.makeText(MainActivity.this, "Mail Sent Successfully", Toast.LENGTH_LONG).show();
+
+            }
+            else
+            if(result.equals("error1"))
+                Toast.makeText(MainActivity.this, "Email Failure", Toast.LENGTH_LONG).show();
+            else
+            if(result.equals("error2"))
+                Toast.makeText(MainActivity.this, "Email Sent problem2", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
     private void CheckSuperAdmin() {
 
 
@@ -140,6 +290,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         navigationView.getMenu().setGroupVisible(R.id.admin_menu, true);
                         navigationView.getMenu().findItem(R.id.notice).setVisible(true);
                     }
+                    email = dataSnapshot.child("email").getValue().toString();
 
                 }
 
@@ -265,8 +416,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
-
     private void ChangeActivity(Class Activity) {
         Intent intent = new Intent(MainActivity.this, Activity);
         startActivity(intent);
@@ -349,8 +498,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
 
-
-
             case R.id.side_loan: {
 
                 boolean b = !menu.findItem(R.id.side_businessloan).isVisible();
@@ -375,17 +522,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
-            case R.id.Tools:
-            {
+            case R.id.Tools: {
                 boolean b = !menu.findItem(R.id.side_emi_cal).isVisible();
                 menu.findItem(R.id.side_emi_cal).setVisible(b);
                 menu.findItem(R.id.side_ifsc).setVisible(b);
+                menu.findItem(R.id.side_income).setVisible(b);
 
                 break;
             }
 
-            case R.id.side_emi_cal:
-            {
+            case R.id.side_emi_cal: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(MainActivity.this, EMICalculatorActivity.class));
@@ -394,11 +540,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
 
-            case R.id.side_ifsc:
-            {
+            case R.id.side_ifsc: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(MainActivity.this, IFSCCodeFinderActivity.class));
+
+                break;
+            }
+
+            case R.id.side_income: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(MainActivity.this, IncomeTaxCalculatorActivity.class));
 
                 break;
             }
@@ -421,8 +574,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
-            case R.id.side_myoffer:
-            {
+            case R.id.side_myoffer: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(MainActivity.this, MyOfferActivity.class));
@@ -430,8 +582,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
-            case R.id.notice:
-            {
+            case R.id.notice: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 startActivity(new Intent(MainActivity.this, NoticeToCustomerActivity.class));
