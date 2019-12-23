@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@android:color/white"
     tools:context=".Activities.CustomerInfoActivity">
 
 
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/main_logo"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="24dp"
         android:orientation="vertical">
 
 
@@ -43,19 +43,17 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/inputs"
             android:gravity="center"
             android:hint="Your name" />
 
         <EditText
-            android:inputType="number"
             android:id="@+id/number"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/inputs"
             android:gravity="center"
-            android:hint="10-digit Mobile Number" />
+            android:hint="10-digit Mobile Number"
+            android:inputType="number" />
 
 
         <EditText
@@ -63,7 +61,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/inputs"
             android:gravity="center"
             android:hint="Your Email" />
 
@@ -74,9 +71,20 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/inputs"
             android:gravity="center"
             android:hint="Reference Number (If any)" />
+
+        <TextView
+            android:id="@+id/old_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/customer_number"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Already a User? Login!"
+            android:textColor="@color/colorAccent"
+            android:textSize="19dp" />
+
 
     </LinearLayout>
 

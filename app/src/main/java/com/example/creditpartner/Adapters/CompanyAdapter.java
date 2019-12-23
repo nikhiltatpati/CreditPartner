@@ -91,15 +91,10 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         holder.companyName.setText(companies.getCompanyName());
         holder.companyInterestRate.setText(companies.getCompanyInterestRate());
         holder.companyMinimumBalance.setText(companies.getCompanyMinimumBalance());
-     /*   Glide.with(mContext)
+       Glide.with(mContext)
                 .load(companies.getCompanyImage())
-                .into(holder.companyImage);*/
-
-        Picasso.with(mContext)
-                .load(companies.getCompanyImage()).resize(200,200)
-                .centerCrop()
                 .into(holder.companyImage);
-        holder.featuresText.setText(companies.getCompanyFeatures());
+
 
 
         SharedPreferences pref = mContext.getSharedPreferences("MyPref",

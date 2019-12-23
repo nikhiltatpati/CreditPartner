@@ -4,64 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".Activities.LoginActivity">
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/customer_otp"
-        android:layout_centerInParent="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/otp_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="OTP"
-            android:gravity="center"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/customer_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/customer_otp"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
 
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/number"
+            android:inputType="number"
+            android:focusedByDefault="false"
+            android:defaultFocusHighlightEnabled="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:hint="Mobile Number" />
+            android:hint="10-digit Mobile Number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/otp_message"
+        android:id="@+id/new_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/customer_otp"
-        android:text="@string/otp_name"
-        android:textSize="19dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="6dp"
-        android:textColor="@color/colorAccent"/>
+        android:layout_below="@id/customer_number"
+        android:layout_marginTop="50dp"
+        android:text="New User? Sign Up!"
+        android:textColor="@color/colorAccent"
+        android:textSize="19dp"/>
 
-    <TextView
-        android:id="@+id/otp_resend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resend"
-        android:layout_above="@id/login_button"
-        android:textSize="18dp"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/verify_logo"
+        android:layout_width="150dp"
+        android:layout_below="@id/login_bar"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/colorAccent"/>
+        android:layout_marginTop="25dp"
+        android:src="@drawable/cplogo" />
 
 
 
@@ -69,8 +55,7 @@
         android:id="@+id/load_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_bar"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="20dp"/>
 
 

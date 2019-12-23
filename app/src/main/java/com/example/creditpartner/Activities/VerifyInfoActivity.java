@@ -1,8 +1,10 @@
 package com.example.creditpartner.Activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,14 +42,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.SendFailedException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class VerifyInfoActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private String phoneNumber, name, email, reference, privilege;
     private String verificationID, currentUserID;
     private ImageView verifyLogo;
-    private TextView verifyButton;
+    private Button verifyButton;
     private EditText otpCode;
     private FirebaseAuth mAuth;
     private TextView otpMessage, resendOTP;
@@ -64,8 +76,6 @@ public class VerifyInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verify_info);
 
         Initialize();
-
-        checkPrivilege();
 
 
         verifyButton.setOnClickListener(new View.OnClickListener() {
@@ -102,35 +112,9 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
     }
 
-    private void checkPrivilege() {
-
-
-        privilege = "User";
-        Ref.child("Customers").child("BasicInfo").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if (dataSnapshot1.child("phoneNumber").getValue().toString().equals(phoneNumber)) {
-                        privilege = dataSnapshot1.child("privilege").getValue().toString();
-                        break;
-
-                    }
-
-
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     private void signInWithCredentials(PhoneAuthCredential credential) {
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -151,11 +135,11 @@ public class VerifyInfoActivity extends AppCompatActivity {
                             hashMap.put("email", email);
                             hashMap.put("timeStamp", timeStamp);
                             hashMap.put("privilege", privilege);
-                            Ref.child("Customers").child("BasicInfo").child(currentUserID).setValue(hashMap);
 
+                            Ref.child("Customers").child("BasicInfo").child(currentUserID).setValue(hashMap);
                             Intent intent = new Intent(VerifyInfoActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
+                            sendMail();
                             finish();
 
 
@@ -209,6 +193,76 @@ public class VerifyInfoActivity extends AppCompatActivity {
         }
     };
 
+    protected void sendMail() {
+        final String username = "spicetechtask@gmail.com";
+        final String password = "tech123spice";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse("" + email));
+            message.setSubject("Welcome to Credit Partner");
+            message.setText("Message : We are glad to welcome you here at CreditPartner. I hope we don't disappoint you!");
+
+            new VerifyInfoActivity.SendMailTask().execute(message);
+
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+
+
+    }
+
+    private class SendMailTask extends AsyncTask<Message, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected String doInBackground(Message... messages) {
+            try {
+                Transport.send(messages[0]);
+                return "Success";
+            } catch (SendFailedException ee) {
+
+                return "error1";
+            } catch (MessagingException e) {
+
+                return "error2";
+            }
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result.equals("Success")) {
+
+                super.onPostExecute(result);
+
+            }
+        }
+
+    }
+
 
     private void Initialize() {
 
@@ -218,12 +272,13 @@ public class VerifyInfoActivity extends AppCompatActivity {
         name = getIntent().getStringExtra("name");
         email = getIntent().getStringExtra("email");
         reference = getIntent().getStringExtra("reference");
+        key = getIntent().getStringExtra("key");
+        privilege = getIntent().getStringExtra("privilege");
 
         otpCode = (EditText) findViewById(R.id.otp_code);
-        verifyButton = (TextView) findViewById(R.id.verify_button);
+        verifyButton = (Button) findViewById(R.id.verify_button);
         verifyLogo = (ImageView) findViewById(R.id.verify_logo);
 
-        resendOTP = (TextView) findViewById(R.id.otp_resend);
         otpMessage = (TextView) findViewById(R.id.otp_message);
 
         mAuth = FirebaseAuth.getInstance();

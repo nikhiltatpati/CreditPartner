@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -23,10 +24,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class ProductsActivity extends AppCompatActivity {
 
@@ -39,6 +42,7 @@ public class ProductsActivity extends AppCompatActivity {
     private DatabaseReference Ref;
     private ArrayList<Products> productsArrayList = new ArrayList<>();
     private SideProductAdapter adapter;
+    private HashMap<String, Integer> hashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +66,17 @@ public class ProductsActivity extends AppCompatActivity {
             int fromPosition = viewHolder.getAdapterPosition();
             int toPosition = target.getAdapterPosition();
 
+
             Collections.swap(productsArrayList, fromPosition, toPosition);
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+
+            hashMap = new HashMap<>();
+            hashMap.put("fromPosition", fromPosition);
+            hashMap.put("toPosition", toPosition);
+
+
+            Log.e("FROM POSITION", String.valueOf(fromPosition));
+            Log.e("TO POSITION", String.valueOf(toPosition));
 
             return false;
         }
@@ -73,6 +86,44 @@ public class ProductsActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        int fromPosition = hashMap.get("fromPosition");
+        int toPosition = hashMap.get("toPosition");
+        ChangeFirebaseOrder(fromPosition, toPosition);
+
+    }
+
+    private void ChangeFirebaseOrder(int fromPosition, int toPosition) {
+
+        Ref.child("ProductList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
+                    if(dataSnapshot1.child("order").getValue().toString().equals(String.valueOf(fromPosition+1)))
+                    {
+                        Ref.child("ProductList").child(dataSnapshot1.getKey()).child("order").setValue(toPosition+1);
+                    }
+                    if(dataSnapshot1.child("order").getValue().toString().equals(String.valueOf(toPosition+1)))
+                    {
+                        Ref.child("ProductList").child(dataSnapshot1.getKey()).child("order").setValue(fromPosition+1);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
 
 
     private void ImplementSearch() {
@@ -103,25 +154,43 @@ public class ProductsActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(linearLayoutManager);
 
 
-            Ref.child("ProductList").addValueEventListener(new ValueEventListener() {
+      /*      Query query = Ref.child("ProductList").orderByChild("order");
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+*/
+            Ref.child("ProductList").orderByChild("order").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     productsArrayList.clear();
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        String productName = dataSnapshot1.child("Name").getValue().toString();
-                        String productImage = dataSnapshot1.child("Image").getValue().toString();
 
-                        productsArrayList.add(new Products(productName, productImage));
+                        if(dataSnapshot1.hasChild("Name") && dataSnapshot1.hasChild("Image"))
+                        {
+                            String productName = dataSnapshot1.child("Name").getValue().toString();
+                            String productImage = dataSnapshot1.child("Image").getValue().toString();
+
+                            productsArrayList.add(new Products(productName, productImage));
+
+                        }
+                        adapter = new SideProductAdapter(ProductsActivity.this, productsArrayList);
+                        recyclerView.setAdapter(adapter);
+                        // loadProducts.setVisibility(View.INVISIBLE);
+                        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                        itemTouchHelper.attachToRecyclerView(recyclerView);
 
                     }
-                     adapter = new SideProductAdapter(ProductsActivity.this, productsArrayList);
-                    recyclerView.setAdapter(adapter);
-                   // loadProducts.setVisibility(View.INVISIBLE);
-
-
-                    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-                    itemTouchHelper.attachToRecyclerView(recyclerView);
-
 
                 }
 

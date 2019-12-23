@@ -60,7 +60,7 @@
             android:id="@+id/percent_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="18dp"
             android:layout_toRightOf="@id/company_image"
             android:textSize="20dp" />
@@ -81,7 +81,7 @@
             android:id="@+id/minimum_balance_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="20dp"
 
             android:layout_marginTop="18dp"
             android:layout_toRightOf="@id/vertical_line"
@@ -112,9 +112,9 @@
         <View
             android:id="@+id/vertical_line"
             android:layout_width="1dp"
-            android:layout_height="65dp"
+            android:layout_height="55dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="17dp"
             android:layout_toRightOf="@id/interest_rate"
             android:background="@android:color/darker_gray" />
 

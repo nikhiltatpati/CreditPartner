@@ -37,6 +37,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -144,6 +145,9 @@ public class ProductDetailActivity extends AppCompatActivity  {
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
 
 
+            ChangeFirebaseOrder(fromPosition, toPosition);
+
+
             return false;
         }
 
@@ -152,6 +156,34 @@ public class ProductDetailActivity extends AppCompatActivity  {
 
         }
     };
+
+    private void ChangeFirebaseOrder(int fromPosition, int toPosition) {
+
+        Ref.child("ProductList").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
+                    if(dataSnapshot1.child("order").getValue().toString().equals(String.valueOf(fromPosition+1)))
+                    {
+                        Ref.child("ProductList").child(dataSnapshot1.getKey()).child("order").setValue(toPosition+1);
+                    }
+                    if(dataSnapshot1.child("order").getValue().toString().equals(String.valueOf(toPosition+1)))
+                    {
+                        Ref.child("ProductList").child(dataSnapshot1.getKey()).child("order").setValue(fromPosition+1);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
 
     private void SetupRecyclerview() {
 
@@ -164,6 +196,9 @@ public class ProductDetailActivity extends AppCompatActivity  {
             SharedPreferences pref = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
             productTitle = pref.getString("productTitle", null);
         }
+
+
+
 
 
         //Get Company list from firebase
@@ -181,11 +216,11 @@ public class ProductDetailActivity extends AppCompatActivity  {
                     }
 
                     if (dataSnapshot1.hasChild("companyRate")) {
-                        companyRate = dataSnapshot1.child("companyRate").getValue().toString();
+                        companyRate = dataSnapshot1.child("companyRate").getValue().toString() + "%";
                     }
 
                     if (dataSnapshot1.hasChild("companyMinimumBalance")) {
-                        companyBalance = dataSnapshot1.child("companyMinimumBalance").getValue().toString();
+                        companyBalance = "₹" + dataSnapshot1.child("companyMinimumBalance").getValue().toString();
                     }
 
                     if (dataSnapshot1.hasChild("companyFeatures")) {
@@ -215,14 +250,26 @@ public class ProductDetailActivity extends AppCompatActivity  {
                 companyRecyclerview.setAdapter(adapter);
                 loadCompanies.setVisibility(View.INVISIBLE);
 
-                ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("privilege").getValue().equals("SuperAdmin")) {
+                            isSuperAdmin = true;
+                            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                            itemTouchHelper.attachToRecyclerView(companyRecyclerview);
 
-                if(isSuperAdmin)
-                {
 
-                    itemTouchHelper.attachToRecyclerView(companyRecyclerview);
+                        }
+                    }
 
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                Log.e("superadmin", String.valueOf(isSuperAdmin));
+
 
 
             }

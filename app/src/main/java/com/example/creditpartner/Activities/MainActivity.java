@@ -2,6 +2,7 @@ package com.example.creditpartner.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,6 +44,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -70,11 +72,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String currentUserID, phoneNumber, superAdmin = "False";
     private boolean isSuperAdmin = false;
 
+
     private ViewPager mSlideViewPager;
 
     private ProgressBar loadProducts;
 
     private SliderAdapter sliderAdapter;
+    private String email;
 
     private BottomNavigationView bottomNavigationView;
     private Toolbar mToolbar;
@@ -89,8 +93,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView productRecyclerView;
     private ArrayList<Products> productsArrayList = new ArrayList<>();
     private ArrayList<Slides> slidesList = new ArrayList<>();
-
-    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Initialize();
             CheckSuperAdmin();
 
-            sendMail();
+
             FirebaseMessaging.getInstance().subscribeToTopic("offers")
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -117,21 +119,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             }
                         }
                     });
-
-        /*    MailService mailer = new MailService("howto257257@gmail.com",email,"Welcome","Welcome to CreditPartner", "<b>HtmlBody</b>");
-            try {
-                mailer.sendAuthenticated();
-            } catch (Exception e) {
-                Log.e("mail", "Failed sending email.", e);
-            }*/
-
-         /*   String fromEmail = "howto257257@gmail.com";
-            String fromPassword = "nopassword@752";
-            String toEmails = email;
-            String emailSubject = "Welcome to credit partner";
-            String emailBody = "Hello";
-            new SendMailTask(MainActivity.this).execute(fromEmail,
-                    fromPassword, toEmails, emailSubject, emailBody);*/
 
 
             SetNavigationView();
@@ -156,18 +143,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     });
 
-
-
-         /*   addAdminButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(MainActivity.this, AddAdminsActivity.class);
-                    intent.putExtra("isSuperAdmin", isSuperAdmin ? "True" : "False");
-                    startActivity(intent);
-                }
-            });
-*/
-
 //        After setting the adapter use the timer
             final Handler handler = new Handler();
             final Runnable Update = new Runnable() {
@@ -190,92 +165,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    protected void sendMail() {
-        final String username = "howto257257@gmail.com";
-        final String password = "nopassword@752";
-
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-
-        try {
-
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("parekhdhanam@gmail.com"));
-            message.setSubject("Sent from MobileApp");
-            message.setText("Message : ");
-
-            new SendMailTask().execute(message);
-
-        }catch (MessagingException mex) {
-            mex.printStackTrace();
-        }
-
-
-    }
-
-    private class SendMailTask extends AsyncTask<Message,String, String> {
-        private ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = ProgressDialog.show(MainActivity.this,null, "Sending mail", true, false);
-        }
-
-
-
-        @Override
-        protected String doInBackground(Message... messages) {
-            try {
-                Transport.send(messages[0]);
-                return "Success";
-            }
-            catch(SendFailedException ee)
-            {
-                if(progressDialog.isShowing())
-                    progressDialog.dismiss();
-                return "error1";
-            }catch (MessagingException e) {
-                if(progressDialog.isShowing())
-                    progressDialog.dismiss();
-                return "error2";
-            }
-
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            if(result.equals("Success"))
-            {
-
-                super.onPostExecute(result);
-                progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "Mail Sent Successfully", Toast.LENGTH_LONG).show();
-
-            }
-            else
-            if(result.equals("error1"))
-                Toast.makeText(MainActivity.this, "Email Failure", Toast.LENGTH_LONG).show();
-            else
-            if(result.equals("error2"))
-                Toast.makeText(MainActivity.this, "Email Sent problem2", Toast.LENGTH_LONG).show();
-
-        }
-    }
-
     private void CheckSuperAdmin() {
 
 
@@ -290,9 +179,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         navigationView.getMenu().setGroupVisible(R.id.admin_menu, true);
                         navigationView.getMenu().findItem(R.id.notice).setVisible(true);
                     }
-                    email = dataSnapshot.child("email").getValue().toString();
 
                 }
+                email = dataSnapshot.child("email").getValue().toString();
 
             }
 
@@ -348,15 +237,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         GridLayoutManager manager = new GridLayoutManager(this, 4);
         productRecyclerView.setLayoutManager(manager);
 
+        /*Query query = Ref.child("ProductList").orderByChild("order");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                productsArrayList.clear();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.hasChild("Name") && dataSnapshot1.hasChild("Image")) {
+                        String productName = dataSnapshot1.child("Name").getValue().toString();
+                        String productImage = dataSnapshot1.child("Image").getValue().toString();
+                        productsArrayList.add(new Products(productName, productImage));
+
+
+                    }
+
+
+                }
+                ProductAdapter adapter = new ProductAdapter(MainActivity.this, productsArrayList);
+                productRecyclerView.setAdapter(adapter);
+                loadProducts.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        */
         Ref.child("ProductList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 productsArrayList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    String productName = dataSnapshot1.child("Name").getValue().toString();
-                    String productImage = dataSnapshot1.child("Image").getValue().toString();
+                    if (dataSnapshot1.hasChild("Name") && dataSnapshot1.hasChild("Image")) {
+                        String productName = dataSnapshot1.child("Name").getValue().toString();
+                        String productImage = dataSnapshot1.child("Image").getValue().toString();
+                        productsArrayList.add(new Products(productName, productImage));
 
-                    productsArrayList.add(new Products(productName, productImage));
+
+                    }
+
 
                 }
                 ProductAdapter adapter = new ProductAdapter(MainActivity.this, productsArrayList);
@@ -370,8 +291,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
-
-
     }
 
 
@@ -561,7 +480,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 mAuth.signOut();
-                startActivity(new Intent(MainActivity.this, CustomerInfoActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 finish();
                 break;
 

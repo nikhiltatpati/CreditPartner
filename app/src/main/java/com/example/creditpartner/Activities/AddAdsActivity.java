@@ -208,11 +208,11 @@ public class AddAdsActivity extends AppCompatActivity implements AdapterView.OnI
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 urltiet.setText(dataSnapshot.child("adLink").getValue().toString());
-
-
+                nameTIET.setText(dataSnapshot.child("customerName").getValue().toString());
                 clickstiet.setText(dataSnapshot.child("noOfClicks").getValue().toString());
                 startDate.setText(dataSnapshot.child("startDate").getValue().toString());
                 endDate.setText(dataSnapshot.child("endDate").getValue().toString());
+
             }
 
             @Override

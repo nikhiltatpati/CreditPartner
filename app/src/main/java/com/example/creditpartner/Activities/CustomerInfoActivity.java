@@ -29,7 +29,7 @@ import java.util.HashMap;
 public class CustomerInfoActivity extends AppCompatActivity {
 
     private EditText emailTIET, mobileTIET, referenceTIET, nameTIET;
-    private TextView generateOTP;
+    private TextView generateOTP, oldUser;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     private FirebaseAuth mAuth;
@@ -54,6 +54,13 @@ public class CustomerInfoActivity extends AppCompatActivity {
             finish();
         }
 
+        oldUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CustomerInfoActivity.this, LoginActivity.class));
+            }
+        });
+
         generateOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +72,6 @@ public class CustomerInfoActivity extends AppCompatActivity {
                 final String reference = referenceTIET.getText().toString();
                 ;
 
-                CheckReference(reference);
 
                 if (name.isEmpty() || name.length() < 5) {
                     nameTIET.setError("Enter your full name!");
@@ -104,26 +110,6 @@ public class CustomerInfoActivity extends AppCompatActivity {
         });
 
 
-    }
-
-    private void CheckReference(String ref) {
-
-        Ref.child("References").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild(ref)) {
-                    isReferenceValid = true;
-                }
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        Log.e("after", "" + isReferenceValid);
-
 
     }
 
@@ -136,6 +122,8 @@ public class CustomerInfoActivity extends AppCompatActivity {
         intent.putExtra("name", name);
         intent.putExtra("reference", reference);
         intent.putExtra("privilege", "User");
+        intent.putExtra("key", "null");
+        intent.putExtra("type", "new");
         startActivity(intent);
 
 
@@ -157,6 +145,8 @@ public class CustomerInfoActivity extends AppCompatActivity {
         //Firebase
         mAuth = FirebaseAuth.getInstance();
         Ref = FirebaseDatabase.getInstance().getReference();
+
+        oldUser = (TextView)findViewById(R.id.old_user);
 
 
         generateOTP = (TextView) findViewById(R.id.generate_button);
