@@ -1,5 +1,6 @@
 package com.example.creditpartner.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -79,7 +80,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 NOTIFICATION_TITLE = edtTitle.getText().toString();
                 NOTIFICATION_MESSAGE = edtMessage.getText().toString();
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/mm/yyyy");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String date = simpleDateFormat.format(new Date());
 
 
@@ -88,7 +89,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 hashMap.put("message", NOTIFICATION_MESSAGE);
                 hashMap.put("date", date);
                 Ref.child("MyOffers").push().setValue(hashMap);
-
+                Toast.makeText(NoticeToCustomerActivity.this, "Notification Sent!", Toast.LENGTH_SHORT).show();
 
 
                 JSONObject notification = new JSONObject();

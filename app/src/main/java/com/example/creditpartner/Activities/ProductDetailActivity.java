@@ -46,13 +46,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ProductDetailActivity extends AppCompatActivity  {
+public class ProductDetailActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private String productTitle, currentUserID, phoneNumber;
     private RecyclerView companyRecyclerview;
     private ArrayList<Companies> companiesArrayList = new ArrayList<>();
-    private String companyName, companyImage, companyRate, companyBalance, companyFeatures;
+    private String companyName, companyImage, value1, value2, field1, field2, companyFeatures;
     private ImageButton addCompanyButton;
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
@@ -162,15 +162,12 @@ public class ProductDetailActivity extends AppCompatActivity  {
         Ref.child("ProductList").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                {
-                    if(dataSnapshot1.child("order").getValue().toString().equals(String.valueOf(fromPosition+1)))
-                    {
-                        Ref.child("ProductList").child(dataSnapshot1.getKey()).child("order").setValue(toPosition+1);
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.child("order").getValue().toString().equals(String.valueOf(fromPosition + 1))) {
+                        Ref.child("ProductList").child(dataSnapshot1.getKey()).child("order").setValue(toPosition + 1);
                     }
-                    if(dataSnapshot1.child("order").getValue().toString().equals(String.valueOf(toPosition+1)))
-                    {
-                        Ref.child("ProductList").child(dataSnapshot1.getKey()).child("order").setValue(fromPosition+1);
+                    if (dataSnapshot1.child("order").getValue().toString().equals(String.valueOf(toPosition + 1))) {
+                        Ref.child("ProductList").child(dataSnapshot1.getKey()).child("order").setValue(fromPosition + 1);
                     }
                 }
             }
@@ -180,7 +177,6 @@ public class ProductDetailActivity extends AppCompatActivity  {
 
             }
         });
-
 
 
     }
@@ -198,9 +194,6 @@ public class ProductDetailActivity extends AppCompatActivity  {
         }
 
 
-
-
-
         //Get Company list from firebase
         Ref.child("CompanyList").child(productTitle).addValueEventListener(new ValueEventListener() {
             @Override
@@ -215,19 +208,26 @@ public class ProductDetailActivity extends AppCompatActivity  {
                         companyImage = dataSnapshot1.child("companyImage").getValue().toString();
                     }
 
-                    if (dataSnapshot1.hasChild("companyRate")) {
-                        companyRate = dataSnapshot1.child("companyRate").getValue().toString() + "%";
+                    if (dataSnapshot1.hasChild("value1")) {
+                        value1 = dataSnapshot1.child("value1").getValue().toString();
                     }
 
-                    if (dataSnapshot1.hasChild("companyMinimumBalance")) {
-                        companyBalance = "₹" + dataSnapshot1.child("companyMinimumBalance").getValue().toString();
+                    if (dataSnapshot1.hasChild("value2")) {
+                        value2 = dataSnapshot1.child("value2").getValue().toString();
+                    }
+                    if (dataSnapshot1.hasChild("field1")) {
+                        field1 = dataSnapshot1.child("field1").getValue().toString();
+                    }
+
+                    if (dataSnapshot1.hasChild("field2")) {
+                        field2 = dataSnapshot1.child("field2").getValue().toString();
                     }
 
                     if (dataSnapshot1.hasChild("companyFeatures")) {
                         companyFeatures = dataSnapshot1.child("companyFeatures").getValue().toString();
                     }
 
-                    companiesArrayList.add(new Companies(companyImage, companyName, companyRate, companyBalance, companyFeatures));
+                    companiesArrayList.add(new Companies(companyImage, companyName, value1, value2, field1, field2, companyFeatures));
                 }
 
                 if (companiesArrayList.size() == 0) {
@@ -269,7 +269,6 @@ public class ProductDetailActivity extends AppCompatActivity  {
                 });
 
                 Log.e("superadmin", String.valueOf(isSuperAdmin));
-
 
 
             }

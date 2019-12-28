@@ -65,10 +65,9 @@ public class VerifyInfoActivity extends AppCompatActivity {
     private TextView otpMessage, resendOTP;
     private DatabaseReference Ref;
     private FirebaseUser currentUser;
-    String key;
+    String key, type;
     private String[] permissionArray = {Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS};
     private static final int requestCode = 1;
-    HashMap<String, String> hashMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,28 +119,37 @@ public class VerifyInfoActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
                             currentUser = mAuth.getCurrentUser();
                             currentUserID = currentUser.getUid();
 
+                            startActivity(new Intent(VerifyInfoActivity.this, MainActivity.class));
 
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
+
+
+
+
+                        /*    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss", Locale.getDefault());
                             Date date = new Date();
                             String timeStamp = simpleDateFormat.format(date);
+*/
 
 
+                            HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("phoneNumber", phoneNumber);
                             hashMap.put("name", name);
                             hashMap.put("reference", reference);
                             hashMap.put("email", email);
-                            hashMap.put("timeStamp", timeStamp);
+                            //                          hashMap.put("timeStamp", timeStamp);
                             hashMap.put("privilege", privilege);
 
                             Ref.child("Customers").child("BasicInfo").child(currentUserID).setValue(hashMap);
-                            Intent intent = new Intent(VerifyInfoActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            sendMail();
-                            finish();
 
+
+                            if (type.equals("new")) {
+                                sendMail();
+
+                            }
 
                         } else {
                             Toast.makeText(VerifyInfoActivity.this, task.getException().getMessage().toString(), Toast.LENGTH_LONG).show();
@@ -274,6 +282,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
         reference = getIntent().getStringExtra("reference");
         key = getIntent().getStringExtra("key");
         privilege = getIntent().getStringExtra("privilege");
+        type = getIntent().getStringExtra("type");
 
         otpCode = (EditText) findViewById(R.id.otp_code);
         verifyButton = (Button) findViewById(R.id.verify_button);
@@ -282,6 +291,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
         otpMessage = (TextView) findViewById(R.id.otp_message);
 
         mAuth = FirebaseAuth.getInstance();
+
         Ref = FirebaseDatabase.getInstance().getReference();
 
     }

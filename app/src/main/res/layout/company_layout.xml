@@ -137,17 +137,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="7dp"
-                    android:text="Key Features and Benefits"
-                    android:textSize="20dp" />
+                    android:textStyle="bold"
+                    android:text="Key Features and Benefits:"
+                    android:textSize="18dp" />
 
-                <TextView
+                <WebView
                     android:id="@+id/features_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/horizontal_line"
                     android:layout_margin="7dp"
                     android:text="Loading"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <View
                     android:id="@+id/horizontal_line"

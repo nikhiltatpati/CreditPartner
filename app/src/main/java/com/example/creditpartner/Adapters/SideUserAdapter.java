@@ -134,6 +134,10 @@ public class SideUserAdapter extends RecyclerView.Adapter<SideUserAdapter.ViewHo
                                     if (dataSnapshot1.child("name").getValue().toString().equals(users.getUserName())
                                             && dataSnapshot1.child("phoneNumber").getValue().toString().equals(users.getUserNumber())) {
                                         key = dataSnapshot1.getKey();
+                                        Intent intent = new Intent(mContext, AddUsersActivity.class);
+                                        intent.putExtra("type","edit");
+                                        intent.putExtra("key",""+key);
+                                        mContext.startActivity(intent);
                                         break;
                                     }
                                 }
@@ -145,10 +149,7 @@ public class SideUserAdapter extends RecyclerView.Adapter<SideUserAdapter.ViewHo
                             }
                         });
 
-                        Intent intent = new Intent(mContext, AddUsersActivity.class);
-                        intent.putExtra("type","edit");
-                        intent.putExtra("key",""+key);
-                        mContext.startActivity(intent);
+
 
                     }
                 });

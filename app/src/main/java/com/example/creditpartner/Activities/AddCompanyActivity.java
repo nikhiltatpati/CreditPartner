@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -46,15 +47,16 @@ public class AddCompanyActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TextInputLayout companyName, companyURL;
     private ImageView companyImage;
-    private TextInputEditText name, url, balance, rate, productID;
-    private EditText features;
+    private TextInputEditText name, url, value1, value2, productID, field1, field2;
+    private Button features;
     private Button addCompanyButton, chooseImage;
-    private String productTitle, type, key, dburl;
+    private String productTitle, type, key, dburl, text;
     private DatabaseReference Ref;
     private ProgressBar addProgress;
     private ImageView viewImage;
     //uri to store file
     private Uri filePath;
+    private boolean noData = true;
 
 
     public static final String STORAGE_PATH_UPLOADS = "uploads/";
@@ -65,9 +67,6 @@ public class AddCompanyActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 234;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +74,21 @@ public class AddCompanyActivity extends AppCompatActivity {
 
         Initialize();
 
-        if(type.equals("edit"))
-        {
-            GetDetails();
-        }
+        features.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddCompanyActivity.this, TextEditorActivity.class);
+                intent.putExtra("", "");
 
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        if (type.equals("edit")) {
+            GetDetails();
+        } else if (type.equals("taxedit")) {
+            GetTaxDetails();
+        }
 
 
         chooseImage.setOnClickListener(new View.OnClickListener() {
@@ -96,33 +105,30 @@ public class AddCompanyActivity extends AppCompatActivity {
                 String nameString = name.getText().toString();
                 String id = productID.getText().toString();
                 String urlString = url.getText().toString();
-                String balanceString = balance.getText().toString();
-                String rateString = rate.getText().toString();
+                String value1S = value1.getText().toString();
+                String value2S = value2.getText().toString();
+                String field1S = field1.getText().toString();
+                String field2S = field2.getText().toString();
                 String featuresString = features.getText().toString();
 
 
-                if(nameString.isEmpty())
-                {
+                if (nameString.isEmpty()) {
                     name.setError("Enter Valid name!");
-                }
-                else if(urlString.isEmpty())
-                {
+                } else if (urlString.isEmpty()) {
                     url.setError("Enter Valid url!");
-                }
-                else if(id.isEmpty())
-                {
+                } else if (id.isEmpty()) {
                     url.setError("Enter Valid Product ID!");
-                }
-                else if(balanceString.isEmpty())
-                {
-                    balance.setError("Enter Valid balance!");
-                }else if(rateString.isEmpty())
-                {
-                    rate.setError("Enter Valid rate!");
-                }
-
-                else
-                {
+                } else if (value1S.isEmpty()) {
+                    value1.setError("Enter Valid Value!");
+                } else if (value2S.isEmpty()) {
+                    value2.setError("Enter Valid Value!");
+                } else if (field1S.isEmpty()) {
+                    field1.setError("Enter Valid Field!");
+                } else if (field2S.isEmpty()) {
+                    field2.setError("Enter Valid Field!");
+                }  else if (noData == true) {
+                    Toast.makeText(AddCompanyActivity.this, "Add Features!", Toast.LENGTH_SHORT).show();
+                } else {
 
 
                     uploadFile();
@@ -136,6 +142,32 @@ public class AddCompanyActivity extends AppCompatActivity {
 
     }
 
+    private void GetTaxDetails() {
+
+        productID.setVisibility(View.GONE);
+        url.setVisibility(View.GONE);
+
+        Ref.child("Taxes").child(key).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                name.setText(dataSnapshot.child("companyName").getValue().toString());
+//                url.setText(dataSnapshot.child("companyURL").getValue().toString());
+//                productID.setText(dataSnapshot.child("productID").getValue().toString());
+                value1.setText(dataSnapshot.child("value1").getValue().toString());
+                value2.setText(dataSnapshot.child("value2").getValue().toString());
+                value1.setText(dataSnapshot.child("value1").getValue().toString());
+                field1.setText(dataSnapshot.child("field1").getValue().toString());
+                field2.setText(dataSnapshot.child("field2").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     private void GetDetails() {
 
 
@@ -145,9 +177,11 @@ public class AddCompanyActivity extends AppCompatActivity {
                 name.setText(dataSnapshot.child("companyName").getValue().toString());
                 url.setText(dataSnapshot.child("companyURL").getValue().toString());
                 productID.setText(dataSnapshot.child("productID").getValue().toString());
-                rate.setText(dataSnapshot.child("companyRate").getValue().toString());
-                balance.setText(dataSnapshot.child("companyMinimumBalance").getValue().toString());
-                features.setText(dataSnapshot.child("companyFeatures").getValue().toString());
+                value1.setText(dataSnapshot.child("value1").getValue().toString());
+                value2.setText(dataSnapshot.child("value2").getValue().toString());
+                value1.setText(dataSnapshot.child("value1").getValue().toString());
+                field1.setText(dataSnapshot.child("field1").getValue().toString());
+                field2.setText(dataSnapshot.child("field2").getValue().toString());
             }
 
             @Override
@@ -155,7 +189,6 @@ public class AddCompanyActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }
@@ -172,6 +205,7 @@ public class AddCompanyActivity extends AppCompatActivity {
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
+
     private void uploadFile() {
         //checking if file is available
         if (filePath != null) {
@@ -195,28 +229,26 @@ public class AddCompanyActivity extends AppCompatActivity {
                             //displaying success toast
 
                             //creating the upload object to store uploaded image details
-                         //   dburl = taskSnapshot.getStorage().getDownloadUrl().toString();
+                            //   dburl = taskSnapshot.getStorage().getDownloadUrl().toString();
 
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                             while (!urlTask.isSuccessful()) ;
                             Uri DownloadUrl = urlTask.getResult();
                             dburl = DownloadUrl.toString();
 
-                            HashMap<String, String> hashMap = new HashMap<>();
+                            HashMap hashMap = new HashMap();
                             hashMap.put("companyName", name.getText().toString());
                             hashMap.put("companyURL", url.getText().toString());
-                            hashMap.put("companyRate", rate.getText().toString());
-                            hashMap.put("companyMinimumBalance", balance.getText().toString());
-                            hashMap.put("companyFeatures", features.getText().toString());
+                            hashMap.put("value1", value1.getText().toString());
+                            hashMap.put("value2", value2.getText().toString());
+                            hashMap.put("field1", field1.getText().toString());
+                            hashMap.put("field2", field2.getText().toString());
                             hashMap.put("productID", productID.getText().toString());
                             hashMap.put("companyImage", dburl);
-
-                            if(type.equals("edit"))
-                            {
+                            hashMap.put("companyFeatures", text);
+                            if (type.equals("edit")) {
                                 Ref.child("CompanyList").child(productTitle).child(key).setValue(hashMap);
-                            }
-                           else
-                            {
+                            } else {
                                 Ref.child("CompanyList").child(productTitle).push().setValue(hashMap);
 
                             }
@@ -225,8 +257,12 @@ public class AddCompanyActivity extends AppCompatActivity {
 
 
                             Intent intent = new Intent(AddCompanyActivity.this, ProductDetailActivity.class);
+                            intent.putExtra("productName", productTitle);
                             finish();
                             startActivity(intent);
+
+
+
 
                         /*    //adding an upload to firebase database
                             String uploadId = mDatabase.push().getKey();
@@ -267,7 +303,25 @@ public class AddCompanyActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
         }
+        else
+        {
+        if(data!= null) {
+            text = data.getStringExtra("text");
+            if (text != null) {
+                noData = false;
+                Log.e("textac", "" + text);
+
+            } else {
+                noData = true;
+            }
+        }
+        }
+
+
+
     }
 
 
@@ -276,28 +330,30 @@ public class AddCompanyActivity extends AppCompatActivity {
 
         productTitle = getIntent().getStringExtra("productTitle");
         key = getIntent().getStringExtra("key");
-        addProgress = (ProgressBar)findViewById(R.id.add_company_progressbar);
+        addProgress = (ProgressBar) findViewById(R.id.add_company_progressbar);
         addProgress.setVisibility(View.INVISIBLE);
+
 
         SetupToolbar();
         Ref = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference(DATABASE_PATH_UPLOADS);
         //TextInputLayouts
-        companyName = (TextInputLayout)findViewById(R.id.company_name);
+        companyName = (TextInputLayout) findViewById(R.id.company_name);
         viewImage = (ImageView) findViewById(R.id.image_chose);
         companyURL = (TextInputLayout) findViewById(R.id.company_url);
 
-        features = (EditText)findViewById(R.id.features);
+        features = (Button) findViewById(R.id.features);
         name = (TextInputEditText) findViewById(R.id.name);
         productID = (TextInputEditText) findViewById(R.id.id);
         url = (TextInputEditText) findViewById(R.id.url);
-        rate = (TextInputEditText) findViewById(R.id.rate);
-        balance = (TextInputEditText) findViewById(R.id.balance);
-
-        addCompanyButton = (Button)findViewById(R.id.add_company_button);
+        value1 = (TextInputEditText) findViewById(R.id.value1);
+        value2 = (TextInputEditText) findViewById(R.id.value2);
+        field1 = (TextInputEditText) findViewById(R.id.field1);
+        field2 = (TextInputEditText) findViewById(R.id.field2);
+        addCompanyButton = (Button) findViewById(R.id.add_company_button);
         type = getIntent().getStringExtra("type");
-        chooseImage = (Button)findViewById(R.id.choose_image);
+        chooseImage = (Button) findViewById(R.id.choose_image);
     }
 
     private void SetupToolbar() {

@@ -51,6 +51,8 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private DatabaseReference Ref;
-    private String currentUserID, phoneNumber, superAdmin = "False";
+    private String currentUserID, phoneNumber, superAdmin = "False", reference;
     private boolean isSuperAdmin = false;
 
 
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             SetNavigationView();
 
+            LinkReferences();
             GetSlides();
 
 
@@ -163,6 +166,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }, DELAY_MS, PERIOD_MS);
 
         }
+    }
+
+    private void LinkReferences() {
+
+        Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("reference"))
+                {
+                    reference = dataSnapshot.child("reference").getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        Ref.child("Customers").child("BasicInfo").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
+                    if(dataSnapshot1.hasChild("userID"))
+                    {
+                        if(dataSnapshot1.child("userID").getValue().toString().equals(reference))
+                        {
+                            Map map = new HashMap<>();
+                            map.put("with", dataSnapshot1.getKey());
+                            Ref.child("Customers").child("BasicInfo").child(currentUserID).updateChildren(map);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void CheckSuperAdmin() {
@@ -504,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.notice: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-                startActivity(new Intent(MainActivity.this, NoticeToCustomerActivity.class));
+                startActivity(new Intent(MainActivity.this, FirebaseActivity.class));
                 break;
 
             }
@@ -724,9 +770,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finishAffinity();
-
+    public void onBackPressed(){
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
     }
 }

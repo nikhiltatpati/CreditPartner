@@ -91,9 +91,13 @@ public class ProductsActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        int fromPosition = hashMap.get("fromPosition");
-        int toPosition = hashMap.get("toPosition");
-        ChangeFirebaseOrder(fromPosition, toPosition);
+       /* if(hashMap.get("fromPosition")!= null  && hashMap.get("toPosition")!= null)
+        {
+            int fromPosition = hashMap.get("fromPosition");
+            int toPosition = hashMap.get("toPosition");
+            ChangeFirebaseOrder(fromPosition, toPosition);
+        }
+*/
 
     }
 

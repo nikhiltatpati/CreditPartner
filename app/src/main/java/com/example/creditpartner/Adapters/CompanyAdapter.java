@@ -5,11 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.view.DragEvent;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -20,17 +21,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.view.MotionEventCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.creditpartner.Activities.AddCompanyActivity;
 import com.example.creditpartner.Activities.ApplyFormActivity;
-import com.example.creditpartner.Activities.CompanyWebsiteActivity;
 import com.example.creditpartner.Classes.Companies;
-import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.Interfaces.ItemLongClickListener;
-import com.example.creditpartner.Interfaces.OnStartDragListener;
 import com.example.creditpartner.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +35,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -55,8 +51,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
     String productTitle;
     private FirebaseAuth mAuth;
     private String currentUserID, privilege, key;
-   // private final OnStartDragListener mDragStartListener;
-
+    // private final OnStartDragListener mDragStartListener;
 
 
     @Override
@@ -71,7 +66,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         this.productTitle = productTitle;
         Ref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-     //   this.mDragStartListener = onStartDragListener;
+        //   this.mDragStartListener = onStartDragListener;
         currentUserID = mAuth.getCurrentUser().getUid();
     }
 
@@ -89,12 +84,21 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
         final Companies companies = companiesArrayList.get(position);
         holder.companyName.setText(companies.getCompanyName());
-        holder.companyInterestRate.setText(companies.getCompanyInterestRate());
-        holder.companyMinimumBalance.setText(companies.getCompanyMinimumBalance());
-       Glide.with(mContext)
+        holder.companyValue1.setText(companies.getValue1());
+        holder.companyValue2.setText(companies.getValue2());
+        holder.companyField1.setText(companies.getField1());
+        holder.companyField2.setText(companies.getField2());
+
+        if (companies.getFeatures() != null) {
+            holder.featuresText.loadDataWithBaseURL(null, companies.getFeatures(), "text/html", "utf-8", null);
+
+        }
+        // set the html content on a TextView
+
+
+        Glide.with(mContext)
                 .load(companies.getCompanyImage())
                 .into(holder.companyImage);
-
 
 
         SharedPreferences pref = mContext.getSharedPreferences("MyPref",
@@ -106,7 +110,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(mContext.getApplicationContext(), ApplyFormActivity.class);
                 intent.putExtra("companyTitle", companies.getCompanyName());
-                intent.putExtra("companyRate", companies.getCompanyInterestRate());
+                intent.putExtra("companyRate", companies.getValue1());
                 intent.putExtra("productTitle", productName);
                 intent.putExtra("type", "noType");
                 mContext.startActivity(intent);
@@ -127,15 +131,16 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         });*/
 
 
-
         Ref.child("CompanyList").child(productTitle).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if (dataSnapshot1.child("companyName").getValue().toString().equals(companies.getCompanyName())
-                            && dataSnapshot1.child("companyImage").getValue().toString().equals(companies.getCompanyImage())) {
-                        key = dataSnapshot1.getKey();
-                        break;
+                    if (dataSnapshot1.hasChild("companyName")) {
+                        if (dataSnapshot1.child("companyName").getValue().toString().equals(companies.getCompanyName())
+                                && dataSnapshot1.child("companyImage").getValue().toString().equals(companies.getCompanyImage())) {
+                            key = dataSnapshot1.getKey();
+                            break;
+                        }
                     }
                 }
             }
@@ -149,13 +154,11 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                privilege =   dataSnapshot.child("privilege").getValue().toString();
+                privilege = dataSnapshot.child("privilege").getValue().toString();
 
-                if(privilege.equals("SuperAdmin"))
-                {
+                if (privilege.equals("SuperAdmin")) {
                     holder.dragButton.setVisibility(View.VISIBLE);
                 }
-
 
 
             }
@@ -165,8 +168,6 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
             }
         });
-
-
 
 
         holder.setItemLongClickListener(new ItemLongClickListener() {
@@ -186,7 +187,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
                                     if (dataSnapshot1.child("companyName").getValue().toString().equals(companies.getCompanyName())
-                                    && dataSnapshot1.child("companyRate").getValue().toString().equals(companies.getCompanyInterestRate())) {
+                                            && dataSnapshot1.child("value2").getValue().toString().equals(companies.getValue2())
+                                            && dataSnapshot1.child("value1").getValue().toString().equals(companies.getValue1())) {
                                         key = dataSnapshot1.getKey();
 
                                         Ref.child("CompanyList").child(productName).child(key).removeValue();
@@ -209,19 +211,19 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                     public void onClick(DialogInterface dialog, int which) {
 
                         Intent intent = new Intent(mContext, AddCompanyActivity.class);
-                        intent.putExtra("type","edit");
-                        intent.putExtra("productTitle",productTitle);
-                        intent.putExtra("key",""+key);
+                        intent.putExtra("type", "edit");
+                        intent.putExtra("productTitle", productTitle);
+                        intent.putExtra("key", "" + key);
                         mContext.startActivity(intent);
 
                     }
                 });
 
 
-                    AlertDialog dialog = builder.create();
-                    if(privilege.equals("SuperAdmin")) {
-                        dialog.show();
-                    }
+                AlertDialog dialog = builder.create();
+                if (privilege.equals("SuperAdmin")) {
+                    dialog.show();
+                }
 
             }
 
@@ -298,10 +300,10 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
         private ImageButton dragButton;
         private ImageView companyImage;
-        private TextView companyName, companyInterestRate, companyMinimumBalance;
+        private TextView companyName, companyValue1, companyValue2, companyField1, companyField2;
         private Button selectCompany, viewDetails;
         private CardView detailsCard;
-        private TextView featuresText;
+        private WebView featuresText;
         ItemLongClickListener itemLongClickListener;
 
         public ViewHolder(@NonNull View itemView) {
@@ -310,12 +312,14 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
             companyImage = (ImageView) myView.findViewById(R.id.company_image);
             companyName = (TextView) myView.findViewById(R.id.company_name);
-            companyInterestRate = (TextView) myView.findViewById(R.id.percent_rate);
-            companyMinimumBalance = (TextView) myView.findViewById(R.id.minimum_balance_money);
+            companyValue1 = (TextView) myView.findViewById(R.id.percent_rate);
+            companyValue2 = (TextView) myView.findViewById(R.id.minimum_balance_money);
+            companyField1 = (TextView) myView.findViewById(R.id.interest_rate);
+            companyField2 = (TextView) myView.findViewById(R.id.minimum_balance);
             selectCompany = (Button) myView.findViewById(R.id.company_select);
             viewDetails = (Button) myView.findViewById(R.id.company_view_details);
             detailsCard = (CardView) myView.findViewById(R.id.details_card);
-            featuresText = (TextView) myView.findViewById(R.id.features_text);
+            featuresText = (WebView) myView.findViewById(R.id.features_text);
             dragButton = (ImageButton) myView.findViewById(R.id.drag_button);
 
             itemView.setOnLongClickListener(this);

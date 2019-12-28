@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -93,7 +94,7 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
                     nameTIET.setError("Enter your full name!");
                 }
 
-                else if (customerNumber.length() < 10) {
+                else if (customerNumber.length() != 10) {
                     mobileTIET.setError("Enter a valid number!");
 
                 }
@@ -129,13 +130,19 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
 
     private void GetDetails() {
 
+        Log.e("KEYYYY", "" + key);
+
         Ref.child("Customers").child("BasicInfo").child(key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 nameTIET.setText(dataSnapshot.child("name").getValue().toString());
                 emailTIET.setText(dataSnapshot.child("email").getValue().toString());
                 mobileTIET.setText(dataSnapshot.child("phoneNumber").getValue().toString());
-                idTIET.setText(dataSnapshot.child("userID").getValue().toString());
+                if(dataSnapshot.hasChild("userID"))
+                {
+                    idTIET.setText(dataSnapshot.child("userID").getValue().toString());
+
+                }
             }
 
             @Override

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,8 +36,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
     private FirebaseUser currentUSer;
-    private boolean isReferenceValid = false;
-
+    private boolean isReferenceValid = false, isExist = false;
 
 
     private static final String countryCode = "+91";
@@ -70,38 +70,63 @@ public class CustomerInfoActivity extends AppCompatActivity {
                 String email = emailTIET.getText().toString();
                 String name = nameTIET.getText().toString();
                 final String reference = referenceTIET.getText().toString();
-                ;
 
 
-                if (name.isEmpty() || name.length() < 5) {
+                if(customerNumber.isEmpty())
+                {
+                    mobileTIET.setError("Enter a valid number!");
+
+                }
+                else if (name.isEmpty() || name.length() < 5) {
                     nameTIET.setError("Enter your full name!");
-                } else if (customerNumber.length() < 10) {
+                } else if (customerNumber.length() != 10) {
                     mobileTIET.setError("Enter a valid number!");
 
                 } else if (!isEmailValid(email)) {
                     emailTIET.setError("Email is invalid!");
                 } else {
-                    Ref.child("References").addValueEventListener(new ValueEventListener() {
+
+                    Ref.child("Customers").child("BasicInfo").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.hasChild(reference))
-                            {
-                                SendDataToNextActivity(countryCode + mobileTIET.getText().toString(), referenceTIET.getText().toString(), emailTIET.getText().toString()
-                                        , nameTIET.getText().toString(), referenceTIET.getText().toString());
+                            long k = 0;
+                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                long n = dataSnapshot.getChildrenCount();
+                                Log.e("n", n + "");
+                                if (dataSnapshot1.child("phoneNumber").getValue().toString().equals(countryCode + customerNumber)) {
+                                    Toast.makeText(CustomerInfoActivity.this, "Already a user with this number exists. Try Login instead!", Toast.LENGTH_SHORT).show();
+                                    isExist = true;
+                                    mobileTIET.setText("");
+                                    mobileTIET.requestFocus();
+                                    break;
+                                }
+                                else
+                                {
+                                    k++;
+                                    if(k==n)
+                                    {
+                                        SendDataToNextActivity(countryCode + mobileTIET.getText().toString(), referenceTIET.getText().toString(), emailTIET.getText().toString()
+                                                , nameTIET.getText().toString(), referenceTIET.getText().toString());
+
+                                    }
+                                    else {
+                                        continue;
+                                    }
+                                }
                             }
 
-                            else
-                            {
-                                referenceTIET.setError("Reference Code is invalid!");
 
-                            }
+
+
                         }
+
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
                     });
+
 
                 }
 
@@ -110,8 +135,8 @@ public class CustomerInfoActivity extends AppCompatActivity {
         });
 
 
-
     }
+
 
     private void SendDataToNextActivity(String phoneNumber, String referenceNumber, String email, String name, String reference) {
 
@@ -146,11 +171,17 @@ public class CustomerInfoActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         Ref = FirebaseDatabase.getInstance().getReference();
 
-        oldUser = (TextView)findViewById(R.id.old_user);
+        oldUser = (TextView) findViewById(R.id.old_user);
 
 
         generateOTP = (TextView) findViewById(R.id.generate_button);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+    }
 }

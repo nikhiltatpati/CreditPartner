@@ -67,6 +67,7 @@ public class MyOfferAdapter extends RecyclerView.Adapter<MyOfferAdapter.ViewHold
         final Notifications notificationss = notifications.get(position);
         holder.notiTitle.setText(notificationss.getNotificationTitle());
         holder.notiText.setText(notificationss.getNotificationText());
+        holder.notiDate.setText(notificationss.getNotificationDate());
         Glide.with(mContext)
                 .load(R.drawable.ic_notifications_black_24dp)
                 .into(holder.notiImage);
@@ -142,7 +143,7 @@ public class MyOfferAdapter extends RecyclerView.Adapter<MyOfferAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements android.view.View.OnLongClickListener {
 
         private CircleImageView notiImage;
-        private TextView notiTitle, notiText;
+        private TextView notiTitle, notiText, notiDate;
         private ItemLongClickListener itemLongClickListener;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -152,6 +153,7 @@ public class MyOfferAdapter extends RecyclerView.Adapter<MyOfferAdapter.ViewHold
 
             notiTitle = (TextView)myView.findViewById(R.id.noti_title);
             notiText = (TextView)myView.findViewById(R.id.noti_text);
+            notiDate = (TextView)myView.findViewById(R.id.noti_date);
 
             itemView.setOnLongClickListener(this);
 

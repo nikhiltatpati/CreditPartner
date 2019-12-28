@@ -56,36 +56,66 @@
                         android:hint="Product URL" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/company_field1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/field1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:hint="Add Field 1" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/company_interese_rate"
+                    android:id="@+id/company_field2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/field2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:hint="Add Field 2" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/company_value1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:inputType="numberDecimal"
-                        android:id="@+id/rate"
+                        android:id="@+id/value1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:hint="Product Interest Rate" />
+                        android:hint="Add Value 1" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/company_minimum_balance"
+                    android:id="@+id/company_value2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:inputType="numberDecimal"
-                        android:id="@+id/balance"
+                        android:id="@+id/value2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:hint="Product Minimum Balance Required" />
+                        android:hint="Add Value 2" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/company_product_id"
@@ -102,13 +132,18 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <EditText
+                <Button
                     android:id="@+id/features"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:hint="Add Features" />
+                    android:layout_width="140dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@android:color/white"
+                    android:text="Add Features"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="17dp" />
 
+                
 
                 <Button
                     android:id="@+id/choose_image"
@@ -117,6 +152,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/buttons"
                     android:text="Choose Image"
+                    android:layout_marginTop="20dp"
                     android:textColor="@android:color/white"
                     android:textSize="17dp" />
 
