@@ -78,7 +78,6 @@ public class AddCompanyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddCompanyActivity.this, TextEditorActivity.class);
-                intent.putExtra("", "");
 
                 startActivityForResult(intent, 0);
             }

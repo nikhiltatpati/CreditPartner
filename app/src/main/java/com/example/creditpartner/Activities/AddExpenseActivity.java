@@ -1,5 +1,6 @@
 package com.example.creditpartner.Activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -28,6 +29,7 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     private EditText expense_value, category_name;
     private TextView addExpense;
+    private boolean noData;
     private Toolbar mToolbar;
 
     private FirebaseAuth mAuth;
@@ -71,8 +73,10 @@ public class AddExpenseActivity extends AppCompatActivity {
         category_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(AddExpenseActivity.this, SeletCategoryActivity.class);
+                startActivityForResult(intent, 0);
 
-                startActivity(new Intent(AddExpenseActivity.this, SeletCategoryActivity.class));
+
             }
         });
 
@@ -96,12 +100,27 @@ public class AddExpenseActivity extends AppCompatActivity {
         expenseDate.setText(sdf.format(myCalendar.getTime()));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data!= null) {
+            category = data.getStringExtra("category");
+            if (category != null) {
+                noData = false;
+                category_name.setText(category);
+
+            } else {
+                noData = true;
+            }
+        }
+    }
+
     private void AddTransactionTODatabase() {
         String expense = expense_value.getText().toString();
-        String category = category_name.getText().toString();
+        String category1 = category_name.getText().toString();
         String date = expenseDate.getText().toString();
 
-        if (expense.isEmpty() || category.isEmpty() || date.length() < 7) {
+        if (expense.isEmpty() || category1.isEmpty() || date.length() < 7) {
             Toast.makeText(AddExpenseActivity.this, "Enter valid details", Toast.LENGTH_LONG).show();
         } else {
             HashMap<String, String> hashMap = new HashMap<>();
@@ -116,22 +135,17 @@ public class AddExpenseActivity extends AppCompatActivity {
         }
 
 
-
-
     }
-
 
 
     private void Initialize() {
 
         SetupToolbar();
 
-        if(getIntent() != null) {
-            category = getIntent().getStringExtra("productName");
-        }
+
         expense_value = (EditText) findViewById(R.id.expense_value);
         category_name = (EditText) findViewById(R.id.category_name);
-        category_name.setText(category);
+
 
         addExpense = (TextView) findViewById(R.id.add_transaction);
         expenseDate = (EditText) findViewById(R.id.expense_date);

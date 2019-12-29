@@ -16,9 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.creditpartner.Activities.AddCompanyActivity;
 import com.example.creditpartner.Activities.AddExpenseActivity;
 import com.example.creditpartner.Activities.ProductDetailActivity;
 import com.example.creditpartner.Activities.TaxesActivity;
+import com.example.creditpartner.Activities.TextEditorActivity;
 import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -65,9 +67,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
 
                 Intent intent = new Intent(mContext, AddExpenseActivity.class);
-                intent.putExtra("productName", product.getProductName());
-                mContext.startActivity(intent);
-                ((Activity)mContext).finish();
+                intent.putExtra("category", product.getProductName());
+                ((Activity) mContext).setResult(1, intent);
+                ((Activity) mContext).finish();
 
             }
         });

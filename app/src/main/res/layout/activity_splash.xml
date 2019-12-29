@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@android:color/white"
     tools:context=".Activities.SplashActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -13,17 +13,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="130dp"
         android:layout_height="200dp"
-        android:src="@drawable/cplogo"/>
-
-    <TextView
-        android:id="@+id/splash_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Credit Partner"
-        android:textColor="@android:color/white"
-        android:layout_below="@id/splash_logo"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="30dp"/>
+        android:scaleType="centerCrop"
+        android:layout_centerInParent="true"
+        android:src="@drawable/cplogo1"/>
 
 </RelativeLayout>

@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void Initialize() {
         splashLogo = (CircleImageView) findViewById(R.id.splash_logo);
-        splashText = (TextView) findViewById(R.id.splash_text);
+       // splashText = (TextView) findViewById(R.id.splash_text);
     }
 
 
