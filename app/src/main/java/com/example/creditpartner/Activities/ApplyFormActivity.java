@@ -58,7 +58,7 @@ public class ApplyFormActivity extends AppCompatActivity {
 
                 if (name.isEmpty()) {
                     nameTIET.setError("Enter your full name!");
-                } else if (customerNumber.length() != 10) {
+                } else if (customerNumber.length() <13) {
                     mobileTIET.setError("Enter a valid number!");
 
                 } else if (!isEmailValid(email)) {

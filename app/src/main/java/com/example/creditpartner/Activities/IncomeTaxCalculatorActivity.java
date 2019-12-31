@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.creditpartner.R;
 
@@ -18,6 +19,7 @@ public class IncomeTaxCalculatorActivity extends AppCompatActivity {
     TextView tx;
     TextView tx1;
     Button b1;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,8 @@ public class IncomeTaxCalculatorActivity extends AppCompatActivity {
         tx=findViewById(R.id.text1);
         tx1=findViewById(R.id.text2);
         b1=findViewById(R.id.button3);
+
+        SetupTOolbar();
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +49,14 @@ public class IncomeTaxCalculatorActivity extends AppCompatActivity {
         });
     }
 
+    private void SetupTOolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.income_bar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Income Tax Calculator");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+    }
 
     @SuppressLint("SetTextI18n")
     public void calculate()

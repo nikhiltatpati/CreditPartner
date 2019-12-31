@@ -28,6 +28,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.creditpartner.Adapters.CategoryAdapter;
 import com.example.creditpartner.Adapters.ProductAdapter;
 import com.example.creditpartner.Adapters.SliderAdapter;
+import com.example.creditpartner.Classes.MyApplication;
 import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.Classes.Slides;
 import com.example.creditpartner.R;
@@ -109,6 +110,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             ChangeActivity(CustomerInfoActivity.class);
         } else {
+            if (getIntent().getExtras() != null) {
+
+                for (String key : getIntent().getExtras().keySet()) {
+                    String value = getIntent().getExtras().getString(key);
+
+                    if (key.equals("AnotherActivity") && value.equals("True")) {
+                        Intent intent = new Intent(this, MyAccountActivity.class);
+                        intent.putExtra("value", value);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                }
+            }
+
+            subscribeToPushService();
+
+        }
             Initialize();
             CheckSuperAdmin();
 
@@ -166,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }, DELAY_MS, PERIOD_MS);
 
         }
-    }
+
 
     private void LinkReferences() {
 
@@ -239,6 +258,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     }
+
+    private void subscribeToPushService() {
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
+
+        Log.d("AndroidBash", "Subscribed");
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+
+        // Log and toast
+    }
+
 
     private void GetSlides() {
 
