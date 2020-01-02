@@ -48,7 +48,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
 
 
     String NOTIFICATION_TITLE;
-    String NOTIFICATION_MESSAGE;
+    String NOTIFICATION_MESSAGE, NOTIFICATION_IMAGE;
     String TOPIC, currentUserID;
 
 
@@ -79,6 +79,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 TOPIC = "/topics/offers"; //topic must match with what the receiver subscribed to
                 NOTIFICATION_TITLE = edtTitle.getText().toString();
                 NOTIFICATION_MESSAGE = edtMessage.getText().toString();
+                NOTIFICATION_IMAGE = "https://dhanam77.github.io/assets/images/profile.png";
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String date = simpleDateFormat.format(new Date());
@@ -97,6 +98,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 try {
                     notifcationBody.put("title", NOTIFICATION_TITLE);
                     notifcationBody.put("message", NOTIFICATION_MESSAGE);
+                    notifcationBody.put("image", NOTIFICATION_IMAGE);
 
                     notification.put("to", TOPIC);
                     notification.put("data", notifcationBody);

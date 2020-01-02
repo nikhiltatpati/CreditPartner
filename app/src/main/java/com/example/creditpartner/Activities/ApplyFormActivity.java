@@ -32,7 +32,7 @@ public class ApplyFormActivity extends AppCompatActivity {
     private DatabaseReference Ref;
     private FirebaseUser currentUSer;
     private TextView applyForm;
-    private String currentUSerID, companyTitle, productTitle, companyRate, type;
+    private String currentUSerID, companyTitle, productTitle, companyRate, type, companyImage;
 
 
     @Override
@@ -53,17 +53,17 @@ public class ApplyFormActivity extends AppCompatActivity {
                 String email = emailTIET.getText().toString();
                 String name = nameTIET.getText().toString();
                 final String pin = pinTIET.getText().toString();
-                ;
+
 
 
                 if (name.isEmpty()) {
                     nameTIET.setError("Enter your full name!");
-                } else if (customerNumber.length() <13) {
+                } else if (customerNumber.length() != 10) {
                     mobileTIET.setError("Enter a valid number!");
 
                 } else if (!isEmailValid(email)) {
                     emailTIET.setError("Email is invalid!");
-                } else if (pin.isEmpty()) {
+                } else if (pin.isEmpty() || pin.length() != 6) {
                     pinTIET.setError("Pin Code is invalid!");
                 } else {
 
@@ -75,6 +75,7 @@ public class ApplyFormActivity extends AppCompatActivity {
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("Date", dates);
                     hashMap.put("Name", companyTitle);
+                    hashMap.put("Image", companyImage);
                     hashMap.put("myName", name);
                     hashMap.put("myEmail", email);
                     hashMap.put("myPin", pin);
@@ -116,7 +117,7 @@ public class ApplyFormActivity extends AppCompatActivity {
                 emailTIET.setText(email);
 
                 String phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
-                mobileTIET.setText(phoneNumber);
+                mobileTIET.setText(phoneNumber.substring(3));
 
             }
 
@@ -137,6 +138,7 @@ public class ApplyFormActivity extends AppCompatActivity {
         companyTitle = getIntent().getStringExtra("companyTitle");
         productTitle = getIntent().getStringExtra("productTitle");
         companyRate = getIntent().getStringExtra("companyRate");
+        companyImage = getIntent().getStringExtra("companyImage");
 
         type = getIntent().getStringExtra("type");
 

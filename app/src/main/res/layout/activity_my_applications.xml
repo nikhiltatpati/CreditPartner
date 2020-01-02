@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/search_apps"
-        android:text="You have no applications!"
+        android:text="You haven't applied anything yet!"
         android:textSize="22dp"
         android:textColor="@android:color/white"
         android:visibility="gone"

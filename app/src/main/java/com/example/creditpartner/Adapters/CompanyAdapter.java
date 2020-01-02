@@ -110,6 +110,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(mContext.getApplicationContext(), ApplyFormActivity.class);
                 intent.putExtra("companyTitle", companies.getCompanyName());
+                intent.putExtra("companyImage", companies.getCompanyImage());
                 intent.putExtra("companyRate", companies.getValue1());
                 intent.putExtra("productTitle", productName);
                 intent.putExtra("type", "noType");

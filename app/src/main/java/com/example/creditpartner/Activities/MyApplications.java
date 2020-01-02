@@ -90,21 +90,30 @@ public class MyApplications extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 applicationsArrayList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    String productName = dataSnapshot1.child("Name").getValue().toString();
-                    String productImage = dataSnapshot1.child("Image").getValue().toString();
-                    String productDate = dataSnapshot1.child("Date").getValue().toString();
 
-                    applicationsArrayList.add(new Applications(productImage, productName, productDate));
+                    if (dataSnapshot1.hasChild("Name") && dataSnapshot1.hasChild("Image") && dataSnapshot1.hasChild("Date")) {
+                        String productName = dataSnapshot1.child("Name").getValue().toString();
+                        String productImage = dataSnapshot1.child("Image").getValue().toString();
+                        String productDate = dataSnapshot1.child("Date").getValue().toString();
 
+                        applicationsArrayList.add(new Applications(productImage, productName, productDate));
+                    }
                 }
 
                 if (applicationsArrayList.size() == 0) {
                     noApps.setVisibility(View.VISIBLE);
                     searchView.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
                 }
 
-                adapter = new ApplicationAdapter(MyApplications.this, applicationsArrayList);
-                recyclerView.setAdapter(adapter);
+                else
+                {
+                    adapter = new ApplicationAdapter(MyApplications.this, applicationsArrayList);
+
+                    recyclerView.setAdapter(adapter);
+
+                }
+
                 loadProducts.setVisibility(View.INVISIBLE);
 
             }
