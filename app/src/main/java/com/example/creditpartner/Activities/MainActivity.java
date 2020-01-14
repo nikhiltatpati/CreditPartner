@@ -1,9 +1,12 @@
 package com.example.creditpartner.Activities;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -97,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ArrayList<Products> productsArrayList = new ArrayList<>();
     private ArrayList<Slides> slidesList = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
 
-            subscribeToPushService();
+//            subscribeToPushService();
 
         }
             Initialize();
@@ -260,9 +265,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void subscribeToPushService() {
-        FirebaseMessaging.getInstance().subscribeToTopic("news");
+        FirebaseMessaging.getInstance().subscribeToTopic("offers");
 
-        Log.d("AndroidBash", "Subscribed");
 
         String token = FirebaseInstanceId.getInstance().getToken();
 
@@ -580,7 +584,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.notice: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
-                startActivity(new Intent(MainActivity.this, FirebaseActivity.class));
+                startActivity(new Intent(MainActivity.this, NoticeToCustomerActivity.class));
                 break;
 
             }

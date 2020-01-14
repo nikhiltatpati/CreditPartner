@@ -107,11 +107,11 @@ public class MyOfferActivity extends AppCompatActivity {
                 arrayList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
-                    if (dataSnapshot1.hasChild("title") && dataSnapshot1.hasChild("message")
-                            && dataSnapshot1.hasChild("date")) {
+                    if (dataSnapshot1.hasChild("title") && dataSnapshot1.hasChild("text")
+                            && dataSnapshot1.hasChild("date") && dataSnapshot1.hasChild("image")) {
 
                         arrayList.add(new Notifications(dataSnapshot1.child("title").getValue().toString(),
-                                dataSnapshot1.child("message").getValue().toString(),
+                                dataSnapshot1.child("text").getValue().toString(),
                                 dataSnapshot1.child("date").getValue().toString()));
                     }
 
