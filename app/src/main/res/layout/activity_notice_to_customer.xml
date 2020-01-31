@@ -15,7 +15,7 @@
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:orientation="vertical">
 
 
@@ -25,7 +25,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:hint="Notification name" />
+            android:hint="Notification Title" />
 
         <EditText
             android:id="@+id/noti_text"
@@ -49,8 +49,8 @@
 
         <ImageView
             android:id="@+id/view_noti_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:layout_marginTop="20dp"/>

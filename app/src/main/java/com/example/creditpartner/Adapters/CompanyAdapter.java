@@ -101,6 +101,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                 .into(holder.companyImage);
 
 
+
         SharedPreferences pref = mContext.getSharedPreferences("MyPref",
                 Context.MODE_PRIVATE);
         productName = pref.getString("productTitle", null);
@@ -132,25 +133,33 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
         });*/
 
 
-        Ref.child("CompanyList").child(productTitle).addValueEventListener(new ValueEventListener() {
+        Thread getKey = new Thread(new Runnable() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if (dataSnapshot1.hasChild("companyName")) {
-                        if (dataSnapshot1.child("companyName").getValue().toString().equals(companies.getCompanyName())
-                                && dataSnapshot1.child("companyImage").getValue().toString().equals(companies.getCompanyImage())) {
-                            key = dataSnapshot1.getKey();
-                            break;
+            public void run() {
+                Ref.child("CompanyList").child(productTitle).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            if (dataSnapshot1.hasChild("companyName")) {
+                                if (dataSnapshot1.child("companyName").getValue().toString().equals(companies.getCompanyName())
+                                        && dataSnapshot1.child("companyImage").getValue().toString().equals(companies.getCompanyImage())) {
+                                    key = dataSnapshot1.getKey();
+                                    break;
+                                }
+                            }
                         }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });
             }
         });
+
+        getKey.start();
+
 
         Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override

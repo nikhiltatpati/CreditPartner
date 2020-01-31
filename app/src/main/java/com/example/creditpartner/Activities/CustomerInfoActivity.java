@@ -102,7 +102,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
                                 }
                                 else
                                 {
-                                    k++;
+                                    ++k;
                                     if(k==n)
                                     {
                                         SendDataToNextActivity(countryCode + mobileTIET.getText().toString(), referenceTIET.getText().toString(), emailTIET.getText().toString()

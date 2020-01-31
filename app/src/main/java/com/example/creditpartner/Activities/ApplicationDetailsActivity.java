@@ -6,10 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.creditpartner.R;
@@ -25,7 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ApplicationDetailsActivity extends AppCompatActivity {
 
-    private TextView emailTIET, mobileTIET, pinTIET, nameTIET, productName, rateText, mbText;
+    private TextView emailTIET, mobileTIET, pinTIET, nameTIET, productName, value1, value2, field1, field2;
     private CircleImageView productImage;
     private Toolbar mToolbar;
     private FirebaseAuth mAuth;
@@ -62,8 +60,10 @@ public class ApplicationDetailsActivity extends AppCompatActivity {
                         if(dataSnapshot11.child("companyName").getValue().toString().equals(name) &&
                                 dataSnapshot11.child("companyImage").getValue().toString().equals(Image))
                         {
-                            rateText.setText(dataSnapshot11.child("companyRate").getValue().toString());
-                            mbText.setText(dataSnapshot11.child("companyMinimumBalance").getValue().toString());
+                            value1.setText(dataSnapshot11.child("value1").getValue().toString());
+                            value2.setText(dataSnapshot11.child("value2").getValue().toString());
+                            field1.setText(dataSnapshot11.child("field1").getValue().toString());
+                            field2.setText(dataSnapshot11.child("field2").getValue().toString());
                         }
                     }
                 }
@@ -136,8 +136,10 @@ public class ApplicationDetailsActivity extends AppCompatActivity {
         mobileTIET = (TextView) findViewById(R.id.appdetail_number);
         nameTIET = (TextView) findViewById(R.id.appdetail_myname);
         pinTIET = (TextView) findViewById(R.id.appdetail_pin);
-        rateText = (TextView) findViewById(R.id.app_rate);
-        mbText = (TextView) findViewById(R.id.app_mb);
+        value1 = (TextView) findViewById(R.id.app_rate);
+        value2 = (TextView) findViewById(R.id.app_mb);
+        field1 = (TextView) findViewById(R.id.interest_rate);
+        field2 = (TextView) findViewById(R.id.minimum_balance);
         productImage = (CircleImageView)findViewById(R.id.appdetail_image);
         productName = (TextView)findViewById(R.id.appdetail_name);
 
@@ -152,7 +154,7 @@ public class ApplicationDetailsActivity extends AppCompatActivity {
     private void SetupToolbar() {
         mToolbar = findViewById(R.id.appdetail_bar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Details");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

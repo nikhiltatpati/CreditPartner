@@ -132,9 +132,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 //            subscribeToPushService();
 
-        }
+
             Initialize();
-            CheckSuperAdmin();
 
 
             FirebaseMessaging.getInstance().subscribeToTopic("offers")
@@ -149,26 +148,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             SetNavigationView();
 
-            LinkReferences();
-            GetSlides();
+            Thread reference = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    LinkReferences();
+                    GetSlides();
+
+                }
+            });
+
+            Thread superadminChecker = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    CheckSuperAdmin();
+                }
+            });
+
+            reference.start();
+            superadminChecker.start();
 
 
             SetupRecyclerView();
 
-            FirebaseInstanceId.getInstance().getInstanceId()
-                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                            if (!task.isSuccessful()) {
-                                return;
-                            }
-
-                            // Get new Instance ID token
-                            String token = task.getResult().getToken();
-
-
-                        }
-                    });
 
 //        After setting the adapter use the timer
             final Handler handler = new Handler();
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }, DELAY_MS, PERIOD_MS);
 
         }
-
+    }
 
     private void LinkReferences() {
 
@@ -251,8 +252,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                 }
-                email = dataSnapshot.child("email").getValue().toString();
-
+                if(dataSnapshot.hasChild("email")) {
+                    email = dataSnapshot.child("email").getValue().toString();
+                }
             }
 
             @Override
@@ -264,14 +266,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void subscribeToPushService() {
-        FirebaseMessaging.getInstance().subscribeToTopic("offers");
-
-
-        String token = FirebaseInstanceId.getInstance().getToken();
-
-        // Log and toast
-    }
 
 
     private void GetSlides() {
@@ -395,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (dataSnapshot.child("phoneNumber").exists()) {
                     String number = dataSnapshot.child("phoneNumber").getValue().toString();
                     TextView numText = (TextView) header.findViewById(R.id.sidenav_header_number);
-                    numText.setText(number);
+                    numText.setText(number.substring(3));
                 }
 
                 if (dataSnapshot.child("privilege").exists()) {

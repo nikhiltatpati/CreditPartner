@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ import com.example.creditpartner.Activities.ApplyFormActivity;
 import com.example.creditpartner.Classes.Companies;
 import com.example.creditpartner.Interfaces.ItemLongClickListener;
 import com.example.creditpartner.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,12 +44,18 @@ public class TaxAdapter extends RecyclerView.Adapter<TaxAdapter.ViewHolder> {
     private String productName, key;
     private boolean isShown = false;
     private DatabaseReference Ref;
+    private String privilege, currentUserID;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+
 
 
     public TaxAdapter(Context mContext, ArrayList<Companies> companiesArrayList) {
         this.mContext = mContext;
         this.companiesArrayList = companiesArrayList;
         Ref = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
     }
 
     @NonNull
@@ -70,8 +79,10 @@ public class TaxAdapter extends RecyclerView.Adapter<TaxAdapter.ViewHolder> {
         Glide.with(mContext)
                 .load(companies.getCompanyImage())
                 .into(holder.companyImage);
-        holder.featuresText.setText(companies.getFeatures());
+        if (companies.getFeatures() != null) {
+            holder.featuresText.loadDataWithBaseURL(null, companies.getFeatures(), "text/html", "utf-8", null);
 
+        }
 
         SharedPreferences pref = mContext.getSharedPreferences("MyPref",
                 Context.MODE_PRIVATE);
@@ -103,9 +114,11 @@ public class TaxAdapter extends RecyclerView.Adapter<TaxAdapter.ViewHolder> {
             }
         });
 
+
         holder.setItemLongClickListener(new ItemLongClickListener() {
             @Override
             public void onItemLongCLick(View v, int pos) {
+
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("Edit");
@@ -131,8 +144,25 @@ public class TaxAdapter extends RecyclerView.Adapter<TaxAdapter.ViewHolder> {
                     }
                 });
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        privilege = dataSnapshot.child("privilege").getValue().toString();
+
+                        if (privilege.equals("SuperAdmin")) {
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
 
@@ -171,7 +201,7 @@ public class TaxAdapter extends RecyclerView.Adapter<TaxAdapter.ViewHolder> {
         private TextView companyName, companyValue1, companyValue2, companyField1, companyField2;
         private Button selectCompany, viewDetails;
         private CardView detailsCard;
-        private TextView featuresText;
+        private WebView featuresText;
         ItemLongClickListener itemLongClickListener;
 
         public ViewHolder(@NonNull View itemView) {
@@ -183,12 +213,12 @@ public class TaxAdapter extends RecyclerView.Adapter<TaxAdapter.ViewHolder> {
             companyField1 = (TextView) myView.findViewById(R.id.interest_rate);
             companyField2 = (TextView) myView.findViewById(R.id.minimum_balance);
 
-            companyImage = (ImageView) myView.findViewById(R.id.tax_image);
+            companyImage = (ImageView) myView.findViewById(R.id.company_image);
             companyName = (TextView) myView.findViewById(R.id.company_name);
             selectCompany = (Button) myView.findViewById(R.id.company_select);
             viewDetails = (Button) myView.findViewById(R.id.company_view_details);
             detailsCard = (CardView) myView.findViewById(R.id.details_card);
-            featuresText = (TextView) myView.findViewById(R.id.features_text);
+            featuresText = (WebView) myView.findViewById(R.id.features_text);
 
             itemView.setOnLongClickListener(this);
 

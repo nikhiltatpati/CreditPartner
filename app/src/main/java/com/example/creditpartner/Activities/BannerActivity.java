@@ -62,7 +62,6 @@ public class BannerActivity extends AppCompatActivity {
     private void Initialize() {
 
         adLink = getIntent().getStringExtra("adLink");
-        Log.e("adLinkBn", adLink);
         mWebView = (WebView)findViewById(R.id.banner_webview);
         SetupTOolbar();
 

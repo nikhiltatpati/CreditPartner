@@ -39,7 +39,15 @@ public class MyAccountActivity extends AppCompatActivity {
 
         Initialize();
 
-        GetUserDetails();
+        Thread getDetails = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                GetUserDetails();
+
+            }
+        });
+
+        getDetails.start();
 
         gotoApp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +80,7 @@ public class MyAccountActivity extends AppCompatActivity {
                 if(dataSnapshot.hasChild("phoneNumber"))
                 {
                     phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
-                    phoneNumberText.setText(phoneNumber);
+                    phoneNumberText.setText(phoneNumber.substring(3));
                 }
                 if(dataSnapshot.hasChild("privilege"))
                 {

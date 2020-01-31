@@ -75,6 +75,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verify_info);
 
         Initialize();
+        sendVerificationCode(phoneNumber);
 
 
         verifyButton.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +98,6 @@ public class VerifyInfoActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        sendVerificationCode(phoneNumber);
 
     }
 
@@ -147,7 +147,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
 
                             if (type.equals("new")) {
-                                sendMail();
+    //                            sendMail();
 
                             }
 

@@ -3,10 +3,12 @@ package com.example.creditpartner.Activities;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -18,12 +20,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.loader.content.CursorLoader;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.creditpartner.Classes.AppHelper;
+import com.example.creditpartner.Classes.MyApplication;
 import com.example.creditpartner.Classes.MySingletonClass;
+import com.example.creditpartner.Classes.VolleyMultipartRequest;
 import com.example.creditpartner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,6 +57,7 @@ import com.google.firebase.storage.UploadTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,13 +68,15 @@ import java.util.Map;
 public class NoticeToCustomerActivity extends AppCompatActivity {
 
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String URL = "https://spicetech.in/img2url.php";
     final private String serverKey = "key=" + "AAAAo4Hho80:APA91bF-6ME8GVGia13gunidiOjFHBJA575kMeAu7Sb1lbrmgzYgSjwWvPmNkRIq9ydcrNZWA-Na0L-LrK1GUy1MHeXGDw5E-Pd9S-rpw6ITDgJ5lqSszhqbgEM-ptsVi582ajf2qhD6";
     final private String contentType = "application/json";
     final String TAG = "NOTIFICATION TAG";
     private Toolbar mToolbar;
     private DatabaseReference Ref;
     private Uri filePath;
-
+    private String resultResponse;
+    private RequestQueue requestQueue;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -89,8 +108,10 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
         edtMessage = findViewById(R.id.noti_text);
         edtImage = findViewById(R.id.noti_image_link);
         Button btnSend = findViewById(R.id.send_noti);
-        viewImage = (ImageView)findViewById(R.id.view_noti_image);
+        viewImage = (ImageView) findViewById(R.id.view_noti_image);
         viewImage.setVisibility(View.GONE);
+
+        requestQueue = Volley.newRequestQueue(this); // 'this' is the Context
 
         Ref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -118,7 +139,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("title", NOTIFICATION_TITLE);
                 hashMap.put("text", NOTIFICATION_MESSAGE);
-                hashMap.put("image", NOTIFICATION_IMAGE);
+                hashMap.put("image", resultResponse);
                 hashMap.put("date", date);
                 Ref.child("MyOffers").push().setValue(hashMap);
                 Toast.makeText(NoticeToCustomerActivity.this, "Notification Sent!", Toast.LENGTH_SHORT).show();
@@ -129,7 +150,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 try {
                     notifcationBody.put("title", NOTIFICATION_TITLE);
                     notifcationBody.put("text", NOTIFICATION_MESSAGE);
-                    notifcationBody.put("image", NOTIFICATION_IMAGE);
+                    notifcationBody.put("image", resultResponse);
 
                     notification.put("to", TOPIC);
                     notification.put("data", notifcationBody);
@@ -140,6 +161,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
             }
         });
     }
+
     private void uploadFile() {
         //checking if file is available
         if (filePath != null) {
@@ -197,6 +219,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
             Toast.makeText(NoticeToCustomerActivity.this, "Select Image", Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -205,6 +228,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 viewImage.setImageBitmap(bitmap);
+                sendImage(bitmap);
                 viewImage.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -212,7 +236,91 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
         }
     }
 
-    private void SetupToolbar() {
+    private void sendImage(Bitmap bitmap) {
+
+
+
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, URL, new Response.Listener<NetworkResponse>() {
+            @Override
+            public void onResponse(NetworkResponse response) {
+                resultResponse = new String(response.data);
+                Log.e("RESULTRESPONSEEEEEEEEEE", resultResponse);
+                try {
+                    JSONObject result = new JSONObject(resultResponse);
+                    String status = result.getString("status");
+                    String message = result.getString("message");
+
+                    if (status.equals("Success")) {
+                        // tell everybody you have succed upload image and post strings
+                        Log.i("Message", message);
+                    } else {
+                        Log.i("Unexpected", message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Unknown error";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect server";
+                    }
+                } else {
+                    String result = new String(networkResponse.data);
+                    Log.e("NETWORKRESPONSEEEEEEEE", result);
+
+                    try {
+                        JSONObject response = new JSONObject(result);
+                        String status = response.getString("status");
+                        String message = response.getString("message");
+
+                        Log.e("Error Status", status);
+                        Log.e("Error Message", message);
+
+                        if (networkResponse.statusCode == 404) {
+                            errorMessage = "Resource not found";
+                        } else if (networkResponse.statusCode == 401) {
+                            errorMessage = message+" Please login again";
+                        } else if (networkResponse.statusCode == 400) {
+                            errorMessage = message+ " Check your inputs";
+                        } else if (networkResponse.statusCode == 500) {
+                            errorMessage = message+" Something is getting wrong";
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.i("Error", errorMessage);
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+
+            @Override
+            protected Map<String, VolleyMultipartRequest.DataPart> getByteData() {
+                Map<String, VolleyMultipartRequest.DataPart> params = new HashMap<>();
+                // file name could found file base or direct access from real path
+                // for now just get bitmap data from ImageView
+                params.put("image", new VolleyMultipartRequest.DataPart("image", AppHelper.getFileDataFromDrawable(getBaseContext(), viewImage.getDrawable())));
+
+                return params;
+            }
+        };
+
+        MySingletonClass.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
+    }
+
+        private void SetupToolbar() {
         mToolbar = findViewById(R.id.noticebar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Send Notice");
@@ -240,10 +348,10 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i(TAG, "onResponse: " + response.toString());
+                        Log.e(TAG, "ONRESPONSEEEEEEEEEEEEEE: " + response.toString());
                         edtTitle.setText("");
                         edtMessage.setText("");
-                        edtImage.setText("");
+                        viewImage.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
@@ -263,4 +371,4 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
         };
         MySingletonClass.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
-}
+    }
