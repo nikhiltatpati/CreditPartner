@@ -198,8 +198,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Ref.child("Customers").child("BasicInfo").child(currentUserID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild("reference"))
-                {
+                if (dataSnapshot.hasChild("reference")) {
                     reference = dataSnapshot.child("reference").getValue().toString();
                 }
             }
@@ -214,12 +213,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                {
-                    if(dataSnapshot1.hasChild("userID"))
-                    {
-                        if(dataSnapshot1.child("userID").getValue().toString().equals(reference))
-                        {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (dataSnapshot1.hasChild("userID")) {
+                        if (dataSnapshot1.child("userID").getValue().toString().equals(reference)) {
                             Map map = new HashMap<>();
                             map.put("with", dataSnapshot1.getKey());
                             Ref.child("Customers").child("BasicInfo").child(currentUserID).updateChildren(map);
@@ -252,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
 
                 }
-                if(dataSnapshot.hasChild("email")) {
+                if (dataSnapshot.hasChild("email")) {
                     email = dataSnapshot.child("email").getValue().toString();
                 }
             }
@@ -265,7 +261,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     }
-
 
 
     private void GetSlides() {
@@ -748,7 +743,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 case R.id.bot_recharge: {
-                    Snackbar.make(drawerLayout, "Coming Soon, hang on!", 3000).show();
+                    ChangeActivity(RechargeActivity.class);
+
                     break;
                 }
                 case R.id.bot_paisa_tracker: {
@@ -798,7 +794,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent a = new Intent(Intent.ACTION_MAIN);
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
