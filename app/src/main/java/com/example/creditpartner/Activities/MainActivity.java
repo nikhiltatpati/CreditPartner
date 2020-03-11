@@ -334,7 +334,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         */
-        Ref.child("ProductList").addValueEventListener(new ValueEventListener() {
+
+
+
+        Ref.child("ProductList").orderByChild("order").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 productsArrayList.clear();

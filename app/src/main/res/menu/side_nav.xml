@@ -40,7 +40,7 @@
 
     <item
         android:id="@+id/side_credit_report"
-        android:title="Credit Report" />
+        android:title="Credit Score" />
     <item
         android:id="@+id/side_credit_card"
         android:title="Credit Card" />
@@ -59,20 +59,14 @@
             android:id="@+id/side_loan"
             android:title="Loans" />
 
-
-        <item
-            android:id="@+id/side_homeloan"
-            android:title="Home Loan"
-            android:visible="false" />
-
         <item
             android:id="@+id/side_personalloan"
             android:title="Personal Loan"
             android:visible="false" />
 
         <item
-            android:id="@+id/side_instantloan"
-            android:title="Instant Loan"
+            android:id="@+id/side_homeloan"
+            android:title="Home Loan"
             android:visible="false" />
 
         <item
@@ -81,9 +75,22 @@
             android:visible="false" />
 
         <item
+            android:id="@+id/side_twloan"
+            android:title="Two Wheeler Loan"
+            android:visible="false" />
+
+
+        <item
             android:id="@+id/side_educationloan"
             android:title="Education Loan"
             android:visible="false" />
+        <item
+            android:id="@+id/side_instantloan"
+            android:title="Instant Loan"
+            android:visible="false" />
+
+
+
 
         <item
             android:id="@+id/side_businessloan"
@@ -105,16 +112,30 @@
             android:id="@+id/side_healthinsurance"
             android:title="Health Insurance"
             android:visible="false" />
+        <item
+            android:id="@+id/side_twinsurance"
+            android:title="Two Wheeler Insurance"
+            android:visible="false" />
+
+
+        <item
+            android:id="@+id/side_carinsurance"
+            android:title="Car Insurance"
+            android:visible="false" />
+
 
         <item
             android:id="@+id/side_terminsurance"
             android:title="Term Insurance"
             android:visible="false" />
 
+
         <item
-            android:id="@+id/side_carinsurance"
-            android:title="Car Insurance"
+            android:id="@+id/side_lifeinsurance"
+            android:title="Life Insurance"
             android:visible="false" />
+
+
     </group>
 
 
@@ -142,24 +163,70 @@
             android:title="Income tax Calculator"
             android:visible="false" />
 
+        <item
+            android:id="@+id/side_gst"
+            android:title="Income tax Calculator"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_fuel"
+            android:title="Income tax Calculator"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_gold"
+            android:title="Gold/Silver Rates"
+            android:visible="false" />
+
     </group>
+
+
+    <item
+        android:id="@+id/side_myoffer"
+        android:title="My Offer" />
+
+
+    <item
+        android:id="@+id/chat_support"
+        android:title="Chat Support"
+        android:visible="false" />
 
 
     <item
         android:id="@+id/notice"
         android:title="Notice to customer"
-        android:visible="false"/>
-
-    <item
-        android:id="@+id/side_myoffer"
-        android:title="My Offer"
-         />
+        android:visible="false" />
 
     <item
         android:id="@+id/side_logout"
         android:title="Logout" />
 
+    <group
+        android:id="@+id/investment"
+        android:checkableBehavior="single">
 
+
+        <item
+            android:id="@+id/Investments"
+            android:title="Investments" />
+
+        <item
+            android:id="@+id/side_dmat"
+            android:title="DMAT"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_fd"
+            android:title="Fixed Deposits"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_mf"
+            android:title="Mutual Funds"
+            android:visible="false" />
+
+
+    </group>
 
 
 </menu>

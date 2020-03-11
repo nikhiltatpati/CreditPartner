@@ -41,6 +41,7 @@ public class SeletCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_selet_category);
 
 
+
         Initialize();
         SetupRecyclerView();
 

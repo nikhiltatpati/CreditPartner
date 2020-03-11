@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="130dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/itemsRecyclerView"
+        android:layout_marginTop="30dp">
+
+
+        <TextView
+            android:id="@+id/paymenttext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Mobile Recharge or Bill Payment"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/paymenttext"
+            android:layout_marginTop="30dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:text="Prepaid"
+                    android:textSize="17dp" />
+
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="70dp"
+                    android:text="Postpaid"
+                    android:textSize="17dp" />
+
+
+            </RelativeLayout>
+
+
+        </RadioGroup>
+
+
+        <EditText
+            android:id="@+id/mobile_recharge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/options"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Enter Mobile Number"
+            android:gravity="center"/>
+
+
+        <Spinner
+            android:id="@+id/operator_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_below="@id/mobile_recharge"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"/>
+
+
+        <EditText
+            android:id="@+id/recharge_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/operator_spinner"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Enter Amount"
+            android:gravity="center"/>
+
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recharge_amount"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/buttons"
+            android:text="Continue"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

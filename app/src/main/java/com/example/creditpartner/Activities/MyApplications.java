@@ -56,6 +56,7 @@ public class MyApplications extends AppCompatActivity {
 
     }
 
+
     private void ImplementSearch() {
 
         searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.search_apps);

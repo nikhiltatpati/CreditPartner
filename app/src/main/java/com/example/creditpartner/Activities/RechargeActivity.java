@@ -19,7 +19,7 @@ public class RechargeActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private String companyTitle;
     private WebView mWebView;
-    private static final String URL = "https://recharge.spicetech.in";
+    private static final String URL = "https://spicetech.in/recharge";
 
 
     @Override

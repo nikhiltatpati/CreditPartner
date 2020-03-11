@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.creditpartner.Adapters.SideUserAdapter;
+import com.example.creditpartner.Classes.UserSorter;
 import com.example.creditpartner.Classes.Users;
 import com.example.creditpartner.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,15 +85,8 @@ public class UsersActivity extends AppCompatActivity {
                         usersArrayList.add(new Users(username, usertype, usernumber));
                 }
 
-                Collections.sort(usersArrayList, new Comparator<Users>() {
-                    @Override
-                    public int compare(Users users, Users t1) {
-                        String s1 = users.getUserName();
-                        String s2 = t1.getUserName();
-                        return s1.compareToIgnoreCase(s2);
-                    }
+                Collections.sort(usersArrayList, new UserSorter());
 
-                });
                 adapter = new SideUserAdapter(UsersActivity.this, usersArrayList);
                 recyclerView.setAdapter(adapter);
                 // loadProducts.setVisibility(View.INVISIBLE);

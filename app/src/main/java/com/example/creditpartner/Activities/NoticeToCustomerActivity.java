@@ -90,7 +90,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
 
     String NOTIFICATION_TITLE;
     String NOTIFICATION_MESSAGE, NOTIFICATION_IMAGE;
-    String TOPIC, currentUserID;
+    String TOPIC, currentUserID, message;
 
 
     EditText edtTitle;
@@ -139,7 +139,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("title", NOTIFICATION_TITLE);
                 hashMap.put("text", NOTIFICATION_MESSAGE);
-                hashMap.put("image", resultResponse);
+                hashMap.put("image", message);
                 hashMap.put("date", date);
                 Ref.child("MyOffers").push().setValue(hashMap);
                 Toast.makeText(NoticeToCustomerActivity.this, "Notification Sent!", Toast.LENGTH_SHORT).show();
@@ -150,7 +150,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 try {
                     notifcationBody.put("title", NOTIFICATION_TITLE);
                     notifcationBody.put("text", NOTIFICATION_MESSAGE);
-                    notifcationBody.put("image", resultResponse);
+                    notifcationBody.put("image", message);
 
                     notification.put("to", TOPIC);
                     notification.put("data", notifcationBody);
@@ -228,7 +228,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 viewImage.setImageBitmap(bitmap);
-                sendImage(bitmap);
+  //              sendImage(bitmap);
                 viewImage.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -236,91 +236,45 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
         }
     }
 
-    private void sendImage(Bitmap bitmap) {
+/*    private void sendImage(Bitmap bitmap) {
 
 
+        VolleyMultipartRequest multipartRequest =
 
-        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, URL, new Response.Listener<NetworkResponse>() {
-            @Override
-            public void onResponse(NetworkResponse response) {
-                resultResponse = new String(response.data);
-                Log.e("RESULTRESPONSEEEEEEEEEE", resultResponse);
-                try {
-                    JSONObject result = new JSONObject(resultResponse);
-                    String status = result.getString("status");
-                    String message = result.getString("message");
+                new VolleyMultipartRequest(URL, AppHelper.getFileDataFromDrawable(),"", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e(TAG, "Success Response: " + response.toString());
 
-                    if (status.equals("Success")) {
-                        // tell everybody you have succed upload image and post strings
-                        Log.i("Message", message);
-                    } else {
-                        Log.i("Unexpected", message);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                NetworkResponse networkResponse = error.networkResponse;
-                String errorMessage = "Unknown error";
-                if (networkResponse == null) {
-                    if (error.getClass().equals(TimeoutError.class)) {
-                        errorMessage = "Request timeout";
-                    } else if (error.getClass().equals(NoConnectionError.class)) {
-                        errorMessage = "Failed to connect server";
-                    }
-                } else {
-                    String result = new String(networkResponse.data);
-                    Log.e("NETWORKRESPONSEEEEEEEE", result);
+                }, new Response.ErrorListener() {
 
-                    try {
-                        JSONObject response = new JSONObject(result);
-                        String status = response.getString("status");
-                        String message = response.getString("message");
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-                        Log.e("Error Status", status);
-                        Log.e("Error Message", message);
+                        if (error.networkResponse != null) {
+                            Log.e(TAG, "Error Response code: " +
+                                    error.networkResponse.statusCode);
 
-                        if (networkResponse.statusCode == 404) {
-                            errorMessage = "Resource not found";
-                        } else if (networkResponse.statusCode == 401) {
-                            errorMessage = message+" Please login again";
-                        } else if (networkResponse.statusCode == 400) {
-                            errorMessage = message+ " Check your inputs";
-                        } else if (networkResponse.statusCode == 500) {
-                            errorMessage = message+" Something is getting wrong";
+
+                            if (error instanceof NetworkError) {
+                            } else if (error instanceof ServerError) {
+                            } else if (error instanceof AuthFailureError) {
+                            } else if (error instanceof ParseError) {
+                            } else if (error instanceof NoConnectionError) {
+                            } else if (error instanceof TimeoutError) {
+                            }
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
-                Log.i("Error", errorMessage);
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                return params;
-            }
-
-            @Override
-            protected Map<String, VolleyMultipartRequest.DataPart> getByteData() {
-                Map<String, VolleyMultipartRequest.DataPart> params = new HashMap<>();
-                // file name could found file base or direct access from real path
-                // for now just get bitmap data from ImageView
-                params.put("image", new VolleyMultipartRequest.DataPart("image", AppHelper.getFileDataFromDrawable(getBaseContext(), viewImage.getDrawable())));
-
-                return params;
-            }
-        };
-
+                });
         MySingletonClass.getInstance(getBaseContext()).addToRequestQueue(multipartRequest);
-    }
 
-        private void SetupToolbar() {
+
+
+    }
+*/
+
+    private void SetupToolbar() {
         mToolbar = findViewById(R.id.noticebar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Send Notice");
@@ -371,4 +325,4 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
         };
         MySingletonClass.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
-    }
+}
