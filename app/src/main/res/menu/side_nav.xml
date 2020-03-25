@@ -170,7 +170,7 @@
 
         <item
             android:id="@+id/side_fuel"
-            android:title="Income tax Calculator"
+            android:title="Fuel Rates"
             android:visible="false" />
 
         <item
@@ -188,14 +188,13 @@
 
     <item
         android:id="@+id/chat_support"
-        android:title="Chat Support"
-        android:visible="false" />
+        android:title="Chat Support"/>
 
 
     <item
         android:id="@+id/notice"
         android:title="Notice to customer"
-        android:visible="false" />
+         />
 
     <item
         android:id="@+id/side_logout"

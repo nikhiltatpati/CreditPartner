@@ -34,7 +34,6 @@ import java.util.List;
 public class AddUsersActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Toolbar mToolbar;
-    private TextInputLayout emailTIL, nameTIL, mobileTIL;
     private Spinner privilegeSpinner;
     private TextInputEditText emailTIET, mobileTIET, nameTIET, idTIET;
     private Button addUserButton;
@@ -43,7 +42,7 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
     private DatabaseReference Ref;
     private FirebaseUser currentUSer;
     private static final String countryCode = "+91";
-    private String type, key;
+    private String type, key, res;
 
 
     @Override
@@ -85,38 +84,39 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View view) {
 
                 String customerNumber = mobileTIET.getText().toString();
+
+
+
                 String email = emailTIET.getText().toString();
                 String name = nameTIET.getText().toString();
                 String userid = idTIET.getText().toString();
                 String privilege = privilegeSpinner.getSelectedItem().toString();
 
-                if (name.isEmpty() || name.length() < 5) {
+                if (name.isEmpty()) {
                     nameTIET.setError("Enter your full name!");
                 }
 
-                else if (customerNumber.length() != 10) {
-                    mobileTIET.setError("Enter a valid number!");
-
-                }
-
-
                 else if (!isEmailValid(email)){
                     emailTIET.setError("Email is invalid!");
-                }
-
-                else if (privilege.equals("Select")){
-                    Toast.makeText(AddUsersActivity.this, "Add a privilege!", Toast.LENGTH_SHORT).show();
                 }
 
                 else if (userid.isEmpty()){
                     Toast.makeText(AddUsersActivity.this, "Add a User ID!", Toast.LENGTH_SHORT).show();
                 }
 
+                else if (!isNotAvailable(mobileTIET.getText().toString()) || (customerNumber.length() < 10 || customerNumber.length() > 10)) {
+                    mobileTIET.setError("Number is invalid or already registered!");
+
+                }
+
+                else if (privilege.equals("Select Privilege")){
+                    Toast.makeText(AddUsersActivity.this, "Add a privilege!", Toast.LENGTH_SHORT).show();
+                }
 
 
                 else
                 {
-                    SendDataToDatabase(countryCode + mobileTIET.getText().toString(),privilegeSpinner.getSelectedItem().toString(),emailTIET.getText().toString()
+                    SendDataToDatabase(countryCode + customerNumber,privilegeSpinner.getSelectedItem().toString(),emailTIET.getText().toString()
                             , nameTIET.getText().toString(), idTIET.getText().toString());
                 }
 
@@ -124,6 +124,34 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
             }
         });
 
+
+
+    }
+
+    private boolean isNotAvailable(String customerNumber) {
+
+        Ref.child("Customers").child("BasicInfo").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
+                    if(dataSnapshot1.child("phoneNumber").getValue().toString().equals("+91" + customerNumber));
+                    {
+                        res = "notAvailable";
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        if(res == null)
+        {
+            return false;
+        }
+        return res == "notAvailable";
 
 
     }
@@ -190,10 +218,6 @@ public class AddUsersActivity extends AppCompatActivity implements AdapterView.O
         key = getIntent().getStringExtra("key");
         type = getIntent().getStringExtra("type");
 
-        //TextInputLayouts
-        emailTIL = (TextInputLayout) findViewById(R.id.add_user_mail);
-        mobileTIL = (TextInputLayout) findViewById(R.id.add_user_number);
-        nameTIL = (TextInputLayout) findViewById(R.id.add_user_name);
 
 
         //TextInputEditTexts

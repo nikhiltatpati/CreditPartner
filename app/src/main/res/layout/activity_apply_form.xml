@@ -15,7 +15,7 @@
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="60dp"
         android:orientation="vertical">
 
 
@@ -52,7 +52,24 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:hint="Pin Code"
+            android:hint="Location"
+            />
+
+        <EditText
+            android:id="@+id/form__code1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:hint="Reference Code"
+            android:inputType="number" />
+        <EditText
+            android:id="@+id/form_code2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:hint="Reference Code 2"
             android:inputType="number" />
 
     </LinearLayout>
@@ -86,8 +103,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:background="@drawable/buttons"
         android:text="Apply"
