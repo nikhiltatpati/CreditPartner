@@ -6,5 +6,28 @@
     <string name="creditscore">Get your credit report for free, with monthly updates.</string>
     <string name="companytext">Tata Banking and Financial Services Fund Direct-Growth</string>
     <string name="refertext">Refer your friends for FREE Credit Report and get a chance to win exciting prizes!</string>
+    <string-array name="state">
+        <item>AGRA</item>
+        <item>AHMEDABAD</item>
+        <item>BANGALORE</item>
+        <item>BHUBANESHWAR</item>
+        <item>BHOPAL</item>
+        <item>CHENNAI</item>
+        <item>HYDERABAD</item>
+        <item>INDORE</item>
+        <item>JAIPUR</item>
+        <item>KANPUR</item>
+        <item>KOLHAPUR</item>
+        <item>KOLKATA</item>
+        <item>LUCKNOW</item>
+        <item>MANGALORE</item>
+        <item>MUMBAI</item>
+        <item>NAGPUR</item>
+        <item>PUNE</item>
+        <item>RAJKOT</item>
+        <item>THIRUVANANTHAPURAM</item>
+
+
+    </string-array>
 
 </resources>

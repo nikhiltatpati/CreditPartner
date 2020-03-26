@@ -325,4 +325,9 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
         };
         MySingletonClass.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

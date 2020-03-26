@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.creditpartner">
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.google.android.c2dm.permission.SEND" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:name=".Classes.MyApplication"
@@ -18,11 +20,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.RechargeActivity"
-            android:parentActivityName=".Activities.MainActivity"></activity>
+        <activity android:name=".Activities.GoldRates"></activity>
+        <activity
+            android:name=".Activities.RechargeActivity"
+            android:parentActivityName=".Activities.MainActivity" />
         <activity
             android:name=".Activities.FirebaseActivity"
-            android:parentActivityName=".Activities.MainActivity"></activity>
+            android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.TextEditorActivity" />
         <activity
             android:name=".Activities.IncomeTaxCalculatorActivity"
@@ -120,7 +124,7 @@
             android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.VerifyInfoActivity" />
-        <activity android:name=".Activities.MainActivity"></activity>
+        <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.CustomerInfoActivity" />
 
         <service android:name=".Services.MyFirebaseMessagingService">

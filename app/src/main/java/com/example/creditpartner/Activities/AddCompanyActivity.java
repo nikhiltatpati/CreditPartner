@@ -125,7 +125,7 @@ public class AddCompanyActivity extends AppCompatActivity {
                     field1.setError("Enter Valid Field!");
                 } else if (field2S.isEmpty()) {
                     field2.setError("Enter Valid Field!");
-                }  else if (noData == true) {
+                } else if (noData == true) {
                     Toast.makeText(AddCompanyActivity.this, "Add Features!", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -304,21 +304,18 @@ public class AddCompanyActivity extends AppCompatActivity {
             }
 
 
-        }
-        else
-        {
-        if(data!= null) {
-            text = data.getStringExtra("text");
-            if (text != null) {
-                noData = false;
-                Log.e("textac", "" + text);
+        } else {
+            if (data != null) {
+                text = data.getStringExtra("text");
+                if (text != null) {
+                    noData = false;
+                    Log.e("textac", "" + text);
 
-            } else {
-                noData = true;
+                } else {
+                    noData = true;
+                }
             }
         }
-        }
-
 
 
     }
@@ -361,6 +358,12 @@ public class AddCompanyActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Add Company");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
 

@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class ApplyFormActivity extends AppCompatActivity {
 
 
-    private EditText emailTIET, mobileTIET, pinTIET, nameTIET, gstText, panText;
+    private EditText emailTIET, mobileTIET, pinTIET, nameTIET, gstText, panText, refCode1, refCode2;
     private Toolbar mToolbar;
     private FirebaseAuth mAuth;
     private DatabaseReference Ref;
@@ -63,8 +63,8 @@ public class ApplyFormActivity extends AppCompatActivity {
 
                 } else if (!isEmailValid(email)) {
                     emailTIET.setError("Email is invalid!");
-                } else if (pin.isEmpty() || pin.length() != 6) {
-                    pinTIET.setError("Pin Code is invalid!");
+                } else if (pin.isEmpty()) {
+                    pinTIET.setError("Location is invalid!");
                 } else {
 
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -80,7 +80,8 @@ public class ApplyFormActivity extends AppCompatActivity {
                     hashMap.put("myEmail", email);
                     hashMap.put("myPin", pin);
                     hashMap.put("myMobile", customerNumber);
-
+                    hashMap.put("code1", refCode1.getText().toString());
+                    hashMap.put("code2", refCode2.getText().toString());
 
                     Ref.child("My Applications").child(currentUSerID).push().setValue(hashMap);
 
@@ -145,6 +146,8 @@ public class ApplyFormActivity extends AppCompatActivity {
 
         //TextInputEditTexts
         emailTIET = (EditText) findViewById(R.id.form_email);
+        refCode1 = (EditText) findViewById(R.id.form__code1);
+        refCode2 = (EditText) findViewById(R.id.form_code2);
         gstText = (EditText) findViewById(R.id.form_gst_number);
         panText = (EditText) findViewById(R.id.form_pan_number);
         mobileTIET = (EditText) findViewById(R.id.form_number);
@@ -173,6 +176,11 @@ public class ApplyFormActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
 }

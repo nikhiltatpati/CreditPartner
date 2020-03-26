@@ -101,7 +101,7 @@ public class MyAccountActivity extends AppCompatActivity {
     }
 
     private void Initialize() {
-        SetupTOolbar();
+       // SetupTOolbar();
         mAuth = FirebaseAuth.getInstance();
         Ref = FirebaseDatabase.getInstance().getReference();
         currentUser = mAuth.getCurrentUser();
@@ -117,18 +117,20 @@ public class MyAccountActivity extends AppCompatActivity {
         loadAccountDetails = (ProgressBar)findViewById(R.id.load_account_details);
     }
 
-    private void SetupTOolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.my_account_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("My Account");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-    }
+//    private void SetupTOolbar() {
+//        mToolbar = (Toolbar) findViewById(R.id.my_account_bar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setTitle("My Account");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//
+//    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
     }
 }

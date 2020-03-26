@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private DatabaseReference Ref;
     private Toolbar mToolbar;
-    private TextInputEditText number;
+    private EditText number;
     private Button LoginButton;
     private ProgressBar loadingBar;
     private FirebaseAuth mAuth;
@@ -151,12 +152,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void Initialize() {
 
-        SetupTOolbar();
+       // SetupTOolbar();
 
         Ref = FirebaseDatabase.getInstance().getReference();
-        loadingBar = (ProgressBar) findViewById(R.id.load_login);
-        loadingBar.setVisibility(View.INVISIBLE);
-        number = (TextInputEditText) findViewById(R.id.number);
+       // loadingBar = (ProgressBar) findViewById(R.id.load_login);
+//        loadingBar.setVisibility(View.INVISIBLE);
+        number = findViewById(R.id.number);
         LoginButton = (Button) findViewById(R.id.login_button);
         mAuth = FirebaseAuth.getInstance();
 
@@ -165,16 +166,21 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void SetupTOolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.login_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Login");
+//    private void SetupTOolbar() {
+//        mToolbar = (Toolbar) findViewById(R.id.login_bar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setTitle("Login");
 
-    }
+    //}
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

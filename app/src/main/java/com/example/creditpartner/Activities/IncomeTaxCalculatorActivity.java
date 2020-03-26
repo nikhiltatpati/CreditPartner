@@ -107,4 +107,9 @@ public class IncomeTaxCalculatorActivity extends AppCompatActivity {
         tx1.setText("Tax on your income "+et.getText()+"= \t"+Tax+"\n \n"+
                 "Total Income (Inclusion of Tax) "+"= \t"+Total);
     }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }
