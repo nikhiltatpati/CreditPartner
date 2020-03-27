@@ -477,7 +477,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void ChangeActivity(Class Activity) {
         Intent intent = new Intent(MainActivity.this, Activity);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
     }
 
     private void SetupToolbar() {
