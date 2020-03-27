@@ -93,5 +93,9 @@ public class AdDetailsActiviy extends AppCompatActivity {
         circleImageView = (CircleImageView)findViewById(R.id.ad_logo);
 
     }
-
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

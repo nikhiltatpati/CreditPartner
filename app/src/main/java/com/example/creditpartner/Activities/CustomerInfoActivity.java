@@ -184,4 +184,9 @@ public class CustomerInfoActivity extends AppCompatActivity {
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
     }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

@@ -29,7 +29,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.example.creditpartner.Adapters.CategoryAdapter;
 import com.example.creditpartner.Adapters.ProductAdapter;
 import com.example.creditpartner.Adapters.SliderAdapter;
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isSuperAdmin = false;
 
 
-    private ViewPager mSlideViewPager, mSlideViewPager2, mSlideViewPager3;
+    private ViewPager mSlideViewPager;
 
     private ProgressBar loadProducts;
 
@@ -154,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void run() {
                     LinkReferences();
                     GetSlides();
-                    GetSlides2();
 
                 }
             });
@@ -193,26 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }, DELAY_MS, PERIOD_MS);
 
         }
-   /*     final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            public void run() {
-                if (mCurrentPage == slidesList.size()) {
-                    mCurrentPage = 0;
-                }
-                mSlideViewPager2.setCurrentItem(mCurrentPage++, true);
-            }
-        };
-
-        Timer timer = new Timer(); // This will create a new Thread
-        timer.schedule(new TimerTask() { // task to be scheduled
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, DELAY_MS, PERIOD_MS);
-*/
     }
-
 
     private void LinkReferences() {
 
@@ -322,49 +301,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void GetSlides2() {
-
-        Ref.child("Banners").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                slidesList.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if (dataSnapshot1.hasChild("adText")) {
-                        String image = dataSnapshot1.child("adImage").getValue().toString();
-                        String link = dataSnapshot1.child("adLink").getValue().toString();
-                        String text = dataSnapshot1.child("adText").getValue().toString();
-                        slidesList.add(new Slides(image, text, link));
-
-
-
-                    } else {
-                        String image = dataSnapshot1.child("adImage").getValue().toString();
-                        String link = dataSnapshot1.child("adLink").getValue().toString();
-
-                        slidesList.add(new Slides(image, "", link));
-
-                    }
-                }
-
-                sliderAdapter = new SliderAdapter(MainActivity.this, slidesList);
-
-                mSlideViewPager2.setAdapter(sliderAdapter);
-                mSlideViewPager3.setAdapter(sliderAdapter);
-                mSlideViewPager2.addOnPageChangeListener(viewListener);
-                mSlideViewPager3.addOnPageChangeListener(viewListener);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
     private void SetupRecyclerView() {
 
-        GridLayoutManager manager = new GridLayoutManager(this, 5);
+        GridLayoutManager manager = new GridLayoutManager(this, 4);
         productRecyclerView.setLayoutManager(manager);
 
         /*Query query = Ref.child("ProductList").orderByChild("order");
@@ -395,6 +334,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         */
+
 
 
         Ref.child("ProductList").orderByChild("order").addValueEventListener(new ValueEventListener() {
@@ -578,71 +518,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 menu.findItem(R.id.side_emi_cal).setVisible(b);
                 menu.findItem(R.id.side_ifsc).setVisible(b);
                 menu.findItem(R.id.side_income).setVisible(b);
-                menu.findItem(R.id.side_gold).setVisible(b);
-                menu.findItem(R.id.side_fuel).setVisible(b);
 
-                break;
-            }
-
-            case R.id.chat_support: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Toast.makeText(MainActivity.this, "To be added soon!", Toast.LENGTH_SHORT).show();
-
-                break;
-            }
-
-
-            case R.id.side_gold: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Toast.makeText(MainActivity.this, "To be added soon!", Toast.LENGTH_SHORT).show();
-
-                break;
-            }
-            case R.id.side_fuel: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Toast.makeText(MainActivity.this, "To be added soon!", Toast.LENGTH_SHORT).show();
-                break;
-            }
-
-            case R.id.Investments: {
-                boolean b = !menu.findItem(R.id.side_dmat).isVisible();
-                menu.findItem(R.id.side_dmat).setVisible(b);
-                menu.findItem(R.id.side_fd).setVisible(b);
-                menu.findItem(R.id.side_mf).setVisible(b);
-
-                break;
-            }
-
-
-            case R.id.side_dmat: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "DMAT");
-                startActivity(intent);
-                break;
-            }
-
-
-            case R.id.side_fd: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Fixed Deposits");
-                startActivity(intent);
-                break;
-            }
-
-
-            case R.id.side_mf: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Mutual Funds");
-                startActivity(intent);
                 break;
             }
 
@@ -904,8 +780,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         loadProducts = findViewById(R.id.load_products);
         mSlideViewPager = findViewById(R.id.main_viewpager);
-        mSlideViewPager2 = findViewById(R.id.main_viewpager2);
-        mSlideViewPager3 = findViewById(R.id.main_viewpager3);
 
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bot_nav);

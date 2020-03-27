@@ -109,6 +109,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(ProductDetailActivity.this, MainActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void CheckUserOrAdmin() {
@@ -325,6 +326,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
 

@@ -286,7 +286,7 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
         otpCode = (EditText) findViewById(R.id.otp_code);
         verifyButton = (Button) findViewById(R.id.verify_button);
-        verifyLogo = (ImageView) findViewById(R.id.verify_logo);
+       // verifyLogo = (ImageView) findViewById(R.id.verify_logo);
 
         otpMessage = (TextView) findViewById(R.id.otp_message);
 
@@ -296,5 +296,9 @@ public class VerifyInfoActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }
