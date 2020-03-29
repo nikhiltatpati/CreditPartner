@@ -1,17 +1,11 @@
 package com.example.creditpartner.Activities;
 
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,48 +29,29 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.example.creditpartner.Adapters.CategoryAdapter;
 import com.example.creditpartner.Adapters.ProductAdapter;
 import com.example.creditpartner.Adapters.SliderAdapter;
-import com.example.creditpartner.Classes.MyApplication;
 import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.Classes.Slides;
 import com.example.creditpartner.R;
-import com.example.creditpartner.SendMailTask;
-import com.example.creditpartner.Services.MailService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.SendFailedException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -355,10 +330,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 sliderAdapter = new SliderAdapter(MainActivity.this, slidesList);
 
-                mSlideViewPager2.setAdapter(sliderAdapter);
-                mSlideViewPager3.setAdapter(sliderAdapter);
-                mSlideViewPager2.addOnPageChangeListener(viewListener);
-                mSlideViewPager3.addOnPageChangeListener(viewListener);
+//                mSlideViewPager2.setAdapter(sliderAdapter);
+//                mSlideViewPager3.setAdapter(sliderAdapter);
+//                mSlideViewPager2.addOnPageChangeListener(viewListener);
+//                mSlideViewPager3.addOnPageChangeListener(viewListener);
             }
 
             @Override
@@ -1033,8 +1008,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         loadProducts = findViewById(R.id.load_products);
         mSlideViewPager = findViewById(R.id.main_viewpager);
-        mSlideViewPager2 = findViewById(R.id.main_viewpager2);
-        mSlideViewPager3 = findViewById(R.id.main_viewpager3);
+//        mSlideViewPager2 = findViewById(R.id.main_cardView1);
+//        mSlideViewPager3 = findViewById(R.id.main_cardView2);
 
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bot_nav);
