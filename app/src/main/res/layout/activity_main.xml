@@ -41,7 +41,7 @@
 
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="58dp"
@@ -123,7 +123,7 @@
                             android:textSize="14sp" />
 
                         <Button
-                            android:id="@+id/textViewVersion1"
+                            android:id="@+id/view_fuel_rates"
                             android:layout_width="100dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center_horizontal"
@@ -189,7 +189,7 @@
                             android:textSize="14sp" />
 
                         <Button
-                            android:id="@+id/textViewVersion"
+                            android:id="@+id/view_gold_rates"
                             android:layout_width="100dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center_horizontal"
@@ -204,7 +204,7 @@
 
 
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

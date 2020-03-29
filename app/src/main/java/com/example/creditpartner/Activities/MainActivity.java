@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -59,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseUser currentUser;
     private DatabaseReference Ref;
     private String currentUserID, phoneNumber, superAdmin = "False", reference;
-    private boolean isSuperAdmin = false;
-
+    private Button viewGoldRates, viewFuelRates;
+    private boolean isSuperAdmin;
 
     private ViewPager mSlideViewPager, mSlideViewPager2, mSlideViewPager3;
 
@@ -175,6 +176,86 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }, DELAY_MS, PERIOD_MS);
 
         }
+
+        viewGoldRates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
+                mBuilder.setTitle("Select State");
+                Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
+                adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
+                mSpinner.setAdapter(adapter);
+
+                mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view,
+                                               int position, long id) {
+                        label = parent.getItemAtPosition(position).toString();
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        Toast.makeText(adapterView.getContext(), "Please select something",Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this, GoldRates.class);
+                        intent.putExtra("currentState", label);
+                        startActivity(intent);
+
+                    }
+
+                });
+                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            }
+        });
+
+        viewFuelRates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
+                mBuilder.setTitle("Select State");
+                Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
+                adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
+                mSpinner.setAdapter(adapter);
+                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this, EMICalculatorActivity.class);
+                        startActivity(intent);
+
+                    }
+
+                });
+                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            }
+        });
    /*     final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
             public void run() {
@@ -1016,6 +1097,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
         productRecyclerView = findViewById(R.id.product_recyclerview);
+
+        viewFuelRates = (Button)findViewById(R.id.view_fuel_rates);
+        viewGoldRates = (Button)findViewById(R.id.view_gold_rates);
 
 
         drawerLayout = findViewById(R.id.drawer_layout);
