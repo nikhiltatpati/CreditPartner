@@ -44,15 +44,14 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="59dp"
         android:layout_marginTop="58dp"
-        android:layout_marginBottom="59dp">
+        android:fillViewport="true">
 
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp">
-
+            android:orientation="vertical">
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/main_viewpager"
@@ -71,6 +70,73 @@
                 android:layout_marginTop="7dp"
 
                 />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/main_cardView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@id/main_cardView1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:padding="10dp"
+                app:cardBackgroundColor="#FFEBEE"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round2"
+                        android:padding="10dp"
+                        android:src="@drawable/report"
+                        android:tag="image_tag" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewName3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:text="Check your Credit Score for FREE Get better deals on Credit Cards and Loans"
+                            android:textColor="#000000"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/view_credit"
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/round"
+                            android:text="Check" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/main_cardView1"
@@ -157,7 +223,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/imageView2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -179,7 +245,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textViewName"
+                            android:id="@+id/textViewName2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -203,7 +269,138 @@
             </androidx.cardview.widget.CardView>
 
 
-        </RelativeLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/main_cardView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@id/main_cardView1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:padding="10dp"
+                app:cardBackgroundColor="#3490dc"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round2"
+                        android:padding="10dp"
+                        android:src="@drawable/find"
+                        android:tag="image_tag" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewName4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:text="Find All IFSC Codes"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/view_ifsc"
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/round"
+                            android:text="Find" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/main_cardView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@id/main_cardView1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:padding="10dp"
+                app:cardBackgroundColor="#00BCD4"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/round2"
+                        android:padding="10dp"
+                        android:src="@drawable/calculator"
+                        android:tag="image_tag" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewName5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:text="Calculate Your EMIs in a Jiffy"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/view_emi"
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/round"
+                            android:text="Calculate" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.navigation.NavigationView

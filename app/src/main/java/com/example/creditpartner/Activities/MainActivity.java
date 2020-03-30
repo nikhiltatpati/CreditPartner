@@ -1,5 +1,6 @@
 package com.example.creditpartner.Activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -199,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
-                        Toast.makeText(adapterView.getContext(), "Please select something",Toast.LENGTH_LONG).show();
+                        Toast.makeText(adapterView.getContext(), "Please select something", Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -226,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+
         viewFuelRates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,10 +238,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
                 adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
                 mSpinner.setAdapter(adapter);
+
+                mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view,
+                                               int position, long id) {
+                        label = parent.getItemAtPosition(position).toString();
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        Toast.makeText(adapterView.getContext(), "Please select something", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
                 mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(MainActivity.this, EMICalculatorActivity.class);
+                        Intent intent = new Intent(MainActivity.this, FuelRates.class);
+                        intent.putExtra("currentState", label);
                         startActivity(intent);
 
                     }
@@ -256,6 +276,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dialog.show();
             }
         });
+
+
+
    /*     final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
             public void run() {
@@ -545,328 +568,346 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
 
-        Menu menu = navigationView.getMenu();
+            Menu menu = navigationView.getMenu();
 
 
-        switch (menuItem.getItemId()) {
+            switch (menuItem.getItemId()) {
 
-            case R.id.side_products: {
+                case R.id.side_products: {
 
 
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductsActivity.class);
-                startActivity(intent);
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductsActivity.class);
+                    startActivity(intent);
 
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
 
 
-            }
+                }
 
-            case R.id.side_ads: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, AdsActivity.class);
+                case R.id.side_ads: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, AdsActivity.class);
 
-                startActivity(intent);
+                    startActivity(intent);
 
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
 
-            case R.id.side_users: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, UsersActivity.class);
-                startActivity(intent);
+                case R.id.side_users: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, UsersActivity.class);
+                    startActivity(intent);
 
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
 
-            case R.id.side_home: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                break;
-            }
+                case R.id.side_home: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    break;
+                }
 
-            case R.id.side_myapps: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, MyApplications.class);
+                case R.id.side_myapps: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, MyApplications.class);
 
-                startActivity(intent);
+                    startActivity(intent);
 
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
 
-            case R.id.side_credit_card: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Credit Card");
-                startActivity(intent);
+                case R.id.side_credit_card: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Credit Card");
+                    startActivity(intent);
 
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
 
-            case R.id.side_taxes: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, TaxInfoActivity.class);
-                startActivity(intent);
+                case R.id.side_taxes: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, TaxInfoActivity.class);
+                    startActivity(intent);
 
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
 
 
-            case R.id.side_loan: {
+                case R.id.side_loan: {
 
-                boolean b = !menu.findItem(R.id.side_businessloan).isVisible();
+                    boolean b = !menu.findItem(R.id.side_businessloan).isVisible();
 
-                menu.findItem(R.id.side_businessloan).setVisible(b);
-                menu.findItem(R.id.side_carloan).setVisible(b);
-                menu.findItem(R.id.side_educationloan).setVisible(b);
-                menu.findItem(R.id.side_personalloan).setVisible(b);
-                menu.findItem(R.id.side_instantloan).setVisible(b);
+                    menu.findItem(R.id.side_businessloan).setVisible(b);
+                    menu.findItem(R.id.side_carloan).setVisible(b);
+                    menu.findItem(R.id.side_educationloan).setVisible(b);
+                    menu.findItem(R.id.side_personalloan).setVisible(b);
+                    menu.findItem(R.id.side_instantloan).setVisible(b);
 
-                menu.findItem(R.id.side_homeloan).setVisible(b);
-                break;
+                    menu.findItem(R.id.side_homeloan).setVisible(b);
+                    break;
 
-            }
+                }
 
-            case R.id.side_insurance: {
-                boolean b = !menu.findItem(R.id.side_carinsurance).isVisible();
-                menu.findItem(R.id.side_carinsurance).setVisible(b);
-                menu.findItem(R.id.side_healthinsurance).setVisible(b);
-                menu.findItem(R.id.side_terminsurance).setVisible(b);
-                break;
-
-            }
-
-            case R.id.Tools: {
-                boolean b = !menu.findItem(R.id.side_emi_cal).isVisible();
-                menu.findItem(R.id.side_emi_cal).setVisible(b);
-                menu.findItem(R.id.side_ifsc).setVisible(b);
-                menu.findItem(R.id.side_income).setVisible(b);
-                menu.findItem(R.id.side_gold).setVisible(b);
-                menu.findItem(R.id.side_fuel).setVisible(b);
-
-                break;
-            }
-
-            case R.id.chat_support: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Toast.makeText(MainActivity.this, "To be added soon!", Toast.LENGTH_SHORT).show();
-
-                break;
-            }
-
-
-            case R.id.side_gold: {
-
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
-                mBuilder.setTitle("Select State");
-                Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
-                adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
-                mSpinner.setAdapter(adapter);
-
-                mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view,
-                                               int position, long id) {
-                         label = parent.getItemAtPosition(position).toString();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-                        Toast.makeText(adapterView.getContext(), "Please select something",Toast.LENGTH_LONG).show();
-
-                    }
-                });
-
-                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(MainActivity.this, GoldRates.class);
-                        intent.putExtra("currentState", label);
-                        startActivity(intent);
-
-                    }
-
-                });
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-                break;
-
-            }
-
-            case R.id.side_fuel: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
-                mBuilder.setTitle("Select State");
-                Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
-                adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
-                mSpinner.setAdapter(adapter);
-                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(MainActivity.this, EMICalculatorActivity.class);
-                        startActivity(intent);
-
-                    }
-
-                });
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-                break;
-
-            }
-
-            case R.id.Investments: {
-                boolean b = !menu.findItem(R.id.side_dmat).isVisible();
-                menu.findItem(R.id.side_dmat).setVisible(b);
-                menu.findItem(R.id.side_fd).setVisible(b);
-                menu.findItem(R.id.side_mf).setVisible(b);
-
-                break;
-            }
-
-
-            case R.id.side_dmat: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "DMAT");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
-
-
-            case R.id.side_fd: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Fixed Deposits");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
-
-
-            case R.id.side_mf: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Mutual Funds");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
-
-            case R.id.side_emi_cal: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                startActivity(new Intent(MainActivity.this, EMICalculatorActivity.class));
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
-
-
-            case R.id.side_ifsc: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                startActivity(new Intent(MainActivity.this, IFSCCodeFinderActivity.class));
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
-
-            case R.id.side_income: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                startActivity(new Intent(MainActivity.this, IncomeTaxCalculatorActivity.class));
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-            }
-
-
-            case R.id.side_logout: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                mAuth.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                break;
-
-            }
-            case R.id.side_myaccount: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                ChangeActivity(MyAccountActivity.class);
-                break;
-
-            }
-
-            case R.id.side_myoffer: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                startActivity(new Intent(MainActivity.this, MyOfferActivity.class));
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-
-            case R.id.notice: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                startActivity(new Intent(MainActivity.this, NoticeToCustomerActivity.class));
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
+                case R.id.side_insurance: {
+                    boolean b = !menu.findItem(R.id.side_carinsurance).isVisible();
+                    menu.findItem(R.id.side_carinsurance).setVisible(b);
+                    menu.findItem(R.id.side_healthinsurance).setVisible(b);
+                    menu.findItem(R.id.side_terminsurance).setVisible(b);
+                    break;
+
+                }
+
+                case R.id.Tools: {
+                    boolean b = !menu.findItem(R.id.side_emi_cal).isVisible();
+                    menu.findItem(R.id.side_emi_cal).setVisible(b);
+                    menu.findItem(R.id.side_ifsc).setVisible(b);
+                    menu.findItem(R.id.side_income).setVisible(b);
+                    menu.findItem(R.id.side_gold).setVisible(b);
+                    menu.findItem(R.id.side_fuel).setVisible(b);
+
+                    break;
+                }
+
+                case R.id.chat_support: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Toast.makeText(MainActivity.this, "To be added soon!", Toast.LENGTH_SHORT).show();
+
+                    break;
+                }
+
+
+                case R.id.side_gold: {
+
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                    View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
+                    mBuilder.setTitle("Select State");
+                    Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
+                    adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
+                    mSpinner.setAdapter(adapter);
+
+                    mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view,
+                                                   int position, long id) {
+                            label = parent.getItemAtPosition(position).toString();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                            Toast.makeText(adapterView.getContext(), "Please select something", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+                    mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(MainActivity.this, GoldRates.class);
+                            intent.putExtra("currentState", label);
+                            startActivity(intent);
+
+                        }
+
+                    });
+                    mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    mBuilder.setView(mView);
+                    AlertDialog dialog = mBuilder.create();
+                    dialog.show();
+
+                    break;
+
+                }
+
+                case R.id.side_fuel: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                    View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
+                    mBuilder.setTitle("Select State");
+                    Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
+                    adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
+                    mSpinner.setAdapter(adapter);
+
+                    mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view,
+                                                   int position, long id) {
+                            label = parent.getItemAtPosition(position).toString();
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                            Toast.makeText(adapterView.getContext(), "Please select something", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+                    mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(MainActivity.this, FuelRates.class);
+                            intent.putExtra("currentState", label);
+                            startActivity(intent);
+
+                        }
+
+                    });
+                    mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    mBuilder.setView(mView);
+                    AlertDialog dialog = mBuilder.create();
+                    dialog.show();
+
+                    break;
+
+                }
+
+                case R.id.Investments: {
+                    boolean b = !menu.findItem(R.id.side_dmat).isVisible();
+                    menu.findItem(R.id.side_dmat).setVisible(b);
+                    menu.findItem(R.id.side_fd).setVisible(b);
+                    menu.findItem(R.id.side_mf).setVisible(b);
+
+                    break;
+                }
+
+
+                case R.id.side_dmat: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "DMAT");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
+
+
+                case R.id.side_fd: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Fixed Deposits");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
+
+
+                case R.id.side_mf: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Mutual Funds");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
+
+                case R.id.side_emi_cal: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    startActivity(new Intent(MainActivity.this, EMICalculatorActivity.class));
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
+
+
+                case R.id.side_ifsc: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    startActivity(new Intent(MainActivity.this, IFSCCodeFinderActivity.class));
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
+
+                case R.id.side_income: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    startActivity(new Intent(MainActivity.this, IncomeTaxCalculatorActivity.class));
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+                }
+
+
+                case R.id.side_logout: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    mAuth.signOut();
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    finish();
+                    break;
+
+                }
+                case R.id.side_myaccount: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    ChangeActivity(MyAccountActivity.class);
+                    break;
+
+                }
+
+                case R.id.side_myoffer: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    startActivity(new Intent(MainActivity.this, MyOfferActivity.class));
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+
+                case R.id.notice: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    startActivity(new Intent(MainActivity.this, NoticeToCustomerActivity.class));
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
        /*     case R.id.side_refer_and_earn: {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
@@ -875,131 +916,131 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }*/
 
-            case R.id.side_credit_report: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                startActivity(new Intent(MainActivity.this, CreditReportActivity.class));
+                case R.id.side_credit_report: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    startActivity(new Intent(MainActivity.this, CreditReportActivity.class));
 
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+                case R.id.side_businessloan: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Business Loan");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+
+                case R.id.side_carloan: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Car Loan");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+                case R.id.side_educationloan: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Education Loan");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+
+                case R.id.side_saving: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Saving Account");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+                case R.id.side_homeloan: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Home Loan");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+                case R.id.side_instantloan: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Instant Loan");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+                case R.id.side_personalloan: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Personal Loan");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+                case R.id.side_terminsurance: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Term Insurance");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+                case R.id.side_carinsurance: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Car Insurance");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
+                case R.id.side_healthinsurance: {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
+                    intent.putExtra("productName", "Health Insurance");
+                    startActivity(intent);
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
+
+                }
 
             }
-            case R.id.side_businessloan: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Business Loan");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-
-            case R.id.side_carloan: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Car Loan");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-            case R.id.side_educationloan: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Education Loan");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-
-            case R.id.side_saving: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Saving Account");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-            case R.id.side_homeloan: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Home Loan");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-            case R.id.side_instantloan: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Instant Loan");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-            case R.id.side_personalloan: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Personal Loan");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-            case R.id.side_terminsurance: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Term Insurance");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-            case R.id.side_carinsurance: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Car Insurance");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-            case R.id.side_healthinsurance: {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(MainActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productName", "Health Insurance");
-                startActivity(intent);
-
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                break;
-
-            }
-
+            return true;
         }
-        return true;
-    }
 
     /* public void addDotsIndicator(int position) {
 
