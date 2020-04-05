@@ -108,7 +108,8 @@
             android:name=".Activities.PaisaTrackerActivity"
             android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.CompanyFormActivity" />
-        <activity android:name=".Activities.CreditReportActivity" />
+        <activity android:name=".Activities.CreditReportActivity"
+            android:parentActivityName=".Activities.MainActivity"/>
         <activity
             android:name=".Activities.ReferAndEarnActivity"
             android:parentActivityName=".Activities.MainActivity" />
