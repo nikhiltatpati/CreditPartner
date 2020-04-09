@@ -33,19 +33,17 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:hint="Notification Text"
-/>
-        <Button
-            android:id="@+id/noti_image_link"
+            android:hint="Notification Text"/>
+
+        <EditText
+            android:id="@+id/img_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:background="@android:color/white"
-            android:elevation="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="20dp"
-            android:hint="Upload Image" />
+            android:hint="Add Image Link"
+/>
+
 
         <ImageView
             android:id="@+id/view_noti_image"

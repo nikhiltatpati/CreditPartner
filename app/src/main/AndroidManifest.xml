@@ -21,6 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".Activities.FuelRates"></activity>
         <activity android:name=".Activities.GoldRates" />
         <activity
@@ -125,7 +126,8 @@
         <activity
             android:name=".Activities.ProductDetailActivity"
             android:parentActivityName=".Activities.MainActivity" />
-        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.LoginActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".Activities.VerifyInfoActivity" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.CustomerInfoActivity" />

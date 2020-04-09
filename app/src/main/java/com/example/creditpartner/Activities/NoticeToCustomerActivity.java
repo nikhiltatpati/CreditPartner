@@ -93,10 +93,9 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
     String TOPIC, currentUserID, message;
 
 
-    EditText edtTitle;
+    EditText edtTitle, imageLink;
     private ImageView viewImage;
     EditText edtMessage;
-    Button edtImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +105,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic("offers");
         edtTitle = findViewById(R.id.noti_name);
         edtMessage = findViewById(R.id.noti_text);
-        edtImage = findViewById(R.id.noti_image_link);
+        imageLink = (EditText)findViewById(R.id.img_text);
         Button btnSend = findViewById(R.id.send_noti);
         viewImage = (ImageView) findViewById(R.id.view_noti_image);
         viewImage.setVisibility(View.GONE);
@@ -117,12 +116,6 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
 
-        edtImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFileChooser();
-            }
-        });
 
         SetupToolbar();
         btnSend.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +132,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("title", NOTIFICATION_TITLE);
                 hashMap.put("text", NOTIFICATION_MESSAGE);
-                hashMap.put("image", message);
+                hashMap.put("image", imageLink.getText().toString());
                 hashMap.put("date", date);
                 Ref.child("MyOffers").push().setValue(hashMap);
                 Toast.makeText(NoticeToCustomerActivity.this, "Notification Sent!", Toast.LENGTH_SHORT).show();
@@ -150,7 +143,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                 try {
                     notifcationBody.put("title", NOTIFICATION_TITLE);
                     notifcationBody.put("text", NOTIFICATION_MESSAGE);
-                    notifcationBody.put("image", message);
+                    notifcationBody.put("image",  imageLink.getText().toString());
 
                     notification.put("to", TOPIC);
                     notification.put("data", notifcationBody);
