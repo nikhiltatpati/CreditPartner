@@ -298,6 +298,7 @@ public class NoticeToCustomerActivity extends AppCompatActivity {
                         Log.e(TAG, "ONRESPONSEEEEEEEEEEEEEE: " + response.toString());
                         edtTitle.setText("");
                         edtMessage.setText("");
+                        imageLink.setText("");
                         viewImage.setVisibility(View.GONE);
                     }
                 },

@@ -127,10 +127,12 @@
             android:name=".Activities.ProductDetailActivity"
             android:parentActivityName=".Activities.MainActivity" />
         <activity android:name=".Activities.LoginActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".Activities.VerifyInfoActivity" />
         <activity android:name=".Activities.MainActivity" />
-        <activity android:name=".Activities.CustomerInfoActivity" />
+        <activity android:name=".Activities.CustomerInfoActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+
 
         <service android:name=".Services.MyFirebaseMessagingService">
             <intent-filter>
