@@ -742,7 +742,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view,
                                                int position, long id) {
-                         label = parent.getItemAtPosition(position).toString();
+                        label = parent.getItemAtPosition(position).toString();
 
                     }
 
@@ -777,39 +777,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
 
-                case R.id.side_fuel: {
-                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                    drawer.closeDrawer(GravityCompat.START);
-                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                    View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
-                    mBuilder.setTitle("Select State");
-                    Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
-                    adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
-                    mSpinner.setAdapter(adapter);
+            case R.id.side_fuel: {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
+                mBuilder.setTitle("Select State");
+                Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
+                adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
+                mSpinner.setAdapter(adapter);
 
-                    mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+                mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view,
-                                                   int position, long id) {
-                            label = parent.getItemAtPosition(position).toString();
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view,
+                                               int position, long id) {
+                        label = parent.getItemAtPosition(position).toString();
 
-                        }
+                    }
 
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-                            Toast.makeText(adapterView.getContext(), "Please select something", Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        Toast.makeText(adapterView.getContext(), "Please select something", Toast.LENGTH_LONG).show();
 
-                        }
-                    });
+                    }
+                });
 
-                    mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(MainActivity.this, FuelRates.class);
-                            intent.putExtra("currentState", label);
-                            startActivity(intent);
+                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this, FuelRates.class);
+                        intent.putExtra("currentState", label);
+                        startActivity(intent);
 
                     }
 
