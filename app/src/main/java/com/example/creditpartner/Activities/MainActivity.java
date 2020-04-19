@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -30,10 +31,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.creditpartner.Adapters.ItemBannerAdapter;
 import com.example.creditpartner.Adapters.ProductAdapter;
 import com.example.creditpartner.Adapters.SliderAdapter;
 import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.Classes.Slides;
+import com.example.creditpartner.Models.ItemBannerModel;
 import com.example.creditpartner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -50,6 +53,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,13 +67,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Button viewGoldRates, viewFuelRates, viewEMI, viewIFSC,viewCreditScore;
     private boolean isSuperAdmin;
 
-    private ViewPager mSlideViewPager, mSlideViewPager2, mSlideViewPager3;
+    private ViewPager mSlideViewPager, mSlideViewPager1;
 
     private ProgressBar loadProducts;
 
     private SliderAdapter sliderAdapter;
     private String email;
     private String label;
+
+    ItemBannerAdapter adapter;
+    List<ItemBannerModel> models;
 
     private BottomNavigationView bottomNavigationView;
     private Toolbar mToolbar;
@@ -177,116 +184,131 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
-        viewGoldRates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
-                mBuilder.setTitle("Select State");
-                Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
-                adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
-                mSpinner.setAdapter(adapter);
-
-                mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view,
-                                               int position, long id) {
-                        label = parent.getItemAtPosition(position).toString();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-                        Toast.makeText(adapterView.getContext(), "Please select something",Toast.LENGTH_LONG).show();
-
-                    }
-                });
-
-                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(MainActivity.this, GoldRates.class);
-                        intent.putExtra("currentState", label);
-                        startActivity(intent);
-
-                    }
-
-                });
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-            }
-        });
-
-        viewFuelRates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
-                mBuilder.setTitle("Select State");
-                Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
-                adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
-                mSpinner.setAdapter(adapter);
-                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(MainActivity.this, FuelRates.class);
-                        intent.putExtra("currentState",mSpinner.getSelectedItem().toString());
-                        startActivity(intent);
-
-                    }
-
-                });
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-            }
-        });
 
 
-        viewIFSC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, IFSCCodeFinderActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        models = new ArrayList<>();
+        models.add(new ItemBannerModel(R.drawable.report, "report", "Check your Credit Score for FREE Get better deals on Credit Cards and Loans"));
+        models.add(new ItemBannerModel(R.drawable.fuel, "fuel", "To View Petrol and Diesel Rate tap here to give access to your location"));
+        models.add(new ItemBannerModel(R.drawable.gold, "gold", "To View Gold and Silver Rate tap here to give access to your location"));
+        models.add(new ItemBannerModel(R.drawable.find, "find", "Find All IFSC Codes"));
+        models.add(new ItemBannerModel(R.drawable.calculator, "calculator", "Calculate Your EMIs in a Jiffy"));
 
-            }
-        });
+        adapter = new ItemBannerAdapter(models,this);
 
-        viewEMI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, EMICalculatorActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        mSlideViewPager1 = findViewById(R.id.main_viewpager1);
+        mSlideViewPager1.setAdapter(adapter);
 
-            }
-        });
+//
+//        viewGoldRates.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+//                View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
+//                mBuilder.setTitle("Select State");
+//                Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
+//                adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
+//                mSpinner.setAdapter(adapter);
+//
+//                mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+//
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view,
+//                                               int position, long id) {
+//                        label = parent.getItemAtPosition(position).toString();
+//
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> adapterView) {
+//                        Toast.makeText(adapterView.getContext(), "Please select something",Toast.LENGTH_LONG).show();
+//
+//                    }
+//                });
+//
+//                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Intent intent = new Intent(MainActivity.this, GoldRates.class);
+//                        intent.putExtra("currentState", label);
+//                        startActivity(intent);
+//
+//                    }
+//
+//                });
+//                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//                mBuilder.setView(mView);
+//                AlertDialog dialog = mBuilder.create();
+//                dialog.show();
+//            }
+//        });
 
-        viewCreditScore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CreditReportActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//        viewFuelRates.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+//                View mView = getLayoutInflater().inflate(R.layout.dialogbox, null);
+//                mBuilder.setTitle("Select State");
+//                Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinner);
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.state));
+//                adapter.setDropDownViewResource((android.R.layout.simple_spinner_dropdown_item));
+//                mSpinner.setAdapter(adapter);
+//                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Intent intent = new Intent(MainActivity.this, FuelRates.class);
+//                        intent.putExtra("currentState",mSpinner.getSelectedItem().toString());
+//                        startActivity(intent);
+//
+//                    }
+//
+//                });
+//                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//                mBuilder.setView(mView);
+//                AlertDialog dialog = mBuilder.create();
+//                dialog.show();
+//            }
+//        });
 
-            }
-        });
 
+//        viewIFSC.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, IFSCCodeFinderActivity.class));
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//
+//            }
+//        });
 
+//        viewEMI.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, EMICalculatorActivity.class));
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//
+//            }
+//        });
+
+//        viewCreditScore.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, CreditReportActivity.class));
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//
+//            }
+//        });
+//
+//
 
 
    /*     final Handler handler = new Handler();
@@ -1149,11 +1171,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         productRecyclerView = findViewById(R.id.product_recyclerview);
 
-        viewFuelRates = (Button)findViewById(R.id.view_fuel_rates);
-        viewGoldRates = (Button)findViewById(R.id.view_gold_rates);
-        viewCreditScore = (Button)findViewById(R.id.view_credit);
-        viewEMI = (Button)findViewById(R.id.view_emi);
-        viewIFSC = (Button)findViewById(R.id.view_ifsc);
+//        viewFuelRates = (Button)findViewById(R.id.view_fuel_rates);
+//        viewGoldRates = (Button)findViewById(R.id.view_gold_rates);
+//        viewCreditScore = (Button)findViewById(R.id.view_credit);
+//        viewEMI = (Button)findViewById(R.id.view_emi);
+//        viewIFSC = (Button)findViewById(R.id.view_ifsc);
 
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -1170,5 +1192,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
+    }
+
+
+
+    public void goldRates(View view){
+
     }
 }

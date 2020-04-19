@@ -55,7 +55,7 @@
 
 
             <androidx.viewpager.widget.ViewPager
-                android:id="@+id/main_viewpager1"
+                android:id="@+id/main_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="105dp"
                 android:layout_marginLeft="15dp"
@@ -75,340 +75,340 @@
                 android:background="#E0E0E0" />
 
             <androidx.viewpager.widget.ViewPager
-                android:id="@+id/main_viewpager"
+                android:id="@+id/main_viewpager1"
                 android:layout_width="match_parent"
-                android:layout_height="105dp"
+                android:layout_height="200dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp" />
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/main_cardView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/main_cardView3"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
 
-                android:layout_below="@id/main_cardView1"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="15dp"
-                android:padding="10dp"
-                app:cardBackgroundColor="#FFEBEE"
-                app:cardCornerRadius="10dp">
+<!--                android:layout_below="@id/main_cardView1"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginRight="15dp"-->
+<!--                android:padding="10dp"-->
+<!--                app:cardBackgroundColor="#FFEBEE"-->
+<!--                app:cardCornerRadius="10dp">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:orientation="horizontal">-->
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/round2"
-                        android:padding="10dp"
-                        android:src="@drawable/report"
-                        android:tag="image_tag" />
+<!--                    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                        android:id="@+id/imageView3"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/round2"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:src="@drawable/report"-->
+<!--                        android:tag="image_tag" />-->
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="12dp"-->
+<!--                        android:layout_weight="2"-->
+<!--                        android:orientation="vertical">-->
 
-                        <TextView
-                            android:id="@+id/textViewName3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:text="Check your Credit Score for FREE Get better deals on Credit Cards and Loans"
-                            android:textColor="#000000"
-                            android:textSize="14sp" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/textViewName3"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:text="Check your Credit Score for FREE Get better deals on Credit Cards and Loans"-->
+<!--                            android:textColor="#000000"-->
+<!--                            android:textSize="14sp" />-->
 
-                        <Button
-                            android:id="@+id/view_credit"
-                            android:layout_width="100dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/round"
-                            android:text="Check" />
+<!--                        <Button-->
+<!--                            android:id="@+id/view_credit"-->
+<!--                            android:layout_width="100dp"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_margin="10dp"-->
+<!--                            android:background="@drawable/round"-->
+<!--                            android:text="Check" />-->
 
-                    </LinearLayout>
-                </LinearLayout>
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
 
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/main_cardView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/product_recyclerview"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="15dp"
-                app:cardBackgroundColor="#38c172"
-                app:cardCornerRadius="10dp">
+<!--            </androidx.cardview.widget.CardView>-->
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
-
-                    <ImageView
-                        android:id="@+id/imageView1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/round2"
-                        android:padding="10dp"
-                        android:src="@drawable/fuel"
-                        android:tag="image_tag" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textViewName1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:text="To View Petrol and Diesel Rate tap here to give access to your location"
-                            android:textColor="#ffffff"
-                            android:textSize="14sp" />
-
-                        <Button
-                            android:id="@+id/view_fuel_rates"
-                            android:layout_width="100dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/round"
-                            android:text="View" />
-
-                    </LinearLayout>
-                </LinearLayout>
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/main_cardView1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/product_recyclerview"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginRight="15dp"-->
+<!--                app:cardBackgroundColor="#38c172"-->
+<!--                app:cardCornerRadius="10dp">-->
 
 
-            </androidx.cardview.widget.CardView>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:padding="5dp">-->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/main_cardView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imageView1"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/round2"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:src="@drawable/fuel"-->
+<!--                        android:tag="image_tag" />-->
 
-                android:layout_below="@id/main_cardView1"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="15dp"
-                android:padding="10dp"
-                app:cardBackgroundColor="#e3342f"
-                app:cardCornerRadius="10dp">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="12dp"-->
+<!--                        android:layout_weight="2"-->
+<!--                        android:orientation="vertical">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
+<!--                        <TextView-->
+<!--                            android:id="@+id/textViewName1"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:text="To View Petrol and Diesel Rate tap here to give access to your location"-->
+<!--                            android:textColor="#ffffff"-->
+<!--                            android:textSize="14sp" />-->
 
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/round2"
-                        android:padding="10dp"
-                        android:src="@drawable/gold"
-                        android:tag="image_tag" />
+<!--                        <Button-->
+<!--                            android:id="@+id/view_fuel_rates"-->
+<!--                            android:layout_width="100dp"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_margin="10dp"-->
+<!--                            android:background="@drawable/round"-->
+<!--                            android:text="View" />-->
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/textViewName2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:text="To View Gold and Silver Rate tap here to give access to your location"
-                            android:textColor="#ffffff"
-                            android:textSize="14sp" />
-
-                        <Button
-                            android:id="@+id/view_gold_rates"
-                            android:layout_width="100dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/round"
-                            android:text="View" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/main_cardView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+<!--            </androidx.cardview.widget.CardView>-->
 
-                android:layout_below="@id/main_cardView1"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="15dp"
-                android:padding="10dp"
-                app:cardBackgroundColor="#3490dc"
-                app:cardCornerRadius="10dp">
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/main_cardView2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
+<!--                android:layout_below="@id/main_cardView1"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginRight="15dp"-->
+<!--                android:padding="10dp"-->
+<!--                app:cardBackgroundColor="#e3342f"-->
+<!--                app:cardCornerRadius="10dp">-->
 
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/round2"
-                        android:padding="10dp"
-                        android:src="@drawable/find"
-                        android:tag="image_tag" />
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:orientation="horizontal">-->
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imageView2"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/round2"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:src="@drawable/gold"-->
+<!--                        android:tag="image_tag" />-->
 
-                        <TextView
-                            android:id="@+id/textViewName4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:text="Find All IFSC Codes"
-                            android:textColor="#ffffff"
-                            android:textSize="14sp" />
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="12dp"-->
+<!--                        android:layout_weight="2"-->
+<!--                        android:orientation="vertical">-->
 
-                        <Button
-                            android:id="@+id/view_ifsc"
-                            android:layout_width="100dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/round"
-                            android:text="Find" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/textViewName2"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:text="To View Gold and Silver Rate tap here to give access to your location"-->
+<!--                            android:textColor="#ffffff"-->
+<!--                            android:textSize="14sp" />-->
 
-                    </LinearLayout>
-                </LinearLayout>
+<!--                        <Button-->
+<!--                            android:id="@+id/view_gold_rates"-->
+<!--                            android:layout_width="100dp"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_margin="10dp"-->
+<!--                            android:background="@drawable/round"-->
+<!--                            android:text="View" />-->
 
-            </androidx.cardview.widget.CardView>
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/main_cardView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+<!--            </androidx.cardview.widget.CardView>-->
 
-                android:layout_below="@id/main_cardView1"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="15dp"
-                android:padding="10dp"
-                app:cardBackgroundColor="#00BCD4"
-                app:cardCornerRadius="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal">
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/main_cardView4"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
 
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/round2"
-                        android:padding="10dp"
-                        android:src="@drawable/calculator"
-                        android:tag="image_tag" />
+<!--                android:layout_below="@id/main_cardView1"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginRight="15dp"-->
+<!--                android:padding="10dp"-->
+<!--                app:cardBackgroundColor="#3490dc"-->
+<!--                app:cardCornerRadius="10dp">-->
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:orientation="horizontal">-->
 
-                        <TextView
-                            android:id="@+id/textViewName5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:text="Calculate Your EMIs in a Jiffy"
-                            android:textColor="#ffffff"
-                            android:textSize="14sp" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imageView4"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/round2"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:src="@drawable/find"-->
+<!--                        android:tag="image_tag" />-->
 
-                        <Button
-                            android:id="@+id/view_emi"
-                            android:layout_width="100dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/round"
-                            android:text="Calculate" />
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="12dp"-->
+<!--                        android:layout_weight="2"-->
+<!--                        android:orientation="vertical">-->
 
-                    </LinearLayout>
-                </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:id="@+id/textViewName4"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:text="Find All IFSC Codes"-->
+<!--                            android:textColor="#ffffff"-->
+<!--                            android:textSize="14sp" />-->
 
-            </androidx.cardview.widget.CardView>
+<!--                        <Button-->
+<!--                            android:id="@+id/view_ifsc"-->
+<!--                            android:layout_width="100dp"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_margin="10dp"-->
+<!--                            android:background="@drawable/round"-->
+<!--                            android:text="Find" />-->
+
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/main_cardView5"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+
+<!--                android:layout_below="@id/main_cardView1"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginRight="15dp"-->
+<!--                android:padding="10dp"-->
+<!--                app:cardBackgroundColor="#00BCD4"-->
+<!--                app:cardCornerRadius="10dp">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/imageView5"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginRight="5dp"-->
+<!--                        android:layout_marginBottom="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/round2"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:src="@drawable/calculator"-->
+<!--                        android:tag="image_tag" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="12dp"-->
+<!--                        android:layout_weight="2"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/textViewName5"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:text="Calculate Your EMIs in a Jiffy"-->
+<!--                            android:textColor="#ffffff"-->
+<!--                            android:textSize="14sp" />-->
+
+<!--                        <Button-->
+<!--                            android:id="@+id/view_emi"-->
+<!--                            android:layout_width="100dp"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:layout_margin="10dp"-->
+<!--                            android:background="@drawable/round"-->
+<!--                            android:text="Calculate" />-->
+
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
 
 
         </LinearLayout>
