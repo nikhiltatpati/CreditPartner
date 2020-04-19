@@ -77,6 +77,7 @@ public class CustomerInfoActivity extends AppCompatActivity {
                     mobileTIET.setError("Enter a valid number!");
 
                 }
+
                 else if (name.isEmpty() || name.length() < 5) {
                     nameTIET.setError("Enter your full name!");
                 } else if (customerNumber.length() != 10) {
@@ -84,7 +85,12 @@ public class CustomerInfoActivity extends AppCompatActivity {
 
                 } else if (!isEmailValid(email)) {
                     emailTIET.setError("Email is invalid!");
-                } else {
+                }
+                else if(reference.isEmpty())
+                {
+                    referenceTIET.setError("Enter reference");
+                }
+                else {
 
                     Ref.child("Customers").child("BasicInfo").addValueEventListener(new ValueEventListener() {
                         @Override

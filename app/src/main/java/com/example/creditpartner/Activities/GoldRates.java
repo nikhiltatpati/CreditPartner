@@ -11,6 +11,7 @@ import android.webkit.WebViewClient;
 
 import com.example.creditpartner.R;
 
+
 public class GoldRates extends AppCompatActivity {
 
         private WebView wv1;

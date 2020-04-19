@@ -19,9 +19,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 
 public class ApplyFormActivity extends AppCompatActivity {
 
@@ -33,6 +35,9 @@ public class ApplyFormActivity extends AppCompatActivity {
     private FirebaseUser currentUSer;
     private TextView applyForm;
     private String currentUSerID, companyTitle, productTitle, companyRate, type, companyImage;
+    SecureRandom random = new SecureRandom();
+    static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
 
 
     @Override
@@ -113,6 +118,8 @@ public class ApplyFormActivity extends AppCompatActivity {
                 String name = dataSnapshot.child("name").getValue().toString();
                 nameTIET.setText(name);
 
+                String ref = dataSnapshot.child("reference").getValue().toString();
+                refCode1.setText(ref + generateRandom());
 
                 String email = dataSnapshot.child("email").getValue().toString();
                 emailTIET.setText(email);
@@ -129,6 +136,13 @@ public class ApplyFormActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private String generateRandom() {
+        StringBuilder sb = new StringBuilder( 8 );
+        for( int i = 0; i < 8; i++ )
+            sb.append( AB.charAt( random.nextInt(AB.length()) ) );
+        return sb.toString();
     }
 
     private void InitializeFields() {
