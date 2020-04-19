@@ -1,85 +1,44 @@
 package com.example.creditpartner.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.os.Bundle;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.creditpartner.Adapters.RechargeAdapter;
+import com.example.creditpartner.Fragment.BroadbandRechargeFragment;
+import com.example.creditpartner.Fragment.DTHRechargeFragment;
+import com.example.creditpartner.Fragment.DataCardRechargeFragment;
+import com.example.creditpartner.Fragment.MobileRechargeFragment;
 import com.example.creditpartner.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.material.tabs.TabLayout;
 
 public class RechargeActivity extends AppCompatActivity {
-    private Toolbar mToolbar;
-    private String companyTitle;
-    private WebView mWebView;
-    private static final String URL = "https://spicetech.in/recharge";
+    private RechargeAdapter adapter;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
-
+    private int[] tabIcons = {
+            R.drawable.ic_add,
+            R.drawable.ic_add,
+            R.drawable.ic_add,
+            R.drawable.ic_add
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recharge);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        adapter = new RechargeAdapter(getSupportFragmentManager());
+        adapter.addFragment(new MobileRechargeFragment(), "Tab 1");
+        adapter.addFragment(new DTHRechargeFragment(), "Tab 2");
+        adapter.addFragment(new DataCardRechargeFragment(), "Tab 3");
+        adapter.addFragment(new BroadbandRechargeFragment(), "Tab 4");
 
-
-        Initialize();
-
-        LoadURL();
-
-
-        mWebView.getSettings().setJavaScriptEnabled(true); // enable javascript
-
-
-        mWebView.setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
-
-
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void LoadURL() {
 
-
-        mWebView.loadUrl(URL);
-
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-    }
-
-    private void Initialize() {
-
-        SetupTOolbar();
-
-
-        mWebView = (WebView) findViewById(R.id.recharge_webview);
-
-
-    }
-
-    private void SetupTOolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.recharge_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Recharge");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
 }

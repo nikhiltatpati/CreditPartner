@@ -53,13 +53,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
             <androidx.viewpager.widget.ViewPager
-                android:id="@+id/main_viewpager"
+                android:id="@+id/main_viewpager1"
                 android:layout_width="match_parent"
                 android:layout_height="105dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp" />
+
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -71,6 +73,14 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="#E0E0E0" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/main_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp" />
 
 
             <androidx.cardview.widget.CardView

@@ -5,19 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activities.CompanyWebsiteActivity">
+    >
 
-    <include
-        android:id="@+id/recharge_bar"
-        layout="@layout/app_bar"/>
+<!--    <include-->
+<!--        android:id="@+id/recharge_bar"-->
+<!--        layout="@layout/app_bar1"/>-->
 
-    <WebView
-        android:id="@+id/recharge_webview"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/recharge_bar"/>
-
-
-        />
+        android:layout_height="wrap_content"
+        android:minHeight="?actionBarSize"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#ffffff"
+        app:tabIndicatorHeight="4dp"
+        app:tabBackground="@color/colorPrimary"
+        app:tabMode="scrollable">
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
 
 </RelativeLayout>
