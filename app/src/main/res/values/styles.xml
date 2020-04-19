@@ -20,4 +20,11 @@
         <item name="colorControlNormal">#ffffff</item>
     </style>
 
+
+    <style name="MyToolbarTheme"
+        parent="@style/ThemeOverlay.AppCompat.Dark">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="titleTextColor">#ffffff</item>
+    </style>
+
 </resources>
