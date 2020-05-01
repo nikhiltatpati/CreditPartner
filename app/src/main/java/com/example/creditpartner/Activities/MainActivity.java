@@ -32,16 +32,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.creditpartner.Adapters.ItemBannerAdapter;
+import com.example.creditpartner.Adapters.ItemBannerAdapterTop;
 import com.example.creditpartner.Adapters.ProductAdapter;
 import com.example.creditpartner.Adapters.SliderAdapter;
 import com.example.creditpartner.Classes.Products;
 import com.example.creditpartner.Classes.Slides;
 import com.example.creditpartner.Models.ItemBannerModel;
+import com.example.creditpartner.Models.ItemBannerModelTop;
 import com.example.creditpartner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Button viewGoldRates, viewFuelRates, viewEMI, viewIFSC,viewCreditScore;
     private boolean isSuperAdmin;
 
-    private ViewPager mSlideViewPager, mSlideViewPager1;
+    private ViewPager mSlideViewPager, mSlideViewPager1, mSlideViewPager2;
 
     private ProgressBar loadProducts;
 
@@ -76,7 +79,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String label;
 
     ItemBannerAdapter adapter;
+    ItemBannerAdapterTop adapter1;
     List<ItemBannerModel> models;
+    List<ItemBannerModelTop> models1;
+
 
     private BottomNavigationView bottomNavigationView;
     private Toolbar mToolbar;
@@ -143,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void run() {
                     LinkReferences();
-                    GetSlides();
-                    GetSlides2();
+                   // GetSlides();
+                    //GetSlides2();
 
                 }
             });
@@ -186,10 +192,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
+        models1 = new ArrayList<>();
+        models1.add(new ItemBannerModelTop(R.drawable.game1));
+        models1.add(new ItemBannerModelTop(R.drawable.game2));
+        models1.add(new ItemBannerModelTop(R.drawable.game3));
+        models1.add(new ItemBannerModelTop(R.drawable.game4));
+        models1.add(new ItemBannerModelTop(R.drawable.game5));
+
+        adapter1 = new ItemBannerAdapterTop(models1,this);
+
+        mSlideViewPager2 = findViewById(R.id.main_viewpager);
+        mSlideViewPager2.setAdapter(adapter1);
+
+
+
         models = new ArrayList<>();
         models.add(new ItemBannerModel(R.drawable.report, "report", "Check your Credit Score for FREE Get better deals on Credit Cards and Loans"));
-        models.add(new ItemBannerModel(R.drawable.fuel, "fuel", "To View Petrol and Diesel Rate tap here to give access to your location"));
-        models.add(new ItemBannerModel(R.drawable.gold, "gold", "To View Gold and Silver Rate tap here to give access to your location"));
+//        models.add(new ItemBannerModel(R.drawable.fuel, "fuel", "To View Petrol and Diesel Rate tap here to give access to your location"));
+//        models.add(new ItemBannerModel(R.drawable.gold, "gold", "To View Gold and Silver Rate tap here to give access to your location"));
         models.add(new ItemBannerModel(R.drawable.find, "find", "Find All IFSC Codes"));
         models.add(new ItemBannerModel(R.drawable.calculator, "calculator", "Calculate Your EMIs in a Jiffy"));
 
@@ -402,82 +422,82 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void GetSlides() {
-
-        Ref.child("Banners").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                slidesList.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if (dataSnapshot1.hasChild("adText")) {
-                        String image = dataSnapshot1.child("adImage").getValue().toString();
-                        String link = dataSnapshot1.child("adLink").getValue().toString();
-                        String text = dataSnapshot1.child("adText").getValue().toString();
-                        slidesList.add(new Slides(image, text, link));
-
-
-                    } else {
-                        String image = dataSnapshot1.child("adImage").getValue().toString();
-                        String link = dataSnapshot1.child("adLink").getValue().toString();
-
-                        slidesList.add(new Slides(image, "", link));
-
-                    }
-                }
-
-                sliderAdapter = new SliderAdapter(MainActivity.this, slidesList);
-
-                mSlideViewPager.setAdapter(sliderAdapter);
-
-                mSlideViewPager.addOnPageChangeListener(viewListener);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-
-    private void GetSlides2() {
-
-        Ref.child("Banners").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                slidesList.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if (dataSnapshot1.hasChild("adText")) {
-                        String image = dataSnapshot1.child("adImage").getValue().toString();
-                        String link = dataSnapshot1.child("adLink").getValue().toString();
-                        String text = dataSnapshot1.child("adText").getValue().toString();
-                        slidesList.add(new Slides(image, text, link));
-
-
-
-                    } else {
-                        String image = dataSnapshot1.child("adImage").getValue().toString();
-                        String link = dataSnapshot1.child("adLink").getValue().toString();
-
-                        slidesList.add(new Slides(image, "", link));
-
-                    }
-                }
-
-                sliderAdapter = new SliderAdapter(MainActivity.this, slidesList);
-
-//                mSlideViewPager2.setAdapter(sliderAdapter);
-//                mSlideViewPager3.setAdapter(sliderAdapter);
-//                mSlideViewPager2.addOnPageChangeListener(viewListener);
-//                mSlideViewPager3.addOnPageChangeListener(viewListener);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    private void GetSlides() {
+//
+//        Ref.child("Banners").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                slidesList.clear();
+//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+//                    if (dataSnapshot1.hasChild("adText")) {
+//                        String image = dataSnapshot1.child("adImage").getValue().toString();
+//                        String link = dataSnapshot1.child("adLink").getValue().toString();
+//                        String text = dataSnapshot1.child("adText").getValue().toString();
+//                        slidesList.add(new Slides(image, text, link));
+//
+//
+//                    } else {
+//                        String image = dataSnapshot1.child("adImage").getValue().toString();
+//                        String link = dataSnapshot1.child("adLink").getValue().toString();
+//
+//                        slidesList.add(new Slides(image, "", link));
+//
+//                    }
+//                }
+//
+//                sliderAdapter = new SliderAdapter(MainActivity.this, slidesList);
+//
+//                mSlideViewPager.setAdapter(sliderAdapter);
+//
+//                mSlideViewPager.addOnPageChangeListener(viewListener);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+//
+//
+//    private void GetSlides2() {
+//
+//        Ref.child("Banners").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                slidesList.clear();
+//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+//                    if (dataSnapshot1.hasChild("adText")) {
+//                        String image = dataSnapshot1.child("adImage").getValue().toString();
+//                        String link = dataSnapshot1.child("adLink").getValue().toString();
+//                        String text = dataSnapshot1.child("adText").getValue().toString();
+//                        slidesList.add(new Slides(image, text, link));
+//
+//
+//
+//                    } else {
+//                        String image = dataSnapshot1.child("adImage").getValue().toString();
+//                        String link = dataSnapshot1.child("adLink").getValue().toString();
+//
+//                        slidesList.add(new Slides(image, "", link));
+//
+//                    }
+//                }
+//
+//                sliderAdapter = new SliderAdapter(MainActivity.this, slidesList);
+//
+////                mSlideViewPager2.setAdapter(sliderAdapter);
+////                mSlideViewPager3.setAdapter(sliderAdapter);
+////                mSlideViewPager2.addOnPageChangeListener(viewListener);
+////                mSlideViewPager3.addOnPageChangeListener(viewListener);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
 
     private void SetupRecyclerView() {
@@ -1192,11 +1212,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
-    }
-
-
-
-    public void goldRates(View view){
-
     }
 }

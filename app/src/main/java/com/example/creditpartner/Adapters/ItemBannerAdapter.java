@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import com.example.creditpartner.Activities.EMICalculatorActivity;
 import com.example.creditpartner.Activities.FuelRates;
 import com.example.creditpartner.Activities.GoldRates;
 import com.example.creditpartner.Activities.IFSCCodeFinderActivity;
-import com.example.creditpartner.Activities.MainActivity;
 import com.example.creditpartner.Models.ItemBannerModel;
 import com.example.creditpartner.R;
 
@@ -55,7 +53,7 @@ public class ItemBannerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.banner_item, container, false);
+        View view = layoutInflater.inflate(R.layout.banner_item_bottom, container, false);
 
         ImageView imageView;
         TextView title, desc;
