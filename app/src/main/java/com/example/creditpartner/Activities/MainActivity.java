@@ -502,7 +502,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void SetupRecyclerView() {
 
-        GridLayoutManager manager = new GridLayoutManager(this, 5);
+        GridLayoutManager manager = new GridLayoutManager(this, 4);
         productRecyclerView.setLayoutManager(manager);
 
         /*Query query = Ref.child("ProductList").orderByChild("order");
