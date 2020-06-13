@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".Activities.ApplyFormActivity">
+    tools:context="com.app.creditpartner.Activities.ApplyFormActivity">
 
     <include
         android:id="@+id/apply_form_bar"
@@ -55,22 +55,22 @@
             android:hint="Location"
             />
 
-        <EditText
-            android:id="@+id/form__code1"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:hint="Reference Code"
-            android:inputType="number" />
-        <EditText
-            android:id="@+id/form_code2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:hint="Reference Code 2"
-            android:inputType="number" />
+<!--        <EditText-->
+<!--            android:id="@+id/form__code1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:gravity="center"-->
+<!--            android:hint="Reference Code"-->
+<!--            android:inputType="number" />-->
+<!--        <EditText-->
+<!--            android:id="@+id/form_code2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:gravity="center"-->
+<!--            android:hint="Reference Code 2"-->
+<!--            android:inputType="number" />-->
 
     </LinearLayout>
 

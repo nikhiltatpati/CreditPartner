@@ -10,7 +10,7 @@
 
     android:layout_height="match_parent"
 
-    tools:context=".Activities.TextEditorActivity">
+    tools:context="com.app.creditpartner.Activities.TextEditorActivity">
 
     <include
         android:id="@+id/text_bar"

@@ -6,15 +6,15 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Home"/>
 
-    <item
-        android:id="@+id/bot_recharge"
-        android:icon="@drawable/ic_tap_and_play_black_24dp"
-        android:title="Recharge"/>
+<!--    <item-->
+<!--        android:id="@+id/bot_recharge"-->
+<!--        android:icon="@drawable/ic_tap_and_play_black_24dp"-->
+<!--        android:title="Recharge"/>-->
 
     <item
         android:id="@+id/bot_paisa_tracker"
         android:icon="@drawable/ic_track_changes_black_24dp"
-        android:title="ExpenseTracker"/>
+        android:title="Tracker"/>
 
     <item
         android:id="@+id/bot_account"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.AddCompanyActivity">
+    tools:context="com.app.creditpartner.Activities.AddCompanyActivity">
 
 
     <ScrollView
@@ -43,19 +43,19 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/company_url"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/company_url"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/url"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:hint="Product URL" />
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/url"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="10dp"-->
+<!--                        android:hint="Product URL" />-->
 
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/company_field1"
                     android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@color/colorAccent"
     android:layout_height="match_parent"
-    tools:context=".Activities.PaisaTrackerActivity">
+    tools:context="com.app.creditpartner.Activities.PaisaTrackerActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_expense_fab"

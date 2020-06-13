@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.CompanyFormActivity">
+    tools:context="com.app.creditpartner.Activities.CompanyFormActivity">
 
     <include
         android:id="@+id/company_form_bar"

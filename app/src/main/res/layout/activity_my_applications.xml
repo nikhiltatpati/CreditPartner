@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".Activities.MyApplications">
+    tools:context="com.app.creditpartner.Activities.MyApplications">
 
     <include
         layout="@layout/app_bar"

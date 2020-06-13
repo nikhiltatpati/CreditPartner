@@ -1,63 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
-        android:id="@+id/admin_menu"
-        android:checkableBehavior="single"
-        android:visible="false">
+<!--    <group-->
+<!--        android:id="@+id/admin_menu"-->
+<!--        android:checkableBehavior="single"-->
+<!--        android:visible="false">-->
 
 
-        <item
-            android:id="@+id/side_products"
-            android:title="Products" />
+<!--        <item-->
+<!--            android:id="@+id/side_products"-->
+<!--            android:title="Products" />-->
 
-        <item
-            android:id="@+id/side_ads"
-            android:title="Ads" />
+<!--        <item-->
+<!--            android:id="@+id/side_ads"-->
+<!--            android:title="Ads" />-->
 
-        <item
-            android:id="@+id/side_users"
-            android:title="Users" />
+<!--        <item-->
+<!--            android:id="@+id/side_users"-->
+<!--            android:title="Users" />-->
 
-    </group>
+<!--    </group>-->
 
-    <item
-        android:id="@+id/side_home"
-        android:title="Home" />
+<!--    <item-->
+<!--        android:id="@+id/side_home"-->
+<!--        android:title="Home" />-->
 
 
-    <item
-        android:id="@+id/side_myaccount"
-        android:title="My Account" />
+<!--    <item-->
+<!--        android:id="@+id/side_myaccount"-->
+<!--        android:title="My Account" />-->
 
     <item
         android:id="@+id/side_myapps"
-        android:title="My Applications" />
+        android:title="Applications" />
 
-    <item
-        android:id="@+id/side_saving"
-        android:title="Savings Account" />
 
     <item
         android:id="@+id/side_credit_report"
         android:title="Credit Score" />
-    <item
-        android:id="@+id/side_credit_card"
-        android:title="Credit Card" />
 
 
     <item
-        android:id="@+id/side_taxes"
-        android:title="Taxes" />
+        android:id="@+id/side_play"
+        android:title="Play Games" />
+
 
 
     <group
-        android:id="@+id/loans"
+
+        android:id="@+id/investment"
         android:checkableBehavior="single">
+
+
+        <item
+            android:icon="@drawable/ic_add"
+            android:id="@+id/Investments"
+            android:title="Investments" />
+
+        <item
+            android:id="@+id/side_dmat"
+            android:title="Demat"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_fd"
+            android:title="Fixed Deposits"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_mf"
+            android:title="Mutual Funds"
+            android:visible="false" />
+
+        <item
+            android:id="@+id/side_saving"
+            android:title="Savings Account"
+            android:visible="false"/>
+
+        <item
+            android:id="@+id/side_credit_card"
+            android:title="Credit Card"
+            android:visible="false"/>
+
+
+
+    </group>
+
+
+
+    <group
+
+        android:id="@+id/tax"
+        android:checkableBehavior="single">
+
+
+        <item
+            android:icon="@drawable/ic_add"
+
+            android:id="@+id/side_taxes"
+            android:title="Taxes" />
+
+
+        <item
+        android:id="@+id/side_tax_register"
+        android:title="Tax Registration"
+        android:visible="false" />
+
+
+
+        <item
+            android:id="@+id/side_tax_return"
+            android:title="Tax Return"
+            android:visible="false" />
+
+
+    </group>
+
+    <group
+        android:id="@+id/loans"
+        android:checkableBehavior="single"
+        >
 
         <item
             android:id="@+id/side_loan"
-            android:title="Loans" />
+            android:title="Loans"
+            android:icon="@drawable/ic_add"/>
 
         <item
             android:id="@+id/side_personalloan"
@@ -92,10 +159,10 @@
 
 
 
-        <item
-            android:id="@+id/side_businessloan"
-            android:title="Business Loan"
-            android:visible="false" />
+<!--        <item-->
+<!--            android:id="@+id/side_businessloan"-->
+<!--            android:title="Business Loan"-->
+<!--            android:visible="false" />-->
 
 
     </group>
@@ -106,6 +173,7 @@
         android:checkableBehavior="single">
 
         <item
+            android:icon="@drawable/ic_add"
             android:id="@+id/side_insurance"
             android:title="Insurance" />
         <item
@@ -113,7 +181,7 @@
             android:title="Health Insurance"
             android:visible="false" />
         <item
-            android:id="@+id/side_twinsurance"
+            android:id="@+id/side_two_wheeler"
             android:title="Two Wheeler Insurance"
             android:visible="false" />
 
@@ -145,6 +213,7 @@
 
 
         <item
+            android:icon="@drawable/ic_add"
             android:id="@+id/Tools"
             android:title="Tools" />
 
@@ -168,22 +237,22 @@
             android:title="Income tax Calculator"
             android:visible="false" />
 
-        <item
-            android:id="@+id/side_fuel"
-            android:title="Fuel Rates"
-            android:visible="false" />
+<!--        <item-->
+<!--            android:id="@+id/side_fuel"-->
+<!--            android:title="Fuel Rates"-->
+<!--            android:visible="false" />-->
 
-        <item
-            android:id="@+id/side_gold"
-            android:title="Gold/Silver Rates"
-            android:visible="false" />
+<!--        <item-->
+<!--            android:id="@+id/side_gold"-->
+<!--            android:title="Gold/Silver Rates"-->
+<!--            android:visible="false" />-->
 
     </group>
 
 
-    <item
-        android:id="@+id/side_myoffer"
-        android:title="My Offer" />
+<!--    <item-->
+<!--        android:id="@+id/side_myoffer"-->
+<!--        android:title="My Offer" />-->
 
 
     <item
@@ -191,41 +260,15 @@
         android:title="Chat Support"/>
 
 
-    <item
-        android:id="@+id/notice"
-        android:title="Notice to customer"
-         />
+<!--    <item-->
+<!--        android:id="@+id/notice"-->
+<!--        android:title="Notice to customer"-->
+<!--         />-->
 
     <item
         android:id="@+id/side_logout"
         android:title="Logout" />
 
-    <group
-        android:id="@+id/investment"
-        android:checkableBehavior="single">
-
-
-        <item
-            android:id="@+id/Investments"
-            android:title="Investments" />
-
-        <item
-            android:id="@+id/side_dmat"
-            android:title="DMAT"
-            android:visible="false" />
-
-        <item
-            android:id="@+id/side_fd"
-            android:title="Fixed Deposits"
-            android:visible="false" />
-
-        <item
-            android:id="@+id/side_mf"
-            android:title="Mutual Funds"
-            android:visible="false" />
-
-
-    </group>
 
 
 </menu>

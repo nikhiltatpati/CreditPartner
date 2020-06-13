@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.creditpartner">
+    package="com.app.creditpartner">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -14,81 +14,82 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".Classes.MyApplication"
+        android:name="com.app.creditpartner.Classes.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher2"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher2"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Activities.FuelRates"></activity>
-        <activity android:name=".Activities.GoldRates" />
+        <activity android:name="com.app.creditpartner.Activities.FuelRates"></activity>
+        <activity android:name="com.app.creditpartner.Activities.GoldRates" />
         <activity
-            android:name=".Activities.RechargeActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.RechargeActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.FirebaseActivity"
-            android:parentActivityName=".Activities.MainActivity" />
-        <activity android:name=".Activities.TextEditorActivity" />
+            android:name="com.app.creditpartner.Activities.FirebaseActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
+        <activity android:name="com.app.creditpartner.Activities.TextEditorActivity" />
         <activity
-            android:name=".Activities.IncomeTaxCalculatorActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.IncomeTaxCalculatorActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.NoticeToCustomerActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.NoticeToCustomerActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.MyOfferActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.MyOfferActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.IFSCCodeFinderActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.IFSCCodeFinderActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.EMICalculatorActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.EMICalculatorActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.TaxInfoActivity"
-            android:parentActivityName=".Activities.MainActivity" />
-        <activity android:name=".Activities.SeletCategoryActivity" />
+            android:name="com.app.creditpartner.Activities.TaxInfoActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
+        <activity android:name="com.app.creditpartner.Activities.SeletCategoryActivity" />
         <activity
-            android:name=".Activities.ApplicationDetailsActivity"
-            android:parentActivityName=".Activities.MyApplications" />
+            android:name="com.app.creditpartner.Activities.ApplicationDetailsActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MyApplications" />
         <activity
-            android:name=".Activities.MyApplications"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.MyApplications"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.ApplyFormActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.ApplyFormActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.TaxWebsiteActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.TaxWebsiteActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.TaxesActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.TaxesActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.AddAdsActivity"
-            android:parentActivityName=".Activities.AdsActivity" />
+            android:name="com.app.creditpartner.Activities.AddAdsActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.AdsActivity" />
         <activity
-            android:name=".Activities.AddUsersActivity"
-            android:parentActivityName=".Activities.UsersActivity" />
+            android:name="com.app.creditpartner.Activities.AddUsersActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.UsersActivity" />
         <activity
-            android:name=".Activities.AdsActivity"
-            android:parentActivityName=".Activities.MainActivity" />
-        <activity android:name=".Activities.AdDetailsActiviy" />
+            android:name="com.app.creditpartner.Activities.AdsActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
+        <activity android:name="com.app.creditpartner.Activities.AdDetailsActiviy" />
         <activity
-            android:name=".Activities.UsersActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.UsersActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.UsersAccountActivity"
-            android:parentActivityName=".Activities.UsersActivity" />
+            android:name="com.app.creditpartner.Activities.UsersAccountActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.UsersActivity" />
         <activity
-            android:name=".Activities.ProductsActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.ProductsActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.BannerActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.BannerActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.SplashActivity"
+            android:name="com.app.creditpartner.Activities.SplashActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -97,49 +98,49 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.DynamicAddActivity"
-            android:parentActivityName=".Activities.AddAdminsActivity" />
+            android:name="com.app.creditpartner.Activities.DynamicAddActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.AddAdminsActivity" />
         <activity
-            android:name=".Activities.AddExpenseActivity"
-            android:parentActivityName=".Activities.PaisaTrackerActivity" />
+            android:name="com.app.creditpartner.Activities.AddExpenseActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.PaisaTrackerActivity" />
         <activity
-            android:name=".Activities.AddAdminsActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.AddAdminsActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.PaisaTrackerActivity"
-            android:parentActivityName=".Activities.MainActivity" />
-        <activity android:name=".Activities.CompanyFormActivity" />
-        <activity android:name=".Activities.CreditReportActivity"
-            android:parentActivityName=".Activities.MainActivity"/>
+            android:name="com.app.creditpartner.Activities.PaisaTrackerActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
+        <activity android:name="com.app.creditpartner.Activities.CompanyFormActivity" />
+        <activity android:name="com.app.creditpartner.Activities.CreditReportActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity"/>
         <activity
-            android:name=".Activities.ReferAndEarnActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.ReferAndEarnActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.AddCompanyActivity"
-            android:parentActivityName=".Activities.ProductDetailActivity" />
+            android:name="com.app.creditpartner.Activities.AddCompanyActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.ProductDetailActivity" />
         <activity
-            android:name=".Activities.CompanyWebsiteActivity"
-            android:parentActivityName=".Activities.ProductDetailActivity" />
+            android:name="com.app.creditpartner.Activities.CompanyWebsiteActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.ProductDetailActivity" />
         <activity
-            android:name=".Activities.MyAccountActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="com.app.creditpartner.Activities.MyAccountActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
         <activity
-            android:name=".Activities.ProductDetailActivity"
-            android:parentActivityName=".Activities.MainActivity" />
-        <activity android:name=".Activities.LoginActivity"
+            android:name="com.app.creditpartner.Activities.ProductDetailActivity"
+            android:parentActivityName="com.app.creditpartner.Activities.MainActivity" />
+        <activity android:name="com.app.creditpartner.Activities.LoginActivity"
             android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name=".Activities.VerifyInfoActivity" />
-        <activity android:name=".Activities.MainActivity" />
-        <activity android:name=".Activities.CustomerInfoActivity"
+        <activity android:name="com.app.creditpartner.Activities.VerifyInfoActivity" />
+        <activity android:name="com.app.creditpartner.Activities.MainActivity" />
+        <activity android:name="com.app.creditpartner.Activities.CustomerInfoActivity"
             android:windowSoftInputMode="adjustNothing"/>
 
 
-        <service android:name=".Services.MyFirebaseMessagingService">
+        <service android:name="com.app.creditpartner.Services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Services.MyFirebaseInstanceIDService">
+        <service android:name="com.app.creditpartner.Services.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
