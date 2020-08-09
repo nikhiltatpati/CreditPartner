@@ -207,12 +207,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         models2 = new ArrayList<>();
+        models2.add(new ItemBannerBottom(R.drawable.bodog));
+        models2.add(new ItemBannerBottom(R.drawable.casumo));
+        models2.add(new ItemBannerBottom(R.drawable.norton2));
+        models2.add(new ItemBannerBottom(R.drawable.cashoola));
+        models2.add(new ItemBannerBottom(R.drawable.bet));
         models2.add(new ItemBannerBottom(R.drawable.game12));
-        models2.add(new ItemBannerBottom(R.drawable.game3));
-        models2.add(new ItemBannerBottom(R.drawable.game5));
-        models2.add(new ItemBannerBottom(R.drawable.game4));
-        models2.add(new ItemBannerBottom(R.drawable.game2));
-        models2.add(new ItemBannerBottom(R.drawable.norton1));
 
         adapter2 = new ItemBannerAdapterBottom(models2,this);
 
@@ -776,7 +776,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void SetupToolbar() {
         mToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("MudraPe");
+        getSupportActionBar().setTitle("");
 
     }
 

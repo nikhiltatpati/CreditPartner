@@ -14,7 +14,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
-        android:src="@drawable/rupee_icon"
+        android:src="@drawable/r2"
         app:backgroundTint="@android:color/white" />
 
 

@@ -10,8 +10,6 @@ import android.webkit.WebViewClient;
 
 import com.app.creditpartner.R;
 
-import java.util.Set;
-
 public class FirebaseActivity extends AppCompatActivity {
 
     private WebView mWebView;

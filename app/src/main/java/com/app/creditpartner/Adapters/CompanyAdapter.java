@@ -182,10 +182,10 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
             }
         });
 
-
-        holder.setItemLongClickListener(new ItemLongClickListener() {
+        holder.editDetails.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemLongCLick(View v, int pos) {
+            public void onClick(View view) {
+                Log.i("TAG","Hellllllllllllo");
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("Select");
@@ -240,8 +240,17 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
             }
 
+            });
 
-        });
+
+                holder.setItemLongClickListener(new ItemLongClickListener() {
+            @Override
+            public void onItemLongCLick(View v, int pos) {
+
+
+
+
+        }});
 
         holder.viewDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,7 +320,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements android.view.View.OnLongClickListener {
 
-        private ImageButton dragButton;
+        private ImageButton dragButton,editDetails;
         private ImageView companyImage;
         private TextView companyName, companyValue1, companyValue2, companyField1, companyField2;
         private Button selectCompany, viewDetails;
@@ -331,6 +340,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
             companyField2 = (TextView) myView.findViewById(R.id.minimum_balance);
             selectCompany = (Button) myView.findViewById(R.id.company_select);
             viewDetails = (Button) myView.findViewById(R.id.company_view_details);
+
+            editDetails = (ImageButton) myView.findViewById(R.id.imgBtn);
             detailsCard = (CardView) myView.findViewById(R.id.details_card);
             featuresText = (WebView) myView.findViewById(R.id.features_text);
             dragButton = (ImageButton) myView.findViewById(R.id.drag_button);

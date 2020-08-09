@@ -25,10 +25,10 @@
         android:id="@+id/circle_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/account_image"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="-63dp"
-        android:src="@drawable/cplogo" />
+        android:src="@drawable/mudra" />
 
     <TextView
         android:id="@+id/useraccount_name"

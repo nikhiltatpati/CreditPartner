@@ -8,14 +8,14 @@
     android:orientation="vertical">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/sidenav_header_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/mudra" />
+        android:src="@drawable/r2" />
 
 
     <TextView

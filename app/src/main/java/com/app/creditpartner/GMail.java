@@ -1,7 +1,6 @@
 package com.app.creditpartner;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -12,7 +11,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import android.app.AlertDialog.Builder;
 import android.util.Log;
 
 public class GMail {

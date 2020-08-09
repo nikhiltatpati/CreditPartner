@@ -64,7 +64,7 @@ public class ItemBannerAdapterBottom extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(position ==5){
+                if(position ==2){
 
                     mAuth = FirebaseAuth.getInstance();
                     Ref = FirebaseDatabase.getInstance().getReference();
@@ -84,7 +84,7 @@ public class ItemBannerAdapterBottom extends PagerAdapter {
 
                             if(ref.isEmpty()){
                                 Intent intent = new Intent(context, TaxWebsiteActivity.class);
-                                murl="https://primeindia.o18.link/c?o=4222229&m=2606&a=74725&sub_aff_id="+phoneNumber;
+                                murl="https://primeindia.o18.link/c?o=4222229&m=2606&a=68599&sub_aff_id="+phoneNumber;
                                 Log.i("TAG",murl);
                                 intent.putExtra("url", murl);
                                 context.startActivity(intent);
@@ -108,7 +108,7 @@ public class ItemBannerAdapterBottom extends PagerAdapter {
 
 
                 }
-                else if(position ==0){
+                else if(position ==5){
                     Intent intent = new Intent(context.getApplicationContext(), CreditReportActivity.class);
                     context.startActivity(intent);
                 }

@@ -80,10 +80,6 @@ public class CustomerInfoActivity extends AppCompatActivity {
                 } else if (!isEmailValid(email)) {
                     emailTIET.setError("Email is invalid!");
                 }
-                else if(reference.isEmpty())
-                {
-                    referenceTIET.setError("Enter reference");
-                }
                 else {
 
                     Ref.child("Customers").child("BasicInfo").addValueEventListener(new ValueEventListener() {

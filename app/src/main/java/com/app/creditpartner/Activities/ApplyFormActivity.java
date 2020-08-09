@@ -37,7 +37,7 @@ public class ApplyFormActivity extends AppCompatActivity {
     private String currentUSerID, companyTitle, productTitle, companyRate, type, companyImage,productID,murl,key;
     SecureRandom random = new SecureRandom();
     static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
+    public TextView mTextView;
 
 
     @Override
@@ -128,6 +128,9 @@ public class ApplyFormActivity extends AppCompatActivity {
                 String name = dataSnapshot.child("name").getValue().toString();
                 nameTIET.setText(name);
 
+                String privilege = dataSnapshot.child("privilege").getValue().toString();
+
+
 
                 String phoneNumber = dataSnapshot.child("phoneNumber").getValue().toString();
                 mobileTIET.setText(phoneNumber.substring(3));
@@ -136,11 +139,19 @@ public class ApplyFormActivity extends AppCompatActivity {
                 String ref = dataSnapshot.child("reference").getValue().toString();
                 //refCode1.setText(ref + generateRandom());
 
-                if(ref.isEmpty()){
-                    murl="https://primeindia.o18.link/c?o="+productID+"&m=2606&a=74725&sub_aff_id="+phoneNumber;
+                if(ref.isEmpty() || ref.equals("") || ref.equals("NA")){
+                    murl="https://primeindia.o18.link/c?o="+productID+"&m=2606&a=74725&sub_aff_id={"+phoneNumber+"}";
                     Log.i("TAG",murl);
+                    if(privilege.equals("SuperAdmin")){
+                        mTextView.setText(murl);
+                    }
+
                 }else{
-                    murl="https://primeindia.o18.link/c?o="+productID+"&m=2606&a="+ref+"&sub_aff_id="+phoneNumber;
+                    murl="https://primeindia.o18.link/c?o="+productID+"&m=2606&a="+ref+"&sub_aff_id={"+phoneNumber+"}";
+
+                    if(privilege.equals("SuperAdmin")){
+                        mTextView.setText(murl);
+                    }
                 }
 
 
@@ -214,6 +225,8 @@ public class ApplyFormActivity extends AppCompatActivity {
         Ref = FirebaseDatabase.getInstance().getReference();
         currentUSerID = mAuth.getCurrentUser().getUid();
         applyForm = (TextView) findViewById(R.id.apply_form);
+        mTextView=findViewById(R.id.form_url);
+
 
 
         if (type.equals("Pan")) {

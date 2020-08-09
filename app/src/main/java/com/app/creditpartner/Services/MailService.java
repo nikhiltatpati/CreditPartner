@@ -1,14 +1,10 @@
 package com.app.creditpartner.Services;
 
 
-import android.util.Log;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
 
-import javax.activation.DataHandler;
 import javax.mail.Authenticator;
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;

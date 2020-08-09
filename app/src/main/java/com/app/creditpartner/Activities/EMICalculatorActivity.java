@@ -16,8 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-
 public class EMICalculatorActivity extends AppCompatActivity {
 
     private EditText loanText, rateText, tenureText;

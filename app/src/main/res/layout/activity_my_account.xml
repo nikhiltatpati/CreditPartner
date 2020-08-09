@@ -81,8 +81,8 @@
                     android:id="@+id/account_image"
                     android:layout_width="150dp"
                     android:layout_height="90dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/cplogo" />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/r2" />
 
             </androidx.cardview.widget.CardView>
 

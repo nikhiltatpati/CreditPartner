@@ -12,8 +12,6 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.app.creditpartner.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class TaxWebsiteActivity extends AppCompatActivity {
     private WebView mWebView;

@@ -30,10 +30,24 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
-            android:background="#00008b"
+            android:background="@color/colorAccent"
             android:onClick="run"
             android:src="@drawable/bell1"
             android:visibility="visible" />
+
+
+        <ImageButton
+            android:id="@+id/add_offer1"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+
+            android:layout_marginTop="5dp"
+
+            android:background="@color/colorAccent"
+            android:scaleType="fitXY"
+            android:src="@drawable/mudran6" />
+
 
 
         <View
@@ -49,6 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            app:itemBackground="@color/colorWhite"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bot_nav" />
 
@@ -58,7 +73,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="59dp"
         android:fillViewport="true">
 
@@ -83,6 +98,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+
                 <TextView
                     android:id="@+id/tv1"
                     android:layout_width="match_parent"
@@ -101,7 +123,15 @@
 
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:background="#ffffff" />
+                    android:background="#ffffff">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
 
                 <TextView
                     android:id="@+id/tv2"
@@ -124,6 +154,13 @@
                     android:layout_marginBottom="5dp"
                     android:background="#ffffff" />
 
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+
                 <TextView
                     android:id="@+id/tv3"
                     android:layout_width="wrap_content"
@@ -144,6 +181,13 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="#ffffff" />
+
+                <View
+                    android:id="@+id/divider5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
 
                 <TextView
                     android:id="@+id/tv4"
@@ -166,6 +210,14 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="#ffffff" />
+
+
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
 
             </LinearLayout>
 
@@ -529,25 +581,25 @@
                 android:visibility="invisible" />
 
 
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/product_recyclerview5"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@id/main_viewpager"-->
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/product_recyclerview5"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_below="@id/main_viewpager"-->
 
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:layout_marginBottom="5dp"-->
-<!--                android:background="#ffffff"-->
-<!--                android:visibility="invisible" />-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                android:layout_marginBottom="5dp"-->
+            <!--                android:background="#ffffff"-->
+            <!--                android:visibility="invisible" />-->
 
 
-<!--            <androidx.viewpager.widget.ViewPager-->
-<!--                android:id="@+id/main_viewpager2"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_marginLeft="15dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginRight="15dp"></androidx.viewpager.widget.ViewPager>-->
+            <!--            <androidx.viewpager.widget.ViewPager-->
+            <!--                android:id="@+id/main_viewpager2"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="200dp"-->
+            <!--                android:layout_marginLeft="15dp"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:layout_marginRight="15dp"></androidx.viewpager.widget.ViewPager>-->
 
 
         </LinearLayout>
